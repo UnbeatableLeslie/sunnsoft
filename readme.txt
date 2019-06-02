@@ -1,4 +1,4 @@
-框架内置功能
+框架预计内置功能
 SpringBoot+Mybatis+CriteriaVo处理三层业务逻辑（完成）
 ManuelTransaction手动事务控制处理工具类 （已完成）
 全局事物控制管理 （完成）
