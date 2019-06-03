@@ -3,12 +3,12 @@ package com.pengheng.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -49,7 +49,7 @@ public class ShiroConfig {
 
 	/**
 	 * SimpleCookie
-	 * 
+	 * Cookie 记住我功能
 	 * @return
 	 */
 	public SimpleCookie rememberMeCookie() {
@@ -57,7 +57,19 @@ public class ShiroConfig {
 		int maxAge = 60 * 60 * 24 * 30;// 设置有效期为30天/或者从配置中读取
 		simpleCookie.setMaxAge(maxAge);
 		simpleCookie.setName("rememberMe-ehcache");
+		simpleCookie.setHttpOnly(true);//设置只能http方式防止xss攻击
+		simpleCookie.setPath("/");
 		return simpleCookie;
+	}
+
+	/**
+	 * CookieRememberMe管理器
+	 */
+	public CookieRememberMeManager rememberMeManager() {
+		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+		cookieRememberMeManager.setCookie(rememberMeCookie());
+		cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+		return cookieRememberMeManager;
 	}
 
 	/**
@@ -80,17 +92,6 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * CookieRememberMeManager
-	 * 
-	 */
-	public CookieRememberMeManager rememberMeManager() {
-		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-		cookieRememberMeManager.setCookie(rememberMeCookie());
-		cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
-		return cookieRememberMeManager;
-	}
-
-	/**
 	 * ShiroFilterFactoryBean  
 	 * Shiro过滤器，针对IP地址进行拦截是否需要对应权限
 	 */
@@ -106,19 +107,21 @@ public class ShiroConfig {
 		 */
 
 		// 设置需要拦截的路径
-		Map<String, String> filterChainDefinitionMap = new HashMap<>();
+		Map<String, String> filterChain = new HashMap<>();
+		//设置登出拦截
+		filterChain.put("logout", "logout");
 		// 拦截指定方法
-		filterChainDefinitionMap.put("/demo/list", "authc");
+		filterChain.put("/demo/list", "authc");
 		// 拦截授权
 		// 通过加载数据库设置方法需要的权限
-		filterChainDefinitionMap.put("/demo/add", "perms[user:add]");
+		filterChain.put("/demo/add", "perms[user:add]");
 		// 过滤指定连接不用登录
-		filterChainDefinitionMap.put("/demo/error", "anon");
-		filterChainDefinitionMap.put("/kaptchaGet", "anon");
-		filterChainDefinitionMap.put("/login", "anon");
+		filterChain.put("/demo/error", "anon");
+		filterChain.put("/kaptchaGet", "anon");
+		filterChain.put("/login", "anon");
 
-		filterChainDefinitionMap.put("/*", "authc");// 拦截所有方法
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+		filterChain.put("/*", "authc");// 拦截所有方法
+		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChain);
 
 		// 设置拦截返回跳转的路径
 		shiroFilterFactoryBean.setLoginUrl("/demo/error");
@@ -137,8 +140,6 @@ public class ShiroConfig {
 		defaultWebSecurityManager.setRealm(authorizingRealm);
 		// 设置缓存管理器
 		defaultWebSecurityManager.setCacheManager(ehCacheManager());
-		// 会话管理器
-
 		// 注入记住我管理器
 		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
 		return defaultWebSecurityManager;
@@ -150,17 +151,27 @@ public class ShiroConfig {
 	@Bean("authorizingRealm")
 	public AuthorizingRealm authorizingRealm() {
 		UserRealm userRealm = new UserRealm();
+		userRealm.setCredentialsMatcher(hashedCredentialsMatcher());//设置密码加密规则
 		userRealm.setCachingEnabled(true);// 设置开启缓存查询
-		// 启用身份验证缓存开启
-		userRealm.setAuthenticationCachingEnabled(true);
-		// 缓存在ehcache.xml对应的名字
-		userRealm.setAuthenticationCacheName("users");
+//		// 启用身份验证缓存开启
+//		userRealm.setAuthenticationCachingEnabled(true);
+//		// 缓存在ehcache.xml对应的名字
+//		userRealm.setAuthenticationCacheName("users");
 		// 设置权限缓存开启
 		userRealm.setAuthorizationCachingEnabled(true);
 		// 权限在缓存中存的名字
 		userRealm.setAuthorizationCacheName("users-perms");
 		return userRealm;
 	}
+	 //密码管理
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+        credentialsMatcher.setHashAlgorithmName("md5"); //散列算法使用md5
+//        credentialsMatcher.setHashIterations(2);        //散列次数，2表示md5加密两次
+        credentialsMatcher.setStoredCredentialsHexEncoded(true);//启用十六进制存储
+        return credentialsMatcher;
+    }
 
 	/**
 	 * 开启shiro aop注解支持.使用代理方式;所以需要开启代码支持;
