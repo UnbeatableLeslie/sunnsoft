@@ -34,16 +34,17 @@ public class LoginController extends BaseController{
 		Map<Object,Object> paramMap = getParameterMap(model);
 		String username = Toolkits.defaultString(paramMap.get("username"));
 		String password = Toolkits.defaultString(paramMap.get("password"));
+		boolean rememberme = Boolean.parseBoolean(Toolkits.defaultString(paramMap.get("rememberme")));
 		String session_captcha = Toolkits.defaultString(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
 		String captcha = request.getParameter("captcha");
-		if (!session_captcha.equals(captcha)) {
-			return new ResultVoFailure("验证码错误");
-		}
+//		if (!session_captcha.equals(captcha)) {
+//			return new ResultVoFailure("验证码错误");
+//		}
 		
 		//获取subject对象
 		Subject subject = SecurityUtils.getSubject();
 		//封装用户数据
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberme);
 		
 		try {
 			subject.login(token);//执行Shiro配置的拦截方法

@@ -3,37 +3,96 @@ package com.pengheng.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.pengheng.model.CriterionVo;
-import com.pengheng.service.IDynamicSqlService;
-import com.pengheng.util.Toolkits;
+import net.sf.ehcache.CacheManager;
 
 @Configuration
 public class ShiroConfig {
 
-	@Autowired
-	private IDynamicSqlService dynamicSqlService;
+	/**
+	 * 缓存管理器 使用Ehcache实现
+	 */
+	@Bean
+	public EhCacheManager ehCacheManager() {
+		CacheManager cacheManager = CacheManager.getCacheManager("shiro-ehcache");
+		EhCacheManager em = new EhCacheManager();
+		if (cacheManager == null) {
+			em.setCacheManagerConfigFile("classpath:ehcache/ehcache-shiro.xml");
+			return em;
+		} else {
+			em.setCacheManager(cacheManager);
+			return em;
+		}
+	}
+
+	@Bean
+	public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
+		EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
+		cacheManagerFactoryBean.setShared(true);
+		return cacheManagerFactoryBean;
+	}
 
 	/**
-	 * ShiroFilterFactoryBean
+	 * SimpleCookie
+	 * 
+	 * @return
+	 */
+	public SimpleCookie rememberMeCookie() {
+		SimpleCookie simpleCookie = new SimpleCookie();
+		int maxAge = 60 * 60 * 24 * 30;// 设置有效期为30天/或者从配置中读取
+		simpleCookie.setMaxAge(maxAge);
+		simpleCookie.setName("rememberMe-ehcache");
+		return simpleCookie;
+	}
+
+	/**
+	 * shiro session的管理
+	 */
+	@Bean
+	public DefaultWebSessionManager sessionManager() {
+		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+		sessionManager.setGlobalSessionTimeout(30 * 60 * 1000);// 30分钟
+		// 设置sessionDao对session查询，在查询在线用户service中用到了
+		sessionManager.setSessionDAO(sessionDAO());
+		// 设置在cookie中的sessionId名称
+		sessionManager.setSessionIdCookie(rememberMeCookie());
+		return sessionManager;
+	}
+
+	@Bean
+	public SessionDAO sessionDAO() {
+		return new MemorySessionDAO();
+	}
+
+	/**
+	 * CookieRememberMeManager
+	 * 
+	 */
+	public CookieRememberMeManager rememberMeManager() {
+		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+		cookieRememberMeManager.setCookie(rememberMeCookie());
+		cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+		return cookieRememberMeManager;
+	}
+
+	/**
+	 * ShiroFilterFactoryBean  
+	 * Shiro过滤器，针对IP地址进行拦截是否需要对应权限
 	 */
 	@Bean
 	public ShiroFilterFactoryBean getShiroFilterFactoryBean(
@@ -68,7 +127,7 @@ public class ShiroConfig {
 	}
 
 	/**
-	 * DefaultWebSecurityManager
+	 * DefaultWebSecurityManager 默认web安全管理器
 	 */
 	@Bean("securityManager")
 	public DefaultWebSecurityManager getDefaultWebSecurityManager(
@@ -77,9 +136,11 @@ public class ShiroConfig {
 		// 关联ream
 		defaultWebSecurityManager.setRealm(authorizingRealm);
 		// 设置缓存管理器
-//		defaultWebSecurityManager.setCacheManager(cacheManager);
+		defaultWebSecurityManager.setCacheManager(ehCacheManager());
 		// 会话管理器
-		
+
+		// 注入记住我管理器
+		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
 		return defaultWebSecurityManager;
 	}
 
@@ -88,42 +149,27 @@ public class ShiroConfig {
 	 */
 	@Bean("authorizingRealm")
 	public AuthorizingRealm authorizingRealm() {
-		return new AuthorizingRealm() {
-
-			/**
-			 * 执行认证逻辑
-			 */
-			@Override
-			protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
-					throws AuthenticationException {
-				UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
-				String password = null;// 数据库返回密码
-
-				CriterionVo criterionVo = new CriterionVo();
-				criterionVo.addCondition("username", usernamePasswordToken.getUsername());
-				Map<Object, Object> userMap = dynamicSqlService.dynamicSelectUnique("tb_user", criterionVo);
-				if (MapUtils.isEmpty(userMap))// 如果没找到集合对象
-				{
-					return null;// 表示用户不存在
-				}
-				password = Toolkits.defaultString(userMap.get("password"));
-
-				return new SimpleAuthenticationInfo(userMap, password, "");
-			}
-
-			/**
-			 * 执行授权逻辑
-			 */
-			@Override
-			protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-				Subject subject = SecurityUtils.getSubject();
-				System.out.println(Toolkits.toJson(subject.getPrincipal()));
-				;
-				SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-				authorizationInfo.addStringPermission("user:add");
-				return authorizationInfo;
-			}
-		};
+		UserRealm userRealm = new UserRealm();
+		userRealm.setCachingEnabled(true);// 设置开启缓存查询
+		// 启用身份验证缓存开启
+		userRealm.setAuthenticationCachingEnabled(true);
+		// 缓存在ehcache.xml对应的名字
+		userRealm.setAuthenticationCacheName("users");
+		// 设置权限缓存开启
+		userRealm.setAuthorizationCachingEnabled(true);
+		// 权限在缓存中存的名字
+		userRealm.setAuthorizationCacheName("users-perms");
+		return userRealm;
 	}
+
+	/**
+	 * 开启shiro aop注解支持.使用代理方式;所以需要开启代码支持;
+	 */
+//    @Bean
+//    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
+//        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+//        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+//        return authorizationAttributeSourceAdvisor;
+//    }
 
 }
