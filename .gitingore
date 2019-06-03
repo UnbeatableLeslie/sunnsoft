@@ -1,6 +1,10 @@
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+ 
+### STS ###
 .settings
 *.class
-*/target/classes/*
 *.classpath
 *.project
 *.springBeans
+*/target/classes/*
