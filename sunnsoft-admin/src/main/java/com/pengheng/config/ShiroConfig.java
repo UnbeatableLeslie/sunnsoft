@@ -102,14 +102,20 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 
 		/**
-		 * Shiro内置过滤器，可以实现权限相关拦截 常用过滤器： anon:无需认证（登录）可以访问 authc:必须认证才可以访问
-		 * user:如果使用rememberme的功能可以直接访问 perms:必须得到资源权限才可以访问 role:必须得到角色权限才可以访问
+		 * Shiro内置过滤器，可以实现权限相关拦截 常用过滤器： 
+		 * anon:无需认证（登录）可以访问 
+		 * authc:必须认证才可以访问
+		 * user:如果使用rememberme的功能可以直接访问 
+		 * perms:必须得到资源权限才可以访问 
+		 * role:必须得到角色权限才可以访问
 		 */
 
 		// 设置需要拦截的路径
 		Map<String, String> filterChain = new HashMap<>();
-		//设置登出拦截
-		filterChain.put("logout", "logout");
+		// 设置登出拦截
+		filterChain.put("/logout", "anon");
+		// 登录后就可以直接访问
+		filterChain.put("/test-RMBM", "user");
 		// 拦截指定方法
 		filterChain.put("/demo/list", "authc");
 		// 拦截授权
@@ -124,7 +130,8 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChain);
 
 		// 设置拦截返回跳转的路径
-		shiroFilterFactoryBean.setLoginUrl("/demo/error");
+		shiroFilterFactoryBean.setLoginUrl("/demo/error");//登录失败跳转页面
+//		shiroFilterFactoryBean.setSuccessUrl("/");//登录成功跳转页面
 		shiroFilterFactoryBean.setUnauthorizedUrl("/demo/unauth");// 未授权跳转页面
 		return shiroFilterFactoryBean;
 	}

@@ -57,4 +57,12 @@ public class LoginController extends BaseController{
 		return new ResultVoSuccess("登录成功");
 		
 	}
+	
+
+	@RequestMapping("/logout")
+	public ResultVo logout() {
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return new ResultVoSuccess("登出成功");
+	}
 }

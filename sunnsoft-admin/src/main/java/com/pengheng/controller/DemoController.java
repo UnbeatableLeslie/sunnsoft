@@ -83,4 +83,9 @@ public class DemoController extends BaseController {
 	public Object unauth(Model model) {
 		return "未授权";
 	}
+	
+	@RequestMapping("/test-RMBM")
+	public Object rememberMe() {
+		return "jizhuwo";
+	}
 }
