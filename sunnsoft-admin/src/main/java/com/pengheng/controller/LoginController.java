@@ -34,7 +34,7 @@ public class LoginController extends BaseController{
 		Map<Object,Object> paramMap = getParameterMap(model);
 		String username = Toolkits.defaultString(paramMap.get("username"));
 		String password = Toolkits.defaultString(paramMap.get("password"));
-		String session_captcha = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		String session_captcha = Toolkits.defaultString(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
 		String captcha = request.getParameter("captcha");
 		if (!session_captcha.equals(captcha)) {
 			return new ResultVoFailure("验证码错误");
