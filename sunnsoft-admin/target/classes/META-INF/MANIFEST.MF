@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: sunnsoft-admin
 Implementation-Version: 1.0
-Built-By: 彭恒
+Built-By: admin
 Implementation-Vendor-Id: com.sunnsoft
-Build-Jdk: 1.8.0_162
+Build-Jdk: 1.8.0_131
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/sunnsoft/sunnsoft-admin
 Created-By: Maven Integration for Eclipse
