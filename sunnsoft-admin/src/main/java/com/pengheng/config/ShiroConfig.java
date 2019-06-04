@@ -56,7 +56,7 @@ public class ShiroConfig {
 		SimpleCookie simpleCookie = new SimpleCookie();
 		int maxAge = 60 * 60 * 24 * 30;// 设置有效期为30天/或者从配置中读取
 		simpleCookie.setMaxAge(maxAge);
-		simpleCookie.setName("rememberMe-ehcache");
+		simpleCookie.setName("rememberMe");
 		simpleCookie.setHttpOnly(true);//设置只能http方式防止xss攻击
 		simpleCookie.setPath("/");
 		return simpleCookie;
@@ -78,11 +78,12 @@ public class ShiroConfig {
 	@Bean
 	public DefaultWebSessionManager sessionManager() {
 		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-		sessionManager.setGlobalSessionTimeout(1 * 60 * 1000);// 30分钟
+		sessionManager.setGlobalSessionTimeout(30 * 60 * 1000);// 30分钟
 		// 设置sessionDao对session查询，在查询在线用户service中用到了
 		sessionManager.setSessionDAO(sessionDAO());
 		// 设置在cookie中的sessionId名称
 		sessionManager.setSessionIdCookie(rememberMeCookie());
+        sessionManager.setDeleteInvalidSessions(true);//是否删除过期session
 		return sessionManager;
 	}
 
@@ -117,7 +118,7 @@ public class ShiroConfig {
 		// 登录后就可以直接访问
 		filterChain.put("/test-RMBM", "user");
 		// 拦截指定方法
-		filterChain.put("/demo/list", "authc");
+		filterChain.put("/demo/list", "user");
 		// 拦截授权
 		// 通过加载数据库设置方法需要的权限
 		filterChain.put("/demo/add", "perms[user:add]");
@@ -147,11 +148,13 @@ public class ShiroConfig {
 		defaultWebSecurityManager.setRealm(authorizingRealm);
 		// 设置缓存管理器
 		defaultWebSecurityManager.setCacheManager(ehCacheManager());
+//		// 设置SessionManager
+//		defaultWebSecurityManager.setSessionManager(sessionManager());
 		// 注入记住我管理器
 		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
 		return defaultWebSecurityManager;
 	}
-
+	
 	/**
 	 * Realm
 	 */

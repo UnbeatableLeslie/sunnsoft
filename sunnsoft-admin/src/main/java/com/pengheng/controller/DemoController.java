@@ -65,11 +65,10 @@ public class DemoController extends BaseController {
 
 	@RequestMapping("/demo/list")
 	public Object list(Model model) {
-		System.out.println(1/0);
 		Map<Object, Object> parameterMap = getParameterMap(model);
 		System.out.println(Toolkits.toJson(parameterMap));
 		PageHelper.startPage(7, 5);
-		List list = dynamicSqlService.dynamicSelect("infra_invite_tbl");
+		List list = dynamicSqlService.dynamicSelect("tb_user");
 		return list;
 
 	}
