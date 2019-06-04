@@ -12,3 +12,4 @@ Shiro+Redis 实现session共享功能，支持水平扩展
 Excel解析公用方法      easyexcel  / easypoi 选择一个
 国际化支持		参考：https://blog.csdn.net/mr_zhangs/article/details/79788618
 swagger2功能（待定）
+ 
