@@ -1,6 +1,6 @@
 logging:  level:    com.pengheng.mapper : debug
 
-spring:  devtools:    remote:      restart:        enabled: true
+spring:  redis:    host: 192.168.0.103    port: 6379  devtools:    remote:      restart:        enabled: true
   datasource:
     username: root
     password: root
