@@ -6,7 +6,9 @@ ManuelTransaction手动事务控制处理工具类 （已完成）
 全局日志控制
 Shiro 安全验证功能  （记住我没实现）
 Shiro ehcache 缓存设置，保存权限信息避免反复查询数据库  （已完成）
-Shiro+Redis 实现session共享功能，支持水平扩展
+SpringSession + Redis 实现session共享功能，支持水平扩展  
+    https://www.cnblogs.com/fengli9998/p/7881331.html
+    https://www.cnblogs.com/shyroke/p/8039430.html
 定时任务的动态添加暂停删除功能 
 文件上传公用方法	
 Excel解析公用方法      easyexcel  / easypoi 选择一个
