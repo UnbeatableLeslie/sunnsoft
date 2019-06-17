@@ -3,19 +3,44 @@ package com.pengheng.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ShiroConfig {
+	@Bean
+	public SimpleCookie rememberMeCookie() {
+		// System.out.println("ShiroConfiguration.rememberMeCookie()");
+		// 这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+		SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+		// <!-- 记住我cookie生效时间30天 ,单位秒;-->
+		simpleCookie.setMaxAge(259200);
+		return simpleCookie;
+	}
+
+	@Bean
+	public CookieRememberMeManager rememberMeManager() {
+		// System.out.println("ShiroConfiguration.rememberMeManager()");
+		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+		cookieRememberMeManager.setCookie(rememberMeCookie());
+		// rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+		cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+		return cookieRememberMeManager;
+	}
 
 	/**
-	 * ShiroFilterFactoryBean  
-	 * Shiro过滤器，针对IP地址进行拦截是否需要对应权限
+	 * ShiroFilterFactoryBean Shiro过滤器，针对IP地址进行拦截是否需要对应权限
 	 */
 	@Bean
 	public ShiroFilterFactoryBean shiroFilterFactoryBean() {
@@ -42,8 +67,8 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChain);
 
 		// 设置拦截返回跳转的路径
-		shiroFilterFactoryBean.setLoginUrl("/demo/error");//登录失败跳转页面
-//		shiroFilterFactoryBean.setSuccessUrl("/");//登录成功跳转页面
+		shiroFilterFactoryBean.setLoginUrl("/demo/error");// 登录失败跳转页面
+		// shiroFilterFactoryBean.setSuccessUrl("/");//登录成功跳转页面
 		shiroFilterFactoryBean.setUnauthorizedUrl("/demo/unauth");// 未授权跳转页面
 		return shiroFilterFactoryBean;
 	}
@@ -56,35 +81,27 @@ public class ShiroConfig {
 		DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
 		// 关联ream
 		defaultWebSecurityManager.setRealm(authorizingRealm());
+		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());  
 		return defaultWebSecurityManager;
 	}
-	
+
 	@Bean
 	public AuthorizingRealm authorizingRealm() {
 		UserRealm userRealm = new UserRealm();
-		userRealm.setCredentialsMatcher(hashedCredentialsMatcher());//设置密码加密规则
-//		userRealm.setCredentialsMatcher(new CredentialsMatcher() {
-//			@Override
-//			public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-//				UsernamePasswordToken userToken = (UsernamePasswordToken) token;
-//				//要验证的明文密码
-//	            String plaintext = new String(userToken.getPassword());
-//	            //数据库中的加密后的密文
-//	            String hashed = info.getCredentials().toString();
-//	            return BCrypt.checkpw(plaintext, hashed);
-//			}
-//		});
-		
+		// userRealm.setCredentialsMatcher(hashedCredentialsMatcher());//设置密码加密规则
+		userRealm.setCredentialsMatcher(new CredentialsMatcher() {
+			@Override
+			public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
+				UsernamePasswordToken userToken = (UsernamePasswordToken) token;
+				// 要验证的明文密码
+				String plaintext = new String(userToken.getPassword());
+				// 数据库中的加密后的密文
+				String hashed = info.getCredentials().toString();
+				return BCrypt.checkpw(plaintext, hashed);
+			}
+		});
+
 		return userRealm;
 	}
-	 //密码管理
-	@Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-        credentialsMatcher.setHashAlgorithmName("md5"); //散列算法使用md5
-//        credentialsMatcher.setHashIterations(2);        //散列次数，2表示md5加密两次
-        credentialsMatcher.setStoredCredentialsHexEncoded(true);//启用十六进制存储
-        return credentialsMatcher;
-    }
 
 }
