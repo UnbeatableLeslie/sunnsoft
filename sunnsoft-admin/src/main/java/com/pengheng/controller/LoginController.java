@@ -3,6 +3,7 @@ package com.pengheng.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -43,11 +44,14 @@ public class LoginController extends BaseController{
 		
 		//获取subject对象
 		Subject subject = SecurityUtils.getSubject();
+		System.out.println(subject.getSession());
 		//封装用户数据
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberme);
 		
 		try {
 			subject.login(token);//执行Shiro配置的拦截方法
+			System.out.println(subject.getSession());
+			
 		} catch (UnknownAccountException e) {//登录失败：用户名不存在
 			e.printStackTrace();
 			return new ResultVoFailure("用户名不存在");
@@ -57,7 +61,6 @@ public class LoginController extends BaseController{
 		return new ResultVoSuccess("登录成功");
 		
 	}
-	
 
 	@RequestMapping("/logout")
 	public ResultVo logout() {
@@ -65,4 +68,5 @@ public class LoginController extends BaseController{
 		subject.logout();
 		return new ResultVoSuccess("登出成功");
 	}
+	
 }

@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageHelper;
+import com.pengheng.config.RedisUtils;
 import com.pengheng.core.BaseController;
 import com.pengheng.model.CriterionVo;
 import com.pengheng.service.IDynamicSqlService;
@@ -22,7 +26,8 @@ public class DemoController extends BaseController {
 
 	@Autowired
 	private IDynamicSqlService dynamicSqlService;
-
+	@Autowired
+    private RedisUtils redisUtils;
 
 	@RequestMapping("/demo/{id}")
 	public Map<Object, Object> getDepartment(@PathVariable("id") Integer id) {
@@ -67,7 +72,7 @@ public class DemoController extends BaseController {
 	public Object list(Model model) {
 		Map<Object, Object> parameterMap = getParameterMap(model);
 		System.out.println(Toolkits.toJson(parameterMap));
-		PageHelper.startPage(7, 5);
+//		PageHelper.startPage(7, 5);
 		List list = dynamicSqlService.dynamicSelect("tb_user");
 		return list;
 
@@ -86,5 +91,23 @@ public class DemoController extends BaseController {
 	@RequestMapping("/test-RMBM")
 	public Object rememberMe() {
 		return "jizhuwo";
+	}
+	
+	@Value("${server.port}")
+	Integer port;
+
+	@GetMapping("/set")
+	public String set(HttpSession session) {
+		session.setAttribute("user", "javaboy");
+		return String.valueOf(port);
+	}
+
+	@GetMapping("/get")
+	public String get(HttpSession session) {
+		return session.getAttribute("user") + ":" + port;
+	}
+	
+	public String testRedis() {
+		return "";
 	}
 }
