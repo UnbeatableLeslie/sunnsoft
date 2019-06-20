@@ -57,7 +57,7 @@ public class UserRealm extends AuthorizingRealm {
 		System.out.println(Toolkits.toJson(subject.getPrincipal()));
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		Map<Object,Object> userMap = (Map<Object, Object>) subject.getPrincipal();
-		//查询用户的所有权限 
+		//查询用户的所有权限
 		StringBuffer sb = new StringBuffer();
 		sb.append("select sys_menu.perms from sys_menu"); 
 		sb.append(" left join sys_role_menu on sys_menu.id = sys_role_menu.menu_id ");

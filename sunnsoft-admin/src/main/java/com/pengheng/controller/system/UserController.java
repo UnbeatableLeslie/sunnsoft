@@ -59,7 +59,7 @@ public class UserController extends BaseController {
 		return new ResultVoSuccess("修改成功");
 	}
 
-	@RequiresPermissions("system:user:delete") 
+	@RequiresPermissions("system:user:delete")
 	@RequestMapping("/delete")
 	public ResultVo deleteUser(Model model,HttpServletRequest request,HttpServletResponse response) {
 		Map<Object,Object> paramMap = getParameterMap(model);
