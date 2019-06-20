@@ -45,10 +45,10 @@ public class UserController extends BaseController {
 		criterionVo.addNormalResult("update_time",new Date());
 		criterionVo.addNormalResult("remark","xxxx");
 		String id = dynamicSqlService.dynamicInsert("sys_user", criterionVo);
-		System.out.println(id);
 		return new ResultVoSuccess("添加成功");
 	}
-	
+
+	@RequiresPermissions("system:user:update")
 	@RequestMapping("/update")
 	public ResultVo updateUser(Model model,HttpServletRequest request,HttpServletResponse response) {
 		Map<Object,Object> paramMap = getParameterMap(model);
@@ -58,21 +58,20 @@ public class UserController extends BaseController {
 		int dynamicUpdate = dynamicSqlService.dynamicUpdate("sys_user", criterionVo);
 		return new ResultVoSuccess("修改成功");
 	}
-	
+
+	@RequiresPermissions("system:user:delete")
 	@RequestMapping("/delete")
 	public ResultVo deleteUser(Model model,HttpServletRequest request,HttpServletResponse response) {
 		Map<Object,Object> paramMap = getParameterMap(model);
 		CriterionVo criterionVo = new CriterionVo();
 		criterionVo.addCondition("id", paramMap.get("id"));
 		int dynamicDelete = dynamicSqlService.dynamicDelete("sys_user", criterionVo);
-		return new ResultVoSuccess("修改成功");
+		return new ResultVoSuccess("删除成功");
 	}
-	
+
+	@RequiresPermissions("system:user:list")
 	@RequestMapping("/list")
 	public ResultVo listUser(Model model,HttpServletRequest request,HttpServletResponse response) {
-		Map<Object,Object> paramMap = getParameterMap(model);
-		CriterionVo criterionVo = new CriterionVo();
-		criterionVo.addCondition("id", paramMap.get("id"));
 		List<Map<Object, Object>> dynamicSelect = dynamicSqlService.dynamicSelect("sys_user");
 		return new ResultVoSuccess("查询成功",dynamicSelect);
 	}
