@@ -19,7 +19,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 @Configuration
 public class DruidConfig {
 
-    @ConfigurationProperties(prefix = "spring.datasource")
+	@ConfigurationProperties(prefix = "spring.datasource")
     @Bean
     public DataSource druid(){
        return  new DruidDataSource();
@@ -28,8 +28,8 @@ public class DruidConfig {
     //配置Druid的监控
     //1、配置一个管理后台的Servlet
     @Bean
-    public ServletRegistrationBean statViewServlet(){
-        ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+    public ServletRegistrationBean<StatViewServlet> statViewServlet(){
+        ServletRegistrationBean<StatViewServlet> bean = new ServletRegistrationBean<StatViewServlet>(new StatViewServlet(), "/druid/*");
         Map<String,String> initParams = new HashMap<>();
 
         initParams.put("loginUsername","admin");
@@ -44,8 +44,8 @@ public class DruidConfig {
 
     //2、配置一个web监控的filter
     @Bean
-    public FilterRegistrationBean webStatFilter(){
-        FilterRegistrationBean bean = new FilterRegistrationBean();
+    public FilterRegistrationBean<WebStatFilter> webStatFilter(){
+        FilterRegistrationBean<WebStatFilter> bean = new FilterRegistrationBean<WebStatFilter>();
         bean.setFilter(new WebStatFilter());
 
         Map<String,String> initParams = new HashMap<>();

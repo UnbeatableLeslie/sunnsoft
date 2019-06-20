@@ -45,6 +45,7 @@ public class UserController extends BaseController {
 		criterionVo.addNormalResult("update_time",new Date());
 		criterionVo.addNormalResult("remark","xxxx");
 		String id = dynamicSqlService.dynamicInsert("sys_user", criterionVo);
+		System.out.println(id);
 		return new ResultVoSuccess("添加成功");
 	}
 

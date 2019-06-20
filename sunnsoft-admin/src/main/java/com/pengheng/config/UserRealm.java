@@ -65,7 +65,7 @@ public class UserRealm extends AuthorizingRealm {
 		sb.append(" left join sys_user_role on sys_role.id = sys_user_role.role_id"); 
 		sb.append(" left join sys_user on sys_user_role.user_id = sys_user.id"); 
 		sb.append(" where sys_user.id = "+Toolkits.defaultString(userMap.get("id"))+" and sys_menu.perms <> ''"); 
-		List<Map<Object, Object>> permsList = dynamicSqlService.dynamicSelect("("+sb+") as tbl");
+		List<Map<Object, Object>> permsList = dynamicSqlService.dynamicSelect("("+sb+") as tb");
 		for (Map<Object, Object> map : permsList) {
 			authorizationInfo.addStringPermission(Toolkits.defaultString(map.get("perms")));
 		}
