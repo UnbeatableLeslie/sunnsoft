@@ -29,6 +29,12 @@ import com.pengheng.util.Toolkits;
 public class LoginController extends BaseController{
 
 
+	/**
+	 * 登录方法
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/login")
 	public ResultVo login(Model model,HttpServletRequest request) {
 		Map<Object,Object> paramMap = getParameterMap(model);
@@ -57,12 +63,33 @@ public class LoginController extends BaseController{
 		return new ResultVoSuccess("登录成功");
 		
 	}
-	
 
+	/**
+	 * 登出方法
+	 * @return
+	 */
 	@RequestMapping("/logout")
 	public ResultVo logout() {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
 		return new ResultVoSuccess("登出成功");
+	}
+
+	/**
+	 * shiro过滤未登录跳转提示
+	 * @return
+	 */
+	@RequestMapping("/unlogin")
+	public ResultVo unlogin() {
+		return new ResultVo("403","用户未登录");
+	}
+
+	/**
+	 * shiro过滤无权限跳转
+	 * @return
+	 */
+	@RequestMapping("/unauth")
+	public ResultVo unauth() {
+		return new ResultVoSuccess("403","用户无权限");
 	}
 }

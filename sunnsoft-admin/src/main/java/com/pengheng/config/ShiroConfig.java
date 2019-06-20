@@ -49,26 +49,29 @@ public class ShiroConfig {
 		// 设置需要拦截的路径
 		Map<String, String> filterChain = new HashMap<>();
 		// 登录后就可以直接访问
-		filterChain.put("/test-RMBM", "user");
+//		filterChain.put("/test-RMBM", "user");
 		// 拦截指定方法
-		filterChain.put("/demo/list", "user");
+//		filterChain.put("/demo/list", "user");
 		// 拦截授权
 //		// 通过加载数据库设置方法需要的权限
 //		filterChain.put("/demo/add", "perms[user:add]");
 		// 设置登出拦截
 		filterChain.put("/logout", "anon");
 		// 过滤指定连接不用登录
-		filterChain.put("/demo/error", "anon");
+		filterChain.put("/index.html", "anon");
 		filterChain.put("/kaptchaGet", "anon");
+		filterChain.put("/unlogin", "anon");
+		filterChain.put("/unauth", "anon");
 		filterChain.put("/login", "anon");
+		filterChain.put("/", "anon");
 
 		filterChain.put("/**", "authc");// 拦截所有方法
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChain);
 
 		// 设置拦截返回跳转的路径
-		shiroFilterFactoryBean.setLoginUrl("/demo/error");// 登录失败跳转页面
+		shiroFilterFactoryBean.setLoginUrl("/unlogin");// 未登录跳转页面
 		// shiroFilterFactoryBean.setSuccessUrl("/");//登录成功跳转页面
-		shiroFilterFactoryBean.setUnauthorizedUrl("/demo/unauth");// 未授权跳转页面
+		shiroFilterFactoryBean.setUnauthorizedUrl("/unauth");// 未授权跳转页面
 		return shiroFilterFactoryBean;
 	}
 
