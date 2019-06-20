@@ -87,4 +87,25 @@ public class DemoController extends BaseController {
 	public Object rememberMe() {
 		return "jizhuwo";
 	}
+	
+	public void add() {
+		CriterionVo criterionVo = new CriterionVo();
+		criterionVo.addNormalResult("id","1");
+		criterionVo.addNormalResult("name","test");
+		dynamicSqlService.dynamicInsert("tb_user_tbl", criterionVo);
+		
+		Map<Object, Object> dynamicSelectUnique = dynamicSqlService.dynamicSelectUnique("tb_user_tbl");
+		
+		criterionVo = new CriterionVo();
+		criterionVo.addNormalResult("name as user_name");
+		Map<Object, Object> dynamicSelectUnique2 = dynamicSqlService.dynamicSelectUnique("tb_user_tbl",criterionVo);
+		
+		List<Map<Object,Object>> dynamicSelect = dynamicSqlService.dynamicSelect("tb_user_tbl");
+		dynamicSelectUnique.put("dynamicSelect", dynamicSelect);
+		
+		Toolkits.toJson(dynamicSelectUnique2);
+		
+		String defaultString = Toolkits.defaultString(dynamicSelectUnique.get("name"),"123");
+	}
+	
 }

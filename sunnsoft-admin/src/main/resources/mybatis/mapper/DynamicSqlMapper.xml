@@ -20,7 +20,7 @@
         </foreach>
     </insert>
 
-    <insert id="dynamicInsertWithoutSelectKey"
+    <insert id="dynamicInsertWithoutSelectKey" useGeneratedKeys="true" keyProperty="id"
             parameterType="java.util.HashMap">
         <![CDATA[insert into ${tableName}]]>
         <foreach collection="resultList" index="key" item="item" open="(" close=")" separator=",">

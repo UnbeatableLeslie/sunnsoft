@@ -20,7 +20,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 //@Aspect
 @Configuration
 public class TransactionConfig {
-     private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.pengheng.controller.**.*(..))";
+     private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.pengheng.service.**.*(..))";
  
         @Autowired
         private PlatformTransactionManager transactionManager;

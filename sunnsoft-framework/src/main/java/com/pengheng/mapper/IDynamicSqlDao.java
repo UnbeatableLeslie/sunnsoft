@@ -16,7 +16,7 @@ public interface IDynamicSqlDao {
 
      int dynamicDelete(Map<Object, Object> paramMap);
 
-     List<Object> dynamicSelect(Map<Object, Object> paramMap);
+     List<Map<Object,Object>> dynamicSelect(Map<Object, Object> paramMap);
 
      String dynamicGetSequence(Map<Object, Object> paramMap);
 

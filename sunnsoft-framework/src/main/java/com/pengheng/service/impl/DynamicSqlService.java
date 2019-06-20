@@ -62,9 +62,13 @@ public class DynamicSqlService implements IDynamicSqlService {
         return Toolkits.defaultString(localHashMap.get("id"));
     }
 
-    public void dynamicInsert(String paramString, CriterionVo paramCriterionVo)
+    public String dynamicInsert(String paramString, CriterionVo paramCriterionVo)
     {
-        dynamicInsert(paramString, null, paramCriterionVo);
+    	HashMap<Object,Object> localHashMap = new HashMap<Object,Object>();
+        localHashMap.put("tableName", paramString);
+        localHashMap.put("resultList", paramCriterionVo.getResultList());
+        this.dynamicSqlDao.dynamicInsertWithoutSelectKey(localHashMap);
+        return Toolkits.defaultString(localHashMap.get("id"));
     }
 
     public int dynamicUpdate(String paramString, CriterionVo paramCriterionVo)
@@ -84,12 +88,12 @@ public class DynamicSqlService implements IDynamicSqlService {
         return this.dynamicSqlDao.dynamicDelete(localHashMap);
     }
     
-    public List<Object> dynamicSelect(String paramString)
+    public List<Map<Object,Object>> dynamicSelect(String paramString)
     {
         return dynamicSelect(paramString,new CriterionVo());
     }
 
-    public List<Object> dynamicSelect(String paramString, CriterionVo paramCriterionVo)
+    public List<Map<Object,Object>> dynamicSelect(String paramString, CriterionVo paramCriterionVo)
     {
         HashMap<Object,Object> localHashMap = new HashMap<Object,Object>();
         localHashMap.put("tableName", paramString);
@@ -99,6 +103,10 @@ public class DynamicSqlService implements IDynamicSqlService {
         localHashMap.put("resultList", str);
         localHashMap.put("conditionList", paramCriterionVo.getConditionList());
         return this.dynamicSqlDao.dynamicSelect(localHashMap);
+    }
+    public Map<Object,Object> dynamicSelectUnique(String paramString)
+    {
+    	return dynamicSelectUnique(paramString, new CriterionVo());
     }
 
     public Map<Object,Object> dynamicSelectUnique(String paramString, CriterionVo paramCriterionVo)
@@ -110,7 +118,7 @@ public class DynamicSqlService implements IDynamicSqlService {
             str = paramCriterionVo.serializeColunmName();
         localHashMap.put("resultList", str);
         localHashMap.put("conditionList", paramCriterionVo.getConditionList());
-        List<Object> list = this.dynamicSqlDao.dynamicSelect(localHashMap);
+        List<Map<Object,Object>> list = this.dynamicSqlDao.dynamicSelect(localHashMap);
         if(CollectionUtils.isEmpty(list)){
         	return null;
         }else {

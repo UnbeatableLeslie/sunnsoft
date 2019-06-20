@@ -10,7 +10,7 @@ public interface IDynamicSqlService {
 
     int dynamicInsertWithEffect(String paramString1, String paramString2, CriterionVo criterionVo);
 
-    void dynamicInsert(String paramString, CriterionVo criterionVo);
+    String dynamicInsert(String paramString, CriterionVo criterionVo);
 
     int dynamicInsertWithEffect(String paramString, CriterionVo criterionVo);
 
@@ -18,9 +18,11 @@ public interface IDynamicSqlService {
 
     int dynamicDelete(String paramString, CriterionVo criterionVo);
 
-    List<Object> dynamicSelect(String paramString);
+    List<Map<Object,Object>> dynamicSelect(String paramString);
     
-    List<Object> dynamicSelect(String paramString, CriterionVo criterionVo);
+    List<Map<Object,Object>> dynamicSelect(String paramString, CriterionVo criterionVo);
+    
+    Map<Object,Object> dynamicSelectUnique(String paramString);
 
     Map<Object,Object> dynamicSelectUnique(String paramString, CriterionVo criterionVo);
 

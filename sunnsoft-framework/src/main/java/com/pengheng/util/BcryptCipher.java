@@ -55,4 +55,9 @@ public class BcryptCipher {
 		return bcryptResult;
 	}
 	
+	public static void main(String[] args) {
+		Map<String, String> bcrypt = BcryptCipher.Bcrypt("123456");
+		System.out.println(Toolkits.toJson(bcrypt));
+	}
+	
 }
