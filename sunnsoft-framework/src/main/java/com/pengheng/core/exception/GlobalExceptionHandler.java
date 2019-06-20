@@ -1,16 +1,7 @@
 package com.pengheng.core.exception;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.springframework.beans.ConversionNotSupportedException;
-import org.springframework.beans.TypeMismatchException;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +15,12 @@ import com.pengheng.util.Toolkits;
 public class GlobalExceptionHandler {
 
 	private static Logger log = Logger.getLogger(GlobalExceptionHandler.class);
-
+	
+	@ExceptionHandler(ApplicationException.class)
+	public ResultVo ApplicationExceptionHandler(ApplicationException ex) {
+		return new ResultVo(Toolkits.defaultString(ex.getCode()),ex.getMessage());
+	}
+	
 	@ExceptionHandler(UnauthorizedException.class)
 	public ResultVo UnauthorizedExceptionHandler(UnauthorizedException ex) {
 		log.error(ex);
