@@ -2,16 +2,14 @@ package com.pengheng.core.exception;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
 import com.pengheng.util.Toolkits;
 
-@ControllerAdvice
-@ResponseBody
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 	private static Logger log = Logger.getLogger(GlobalExceptionHandler.class);
