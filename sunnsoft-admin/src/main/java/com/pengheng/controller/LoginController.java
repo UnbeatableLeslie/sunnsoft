@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Constants;
 import com.pengheng.core.BaseController;
+import com.pengheng.core.annotation.RedisLock;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
 import com.pengheng.model.ResultVoSuccess;
@@ -28,16 +29,19 @@ import com.pengheng.util.Toolkits;
 @RestController
 public class LoginController extends BaseController{
 
-
 	/**
 	 * 登录方法
 	 * @param model
 	 * @param request
 	 * @return
+	 * @throws Exception 
 	 */
+	@RedisLock
 	@RequestMapping("/login")
-	public ResultVo login(Model model,HttpServletRequest request) {
+	public ResultVo login(Model model,HttpServletRequest request) throws Exception {
+//
 		Map<Object,Object> paramMap = getParameterMap(model);
+		
 		String username = Toolkits.defaultString(paramMap.get("username"));
 		String password = Toolkits.defaultString(paramMap.get("password"));
 		boolean rememberme = Boolean.parseBoolean(Toolkits.defaultString(paramMap.get("rememberme")));
@@ -61,6 +65,7 @@ public class LoginController extends BaseController{
 			return new ResultVoFailure("密码错误");
 		}
 		return new ResultVoSuccess("登录成功");
+//		return invokeService;
 		
 	}
 

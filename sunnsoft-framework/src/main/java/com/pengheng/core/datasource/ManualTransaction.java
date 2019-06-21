@@ -43,11 +43,11 @@ public class ManualTransaction {
   public ManualTransaction(int paramInt1, int paramInt2) { this(null, paramInt1, paramInt2); }
   
   public ManualTransaction(String paramString, int paramInt1, int paramInt2) {
-    if (DefaultContainer.getSpringContext() != null) {
+    if (DefaultContainer.getApplicationContext() != null) {
       if (Toolkits.defaultString(paramString).equals(""))
         paramString = "dataSourceTransactionManager.default"; 
       if (this.dataSourceTransactionManager == null)
-        this.dataSourceTransactionManager = (DataSourceTransactionManager)DefaultContainer.getSpringContext().getBean(paramString); 
+        this.dataSourceTransactionManager = (DataSourceTransactionManager)DefaultContainer.getBean(paramString); 
       DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
       defaultTransactionDefinition.setPropagationBehavior(paramInt1);
       defaultTransactionDefinition.setIsolationLevel(paramInt2);
