@@ -8,19 +8,19 @@ public class ResultVoSuccess  extends ResultVo{
         super(ReplyCode.ALL_SUCCESS.getCode(), ReplyCode.ALL_SUCCESS.getTxtCode());
     }
 
-    public ResultVoSuccess(String paramString)
+    public ResultVoSuccess(String msg)
     {
 
-        super(ReplyCode.ALL_SUCCESS.getCode(),paramString);
+        super(ReplyCode.ALL_SUCCESS.getCode(),msg);
     }
 
-    public ResultVoSuccess(String paramString, Object paramObject)
+    public ResultVoSuccess(String msg, Object data)
     {
-        super(ReplyCode.ALL_SUCCESS.getCode(), paramString, paramObject);
+        super(ReplyCode.ALL_SUCCESS.getCode(), msg, data);
     }
 
-    public ResultVoSuccess(String paramString, Object paramObject1, Object paramObject2)
+    public ResultVoSuccess(String msg, Object data, Object info)
     {
-        super(ReplyCode.ALL_SUCCESS.getCode(), paramString, paramObject1, paramObject2);
+        super(ReplyCode.ALL_SUCCESS.getCode(), msg, data, info);
     }
 }

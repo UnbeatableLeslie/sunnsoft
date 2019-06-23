@@ -9,19 +9,19 @@ public class ResultVoFailure extends ResultVo{
         super(ReplyCode.ALL_FAILURE.getCode(), ReplyCode.ALL_FAILURE.getTxtCode());
     }
 
-    public ResultVoFailure(String paramString)
+    public ResultVoFailure(String msg)
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), paramString);
+        super(ReplyCode.ALL_FAILURE.getCode(), msg);
     }
 
-    public ResultVoFailure(String paramString, Object paramObject)
+    public ResultVoFailure(String msg, Object data)
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), paramString, paramObject);
+        super(ReplyCode.ALL_FAILURE.getCode(), msg, data);
     }
 
-    public ResultVoFailure(String paramString, Object paramObject, Object paramObject2)
+    public ResultVoFailure(String msg, Object data, Object info)
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), paramString, paramObject, paramObject2);
+        super(ReplyCode.ALL_FAILURE.getCode(), msg, data, info);
     }
 
 

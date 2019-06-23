@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 public final class CriterionVo {
 
-    private List<Object> resultList = new ArrayList();
-    private List<Object> conditionList = new ArrayList();
+    private List<Object> resultList = new ArrayList<Object>();
+    private List<Object> conditionList = new ArrayList<Object>();
 
     public final void clear()
     {
@@ -24,53 +24,52 @@ public final class CriterionVo {
         return this.conditionList;
     }
 
-    public final void addResult(String paramString, Object paramObject, boolean paramBoolean)
+    public final void addResult(String columnName, Object columnValue, boolean paramBoolean)
     {
         String str = "";
-        if (((paramObject instanceof Long)) || ((paramObject instanceof Integer)) || ((paramObject instanceof Float)) || ((paramObject instanceof Double)) || ((paramObject instanceof Byte)))
-            str = String.valueOf(paramObject);
-        this.resultList.add(new ColumnVo(paramString, str.equals("") ? paramObject : paramBoolean ? "_primarykey_" : str));
+        if (((columnValue instanceof Long)) || ((columnValue instanceof Integer)) || ((columnValue instanceof Float)) || ((columnValue instanceof Double)) || ((columnValue instanceof Byte)))
+            str = String.valueOf(columnValue);
+        this.resultList.add(new ColumnVo(columnName, str.equals("") ? columnValue : paramBoolean ? "_primarykey_" : str));
     }
 
-    public final void addNormalResult(String paramString, Object paramObject)
+    public final void addNormalResult(String columnName, Object columnValue)
     {
-        if(paramObject!=null){
-            addResult(paramString, paramObject, false);
+        if(columnValue!=null){
+            addResult(columnName, columnValue, false);
         }
     }
 
-    public final void addNormalResult(String paramString)
+    public final void addNormalResult(String columnName)
     {
-        addResult(paramString, null, false);
+        addResult(columnName, null, false);
     }
 
-    public final void addPrimaryKeyResult(String paramString)
+    public final void addPrimaryKeyResult(String columnName)
     {
-        addResult(paramString, "", true);
+        addResult(columnName, "", true);
     }
 
-    public final void addCondition(String paramString, Object paramObject)
+    public final void addCondition(String columnName, Object columnValue)
     {
-        if(paramObject!=null){
-            this.conditionList.add(new ColumnVo(paramString, paramObject));
+        if(columnValue!=null){
+            this.conditionList.add(new ColumnVo(columnName, columnValue));
         }
     }
 
-    public final void addCondition(String paramString1, String paramString2, Object paramObject)
+    public final void addCondition(String columnName, String operator, Object columnValue)
     {
-        if(paramObject!=null){
-            this.conditionList.add(new ColumnVo(paramString1, paramObject, paramString2));
+        if(columnValue!=null){
+            this.conditionList.add(new ColumnVo(columnName, columnValue, operator));
         }
     }
-
-    public final void addCondition(String paramString1, String paramString2, String paramString3, Object paramObject)
+    public final void addCondition(String linker, String columnName, String operator, Object columnValue)
     {
-        this.conditionList.add(new ColumnVo(paramString2, paramObject, paramString3, paramString1));
+        this.conditionList.add(new ColumnVo(columnName, columnValue, operator, linker));
     }
 
     public final String serializeColunmName()
     {
-        ArrayList localArrayList = new ArrayList();
+        ArrayList<Object> localArrayList = new ArrayList<Object>();
         for (int i = 0; i < this.resultList.size(); i++)
         {
             ColumnVo localColumnVo = (ColumnVo)this.resultList.get(i);

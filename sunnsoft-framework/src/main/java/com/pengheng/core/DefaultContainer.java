@@ -16,7 +16,7 @@ public class DefaultContainer implements ApplicationContextAware {
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
-    	this.applicationContext = applicationContext;
+    	DefaultContainer.applicationContext = applicationContext;
 
         logger.info("ApplicationContext配置成功,applicationContext对象："+applicationContext);
 

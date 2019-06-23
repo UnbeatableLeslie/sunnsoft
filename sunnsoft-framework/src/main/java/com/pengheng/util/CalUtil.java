@@ -26,7 +26,7 @@ public class CalUtil {
 
 	public static String Divide(String paramString1, String paramString2, int paramInt) {
 		if (paramInt < 0)
-			throw new IllegalArgumentException("��������������������");
+			throw new IllegalArgumentException("必须为自然数");
 		if (CompareTo(paramString1, "0") == 0)
 			return "0";
 		BigDecimal bigDecimal1 = new BigDecimal(paramString1);

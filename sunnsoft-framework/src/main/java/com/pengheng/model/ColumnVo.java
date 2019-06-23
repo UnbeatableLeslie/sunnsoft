@@ -12,25 +12,25 @@ public final class ColumnVo implements Serializable {
     private String operator = "=";
     private String linker = "and";
 
-    public ColumnVo(String paramString, Object paramObject)
+    public ColumnVo(String columnName, Object columnValue)
     {
-        setColumnName(paramString);
-        setColumnValue(paramObject);
+        setColumnName(columnName);
+        setColumnValue(columnValue);
     }
 
-    public ColumnVo(String paramString1, Object paramObject, String paramString2)
+    public ColumnVo(String columnName, Object columnValue, String operator)
     {
-        setColumnName(paramString1);
-        setColumnValue(paramObject);
-        setOperator(paramString2);
+        setColumnName(columnName);
+        setColumnValue(columnValue);
+        setOperator(operator);
     }
 
-    public ColumnVo(String paramString1, Object paramObject, String paramString2, String paramString3)
+    public ColumnVo(String columnName, Object columnValue, String operator, String linker)
     {
-        setColumnName(paramString1);
-        setColumnValue(paramObject);
-        setOperator(paramString2);
-        setLinker(paramString3);
+        setColumnName(columnName);
+        setColumnValue(columnValue);
+        setOperator(operator);
+        setLinker(linker);
     }
 
     public String getLinker()
@@ -38,9 +38,9 @@ public final class ColumnVo implements Serializable {
         return this.linker;
     }
 
-    public void setLinker(String paramString)
+    public void setLinker(String linker)
     {
-        this.linker = paramString;
+        this.linker = linker;
     }
 
     public String getOperator()
@@ -48,14 +48,14 @@ public final class ColumnVo implements Serializable {
         return this.operator;
     }
 
-    public void setOperator(String paramString)
+    public void setOperator(String operator)
     {
-        if ("in".equals(paramString))
+        if ("in".equals(operator))
         {
             String[] arrayOfString = StringUtils.split(Toolkits.defaultString(getColumnValue()), ',');
             setColumnValue("'" + StringUtils.join(arrayOfString, "','") + "'");
         }
-        this.operator = paramString;
+        this.operator = operator;
     }
 
     public String getColumnName()
@@ -63,9 +63,9 @@ public final class ColumnVo implements Serializable {
         return this.columnName;
     }
 
-    public void setColumnName(String paramString)
+    public void setColumnName(String columnName)
     {
-        this.columnName = paramString;
+        this.columnName = columnName;
     }
 
     public Object getColumnValue()
@@ -73,8 +73,8 @@ public final class ColumnVo implements Serializable {
         return this.columnValue;
     }
 
-    public void setColumnValue(Object paramObject)
+    public void setColumnValue(Object columnValue)
     {
-        this.columnValue = paramObject;
+        this.columnValue = columnValue;
     }
 }

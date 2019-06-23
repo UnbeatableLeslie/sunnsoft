@@ -12,7 +12,7 @@ public class ResultVo implements Serializable {
     private String code  = "";//返回的code
     private String msg  = ""; //返回的信息
     private Object data  = null;//返回的结果集合
-    private Object info  = new HashMap();//返回的分页集合
+    private Object info  = new HashMap<Object,Object>();//返回的分页集合
     private String timestamp = String.valueOf(System.currentTimeMillis());
     private String signature = "";
     private String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(Long.parseLong(this.timestamp)));
@@ -21,23 +21,23 @@ public class ResultVo implements Serializable {
     {
     }
 
-    public ResultVo(String paramString){
-        this(paramString, "", null, null);
+    public ResultVo(String code){
+        this(code, "", null, null);
     }
 
-    public ResultVo(String paramString1, String paramString2)
+    public ResultVo(String code, String msg)
     {
-        this.code = paramString1;
-        this.msg = paramString2;
+        this.code = code;
+        this.msg = msg;
 
     }
 
-    public ResultVo(String paramString1, String paramString2, Object paramObject1, Object paramObject2)
+    public ResultVo(String code, String msg, Object data, Object info)
     {
-        this.code = paramString1;
-        this.msg = paramString2;
-        this.data = paramObject1;
-        this.info = paramObject2;
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+        this.info = info;
     }
 
     public ResultVo(String paramString1, String paramString2, Object paramObject)

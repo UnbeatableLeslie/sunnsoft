@@ -13,10 +13,9 @@ import java.util.Map;
 public final class Toolkits {
 
 	private static final Logger logger = Logger.getLogger(Toolkits.class);
-	private static final Map<String, String> applicationModules = new HashMap<String, String>();
-	private static final Map<String, String> customServicesAndMethodsRule = new HashMap();
-	private static final Map<Object, Object> onlineUsers = new HashMap();
-	private static final Map<String, String> customDubboServices = new HashMap();
+	private static final Map<String, String> customServicesAndMethodsRule = new HashMap<String, String>();
+	private static final Map<Object, Object> onlineUsers = new HashMap<Object, Object>();
+	private static final Map<String, String> customDubboServices = new HashMap<String, String>();
 
 	public static final String defaultString(Object paramObject) {
 		return defaultString(paramObject, "");

@@ -4,7 +4,6 @@ package com.pengheng.model;
  * enum 枚举
  * ReplyCode 返回信息类
  * code：编码   txtCode：中文解释
- * dubo 2018年4月11日12:44:34
  */
 public enum ReplyCode {
 
