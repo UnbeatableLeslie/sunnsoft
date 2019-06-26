@@ -24,47 +24,52 @@ public final class CriterionVo {
         return this.conditionList;
     }
 
-    public final void addResult(String columnName, Object columnValue, boolean paramBoolean)
+    public final CriterionVo addResult(String columnName, Object columnValue, boolean paramBoolean)
     {
         String str = "";
         if (((columnValue instanceof Long)) || ((columnValue instanceof Integer)) || ((columnValue instanceof Float)) || ((columnValue instanceof Double)) || ((columnValue instanceof Byte)))
             str = String.valueOf(columnValue);
         this.resultList.add(new ColumnVo(columnName, str.equals("") ? columnValue : paramBoolean ? "_primarykey_" : str));
+        return this;
     }
 
-    public final void addNormalResult(String columnName, Object columnValue)
+    public final CriterionVo addNormalResult(String columnName, Object columnValue)
     {
         if(columnValue!=null){
-            addResult(columnName, columnValue, false);
+        	return addResult(columnName, columnValue, false);
         }
+        return this;
     }
 
-    public final void addNormalResult(String columnName)
+    public final CriterionVo addNormalResult(String columnName)
     {
-        addResult(columnName, null, false);
+        return addResult(columnName, null, false);
     }
 
-    public final void addPrimaryKeyResult(String columnName)
+    public final CriterionVo addPrimaryKeyResult(String columnName)
     {
-        addResult(columnName, "", true);
+    	return addResult(columnName, "", true);
     }
 
-    public final void addCondition(String columnName, Object columnValue)
+    public final CriterionVo addCondition(String columnName, Object columnValue)
     {
         if(columnValue!=null){
-            this.conditionList.add(new ColumnVo(columnName, columnValue));
+        	this.conditionList.add(new ColumnVo(columnName, columnValue));
         }
+        return this;
     }
 
-    public final void addCondition(String columnName, String operator, Object columnValue)
+    public final CriterionVo addCondition(String columnName, String operator, Object columnValue)
     {
         if(columnValue!=null){
             this.conditionList.add(new ColumnVo(columnName, columnValue, operator));
         }
+        return this;
     }
-    public final void addCondition(String linker, String columnName, String operator, Object columnValue)
+    public final CriterionVo addCondition(String linker, String columnName, String operator, Object columnValue)
     {
         this.conditionList.add(new ColumnVo(columnName, columnValue, operator, linker));
+        return this;
     }
 
     public final String serializeColunmName()
