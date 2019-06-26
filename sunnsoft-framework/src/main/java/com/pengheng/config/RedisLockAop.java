@@ -34,7 +34,7 @@ public class RedisLockAop {
 		MethodSignature signature = (MethodSignature) joinpoint.getSignature();
 		String className = joinpoint.getTarget().getClass().getName();
 		String methodName = signature.getName();
-		logger.info("请求"+className+methodName);
+		logger.info("请求"+className+"."+methodName);
 	}
 	
 	@Around("lockPointCut()")
