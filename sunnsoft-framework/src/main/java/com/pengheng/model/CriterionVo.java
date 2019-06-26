@@ -27,9 +27,10 @@ public final class CriterionVo {
     public final CriterionVo addResult(String columnName, Object columnValue, boolean paramBoolean)
     {
         String str = "";
-        if (((columnValue instanceof Long)) || ((columnValue instanceof Integer)) || ((columnValue instanceof Float)) || ((columnValue instanceof Double)) || ((columnValue instanceof Byte)))
+        if (((columnValue instanceof Long)) || ((columnValue instanceof Integer)) || ((columnValue instanceof Float)) || ((columnValue instanceof Double)) || ((columnValue instanceof Byte))) {
             str = String.valueOf(columnValue);
-        this.resultList.add(new ColumnVo(columnName, str.equals("") ? columnValue : paramBoolean ? "_primarykey_" : str));
+        }
+        this.resultList.add(new ColumnVo(columnName, "".equals(str) ? columnValue : paramBoolean ? "_primarykey_" : str));
         return this;
     }
 

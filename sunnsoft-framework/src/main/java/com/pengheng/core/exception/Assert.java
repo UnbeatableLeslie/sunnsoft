@@ -10,8 +10,9 @@ public final class Assert {
 	}
 
 	public static final void error(boolean paramBoolean, String paramString) throws ApplicationException {
-		if (paramBoolean)
+		if (paramBoolean) {
 			throw new ApplicationException(paramString);
+		}
 	}
 	
 	/**

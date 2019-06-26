@@ -14,8 +14,9 @@ import sun.misc.BASE64Encoder;
 public class Base64Utils {
 
 	public static boolean generateImage(String imgStr, String path) {
-		if (imgStr == null)
-			return false;
+		if (imgStr == null) {
+            return false;
+        }
 		BASE64Decoder decoder = new BASE64Decoder();
 		OutputStream out = null;
 		try {
@@ -35,13 +36,14 @@ public class Base64Utils {
 		} catch (Exception e) {
 			return false;
 		} finally {
-			if (out != null)
-				try {
-					out.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
 		}
 	}
 
@@ -56,13 +58,14 @@ public class Base64Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (inputStream != null)
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
 		}
 		// 加密
 		BASE64Encoder encoder = new BASE64Encoder();

@@ -23,7 +23,7 @@ public final class DesCrypto {
 
 	public static final String DES = "DES";
 
-	public static final String TripleDES = "DESEDE";
+	public static final String TRIPLE_DES = "DESEDE";
 
 	public static String desEncryptWithCBC(String paramString1, String paramString2, String paramString3)
 			throws Exception {

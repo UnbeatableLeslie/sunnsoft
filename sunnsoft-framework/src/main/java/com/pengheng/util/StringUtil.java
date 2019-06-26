@@ -37,14 +37,17 @@ public class StringUtil {
 	 */
 	public static boolean isNull(String value) {
 		try {
-			if (value == null)
-				return true;
-			if ("null".equals(value))
-				return true;
-			if (value.trim().length() == 0)
-				return true;
-			else
-				return false;
+			if (value == null) {
+                return true;
+            }
+			if ("null".equals(value)) {
+                return true;
+            }
+			if (value.trim().length() == 0) {
+                return true;
+            } else {
+                return false;
+            }
 		} catch (Exception e) {
 			return false;
 		}
@@ -131,8 +134,9 @@ public class StringUtil {
 	 * @return 将源字符串替换后的字符串
 	 */
 	public static String replace(String str, String tag, String news) {
-		if (str == null || str.length() == 0 || tag == null || tag.length() == 0)
-			return (str);
+		if (str == null || str.length() == 0 || tag == null || tag.length() == 0) {
+            return (str);
+        }
 		String ret = str, temp = "";
 		String l_str;
 		int len_s = str.length();
@@ -140,23 +144,27 @@ public class StringUtil {
 		int pos_1 = 0, pos_2 = 0;
 		int i = 0;
 		while (i < len_s) {
-			if (i >= (len_s - len_t))
-				l_str = str.substring(i);
-			else
-				l_str = str.substring(i, i + len_t);
+			if (i >= (len_s - len_t)) {
+                l_str = str.substring(i);
+            } else {
+                l_str = str.substring(i, i + len_t);
+            }
 			if (l_str.equals(tag)) {
 				pos_2 = i;
 				temp = temp + str.substring(pos_1, pos_2) + news;
 				i = i + len_t;
 				pos_1 = i;
-			} else
-				i++;
+			} else {
+                i++;
+            }
 		}
-		if (pos_1 < len_s)
-			temp = temp + str.substring(pos_1);
+		if (pos_1 < len_s) {
+            temp = temp + str.substring(pos_1);
+        }
 
-		if (temp.length() > 0)
-			ret = temp;
+		if (temp.length() > 0) {
+            ret = temp;
+        }
 
 		return (ret);
 	}
@@ -182,8 +190,9 @@ public class StringUtil {
 	 * 将字符串转化成gb2312的编码格式
 	 */
 	public static String changeEncoding(String strChinese, String soureceEncoding, String targetEncoding) {
-		if (strChinese == null)
-			return "";
+		if (strChinese == null) {
+            return "";
+        }
 		try {
 			return new String(strChinese.trim().getBytes(soureceEncoding), targetEncoding);
 		} catch (Exception e) {
@@ -200,10 +209,12 @@ public class StringUtil {
 	 */
 	public static String[] toArray(String source, String str) {
 		Vector vResult = new Vector();
-		if (source == null || source.equals(""))
-			return new String[0];
-		if (str == null || "".equals(str))
-			return new String[] { source };
+		if (source == null || "".equals(source)) {
+            return new String[0];
+        }
+		if (str == null || "".equals(str)) {
+            return new String[] { source };
+        }
 		int pos1 = 0;
 		int pos2 = 0;
 		pos2 = source.indexOf(str);
@@ -217,8 +228,9 @@ public class StringUtil {
 			vResult.add(strItem);
 			pos1 = pos2 + 1;
 			pos2 = source.indexOf(str, pos1);
-			if (pos2 <= 0)
-				pos2 = source.length();
+			if (pos2 <= 0) {
+                pos2 = source.length();
+            }
 
 		}
 		return toArray(vResult);
@@ -235,13 +247,14 @@ public class StringUtil {
 	public static String[] stringToArray(String source, String str) {
 
 		Vector vResult = new Vector();
-		if (source == null || source.equals("")) {
+		if (source == null || "".equals(source)) {
 			String tmp[] = { "" };
 			return tmp;
 		}
 
-		if (str == null || "".equals(str))
-			return new String[] { source };
+		if (str == null || "".equals(str)) {
+            return new String[] { source };
+        }
 		int pos1 = 0;
 		int pos2 = 0;
 		pos2 = source.indexOf(str);
@@ -260,17 +273,19 @@ public class StringUtil {
 			vResult.add(strItem);
 			pos1 = pos2 + 1;
 			pos2 = source.indexOf(str, pos1);
-			if (pos2 <= 0)
-				pos2 = source.length();
+			if (pos2 <= 0) {
+                pos2 = source.length();
+            }
 		}
 		return toArray(vResult);
 	}
 
 	public static String[] toArray(Vector vec) {
 		int intSize = vec.size();
-		String str[] = new String[intSize];
-		for (int i = 0; i < intSize; i++)
-			str[i] = vec.elementAt(i).toString();
+		String[] str = new String[intSize];
+		for (int i = 0; i < intSize; i++) {
+            str[i] = vec.elementAt(i).toString();
+        }
 		return str;
 	}
 
@@ -278,12 +293,14 @@ public class StringUtil {
 		sources = StringUtil.moveToEnd(sources, str);
 		int size = 0;
 		for (; size < sources.length; size++) {
-			if (sources[size].equals(str))
-				break;
+			if (sources[size].equals(str)) {
+                break;
+            }
 		}
 		String[] temp = new String[size];
-		for (int i = 0; i < size; i++)
-			temp[i] = sources[i];
+		for (int i = 0; i < size; i++) {
+            temp[i] = sources[i];
+        }
 		return temp;
 	}
 
@@ -299,13 +316,15 @@ public class StringUtil {
 		int end = sources.length - 1;
 		while (head != end) {
 			while (head != end) {
-				if (sources[head].equals(str))
-					break;
+				if (sources[head].equals(str)) {
+                    break;
+                }
 				head++;
 			}
 			while (head != end) {
-				if (!sources[end].equals(str))
-					break;
+				if (!sources[end].equals(str)) {
+                    break;
+                }
 				end--;
 			}
 			if (head != end) {
@@ -338,8 +357,9 @@ public class StringUtil {
 	public static String toString(Vector vec, String str) {
 		String s = "";
 		for (int i = 0; i < vec.size(); i++) {
-			if (i != 0)
-				s += str;
+			if (i != 0) {
+                s += str;
+            }
 			s += vec.elementAt(i).toString().trim();
 		}
 		return s;
@@ -351,8 +371,9 @@ public class StringUtil {
 	public static String toString(String[] scr, String str) {
 		String s = "";
 		for (int i = 0; i < scr.length; i++) {
-			if (i != 0)
-				s += str;
+			if (i != 0) {
+                s += str;
+            }
 			s += scr[i];
 		}
 		return s;
@@ -362,8 +383,9 @@ public class StringUtil {
 	 * 从字符串中取出一个单词
 	 */
 	public static String getWord(String str, int index) throws Exception {
-		if (index < 1)
-			throw new Exception("getWord error,index less than 1");
+		if (index < 1) {
+            throw new Exception("getWord error,index less than 1");
+        }
 		String word = null;
 		for (int i = 0; i < index; i++) {
 			word = StringUtil.getFirstWord(str, true);
@@ -376,13 +398,16 @@ public class StringUtil {
 	 * 从字符串中取出第一个单词,并且将分隔符（'，'、‘ ’）也作为一个单词
 	 */
 	public static String getFirstWord(String str, boolean hasSeparator) throws Exception {
-		if (str.equals(""))
-			return "";
+		if ("".equals(str)) {
+            return "";
+        }
 		char ch = str.charAt(0);
-		if (ch == '(' || ch == '[' || ch == '{')
-			return StringUtil.getBracket(str, ch);
-		if (ch == '\'')
-			return StringUtil.getString(str, ch);
+		if (ch == '(' || ch == '[' || ch == '{') {
+            return StringUtil.getBracket(str, ch);
+        }
+		if (ch == '\'') {
+            return StringUtil.getString(str, ch);
+        }
 		int offs = str.indexOf(" ") == -1 ? str.length() : str.indexOf(" ");
 		String separator = " ";
 		if (str.indexOf(",") != -1 && str.indexOf(",") < offs) {
@@ -414,10 +439,12 @@ public class StringUtil {
 			// System.out.println("(:"+str.substring(0,offs)+" == "+str.substring(offs));
 			return str.substring(0, offs) + StringUtil.getBracket(str.substring(offs), '(');
 		}
-		if (offs == -1)
-			return str;
-		if (hasSeparator && offs == 0)
-			return separator;
+		if (offs == -1) {
+            return str;
+        }
+		if (hasSeparator && offs == 0) {
+            return separator;
+        }
 		return str.substring(0, offs);
 	}
 
@@ -435,12 +462,13 @@ public class StringUtil {
 		// 确定刮号的种类
 		// System.out.println("确定刮号的种类:"+str);
 		char endType = ')';
-		if (bracketType == '[')
-			endType = ']';
-		else if (bracketType == '{')
-			endType = '}';
-		else if (bracketType != '(')
-			throw new Exception(bracketType + " not a type of bracket");
+		if (bracketType == '[') {
+            endType = ']';
+        } else if (bracketType == '{') {
+            endType = '}';
+        } else if (bracketType != '(') {
+            throw new Exception(bracketType + " not a type of bracket");
+        }
 
 		char[] c = str.toCharArray();
 		int sum = 1;
@@ -457,8 +485,9 @@ public class StringUtil {
 				}
 			}
 		}
-		if (s == null)
-			throw new Exception("bracket not suited");
+		if (s == null) {
+            throw new Exception("bracket not suited");
+        }
 		// System.out.println("确定刮号的种类 new:"+s);
 		return s;
 	}
@@ -557,8 +586,9 @@ public class StringUtil {
 	}
 
 	public static String toString(Object obj) {
-		if (obj == null)
-			return "";
+		if (obj == null) {
+            return "";
+        }
 		return obj.toString();
 	}
 

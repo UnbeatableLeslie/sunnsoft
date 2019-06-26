@@ -10,6 +10,7 @@ public class DateConvertEditor extends PropertyEditorSupport {
   
   private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
   
+  @Override
   public void setAsText(String paramString) throws IllegalArgumentException {
     if (StringUtils.hasText(paramString)) {
       try {

@@ -22,9 +22,10 @@ public final class Toolkits {
 	}
 
 	public static final String defaultString(Object paramObject, String paramString) {
-		if ((paramObject != null) && (paramObject.equals("null")))
-			paramObject = null;
-		return (paramObject == null) || (((paramObject instanceof String)) && (paramObject.equals(""))) ? paramString
+		if ((paramObject != null) && ("null".equals(paramObject))) {
+            paramObject = null;
+        }
+		return (paramObject == null) || (((paramObject instanceof String)) && ("".equals(paramObject))) ? paramString
 				: paramObject.toString();
 	}
 
@@ -52,19 +53,21 @@ public final class Toolkits {
 
 	public static final String toJson(Object paramObject) {
 		String str = "";
-		if (paramObject != null)
-			if (paramObject instanceof List || paramObject instanceof Collection || paramObject instanceof Object[]) {
-				str = JSONArray.fromObject(paramObject).toString();
-			} else {
-				str = JSONObject.fromObject(paramObject).toString();
-			}
+		if (paramObject != null) {
+            if (paramObject instanceof List || paramObject instanceof Collection || paramObject instanceof Object[]) {
+                str = JSONArray.fromObject(paramObject).toString();
+            } else {
+                str = JSONObject.fromObject(paramObject).toString();
+            }
+        }
 		return str;
 	}
 
 	public static final String toJson(String paramString) {
 		String str = "";
-		if (!defaultString(paramString).equals(""))
-			str = JSONObject.fromObject(paramString).toString();
+		if (!"".equals(defaultString(paramString))) {
+            str = JSONObject.fromObject(paramString).toString();
+        }
 		return str;
 	}
 

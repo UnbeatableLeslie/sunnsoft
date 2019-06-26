@@ -96,7 +96,7 @@ public class Page {
 		Map searchMap = new HashMap();
 		Page page = pageLocal.get();
 		if (page == null) {
-			page = page.newBuilder(request);
+			page = newBuilder(request);
 		}
 		searchMap.put("page", page);
 		Map map = request.getParameterMap();
@@ -139,8 +139,9 @@ public class Page {
 		Map<String, String> userMap = (Map<String, String>) request.getSession().getAttribute("UserInfo");
 		if (userMap != null && userMap.size() > 0) {
 			String orgId = Toolkits.defaultString(userMap.get("orgId"));
-			if (!"100083".equals(orgId))
-				searchMap.put("orgId", userMap.get("orgId"));
+			if (!"100083".equals(orgId)) {
+                searchMap.put("orgId", userMap.get("orgId"));
+            }
 		}
 		return searchMap;
 	}

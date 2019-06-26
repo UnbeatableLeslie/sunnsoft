@@ -34,8 +34,9 @@ public class Md5Crypto {
 	}
 
 	public static String crypt(String paramString) {
-		if (paramString == null || paramString.length() == 0)
-			throw new IllegalArgumentException("String to encript cannot be null or zero length");
+		if (paramString == null || paramString.length() == 0) {
+            throw new IllegalArgumentException("String to encript cannot be null or zero length");
+        }
 		return crypt(paramString, false);
 	}
 

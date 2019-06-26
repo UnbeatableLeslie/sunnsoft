@@ -58,8 +58,9 @@ public class BaseController {
 		try 
 		{
 			String str = Toolkits.defaultString(paramHttpServletRequest.getParameter("jsonData"));
-			if (!str.equals(""))
-				localObject = (Map) convertJSON2Object(str, Map.class);
+			if (!"".equals(str)) {
+                localObject = (Map) convertJSON2Object(str, Map.class);
+            }
 			((Map) localObject).putAll(fillParameterMap(paramHttpServletRequest, paramHttpServletResponse));
 		} 
 		catch (Exception localException) 
@@ -80,8 +81,9 @@ public class BaseController {
 			Map.Entry localEntry = (Map.Entry) localIterator.next();
 			String str1 = Toolkits.defaultString(localEntry.getKey());
 			String str2 = Toolkits.defaultString(paramHttpServletRequest.getParameter(str1));
-			if ((!str2.equals("")) && (!str1.equalsIgnoreCase("jsonData")) && (!str1.equalsIgnoreCase("callService")))
-				localHashMap.put(str1, str2);
+			if ((!"".equals(str2)) && (!"jsonData".equalsIgnoreCase(str1)) && (!"callService".equalsIgnoreCase(str1))) {
+                localHashMap.put(str1, str2);
+            }
 		}
 		Map<String, String> userMap = (Map<String, String>) paramHttpServletRequest.getSession()
 				.getAttribute("UserInfo");

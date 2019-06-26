@@ -68,8 +68,9 @@ public class TextUtils {
 		StringBuffer stringBuffer = new StringBuffer();
 		for (byte b = 0; b < paramArrayOfByte.length; b++) {
 			str = Integer.toHexString(paramArrayOfByte[b] & 0xFF);
-			if (str.length() == 1)
-				stringBuffer.append("0");
+			if (str.length() == 1) {
+                stringBuffer.append("0");
+            }
 			stringBuffer.append(str);
 		}
 		return stringBuffer.toString().toUpperCase();
@@ -128,30 +129,35 @@ public class TextUtils {
 	}
 
 	public static final boolean checkCharset(String paramString, String[] paramArrayOfString) throws Exception {
-		if (paramString != null && !paramString.equals(""))
-			for (byte b = 0; b < paramArrayOfString.length; b++) {
-				if (paramString.equals(new String(paramString.getBytes(paramArrayOfString[b]))))
-					return true;
-			}
+		if (paramString != null && !"".equals(paramString)) {
+            for (byte b = 0; b < paramArrayOfString.length; b++) {
+                if (paramString.equals(new String(paramString.getBytes(paramArrayOfString[b])))) {
+                    return true;
+                }
+            }
+        }
 		return false;
 	}
 
 	public static final String getCharset(String paramString, String[] paramArrayOfString) throws Exception {
-		if (paramString != null && !paramString.equals(""))
-			for (byte b = 0; b < paramArrayOfString.length; b++) {
-				if (paramString.equals(new String(paramString.getBytes(paramArrayOfString[b]))))
-					return paramArrayOfString[b].toUpperCase();
-			}
+		if (paramString != null && !"".equals(paramString)) {
+            for (byte b = 0; b < paramArrayOfString.length; b++) {
+                if (paramString.equals(new String(paramString.getBytes(paramArrayOfString[b])))) {
+                    return paramArrayOfString[b].toUpperCase();
+                }
+            }
+        }
 		return "UNKNOWN";
 	}
 
 	public static final String getSupportCharset(String paramString) throws IOException {
-		if (paramString != null && !paramString.equals("")) {
+		if (paramString != null && !"".equals(paramString)) {
 			Iterator iterator = systemCharsets.keySet().iterator();
 			while (iterator.hasNext()) {
 				String str = iterator.next().toString().toUpperCase();
-				if (paramString.equals(new String(paramString.getBytes(str))))
-					return str.toUpperCase();
+				if (paramString.equals(new String(paramString.getBytes(str)))) {
+                    return str.toUpperCase();
+                }
 			}
 		}
 		return "UNKNOWN";
@@ -163,15 +169,17 @@ public class TextUtils {
 		Iterator iterator = Charset.availableCharsets().keySet().iterator();
 		while (iterator.hasNext()) {
 			String str = iterator.next().toString().trim().toUpperCase();
-			if (str.indexOf("WINDOWS-") == -1 && str.indexOf("X-") == -1)
-				hashMap.put(str, str);
+			if (str.indexOf("WINDOWS-") == -1 && str.indexOf("X-") == -1) {
+                hashMap.put(str, str);
+            }
 		}
 		return hashMap;
 	}
 
 	public static String compress(String paramString) throws IOException {
-		if (paramString == null || paramString.length() == 0)
-			return paramString;
+		if (paramString == null || paramString.length() == 0) {
+            return paramString;
+        }
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		GZIPOutputStream gZIPOutputStream = new GZIPOutputStream(byteArrayOutputStream);
 		gZIPOutputStream.write(paramString.getBytes());
@@ -180,15 +188,17 @@ public class TextUtils {
 	}
 
 	public static String uncompress(String paramString) throws IOException {
-		if (paramString == null || paramString.length() == 0)
-			return paramString;
+		if (paramString == null || paramString.length() == 0) {
+            return paramString;
+        }
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(paramString.getBytes("ISO-8859-1"));
 		GZIPInputStream gZIPInputStream = new GZIPInputStream(byteArrayInputStream);
 		byte[] arrayOfByte = new byte[256];
 		int i;
-		while ((i = gZIPInputStream.read(arrayOfByte)) >= 0)
-			byteArrayOutputStream.write(arrayOfByte, 0, i);
+		while ((i = gZIPInputStream.read(arrayOfByte)) >= 0) {
+            byteArrayOutputStream.write(arrayOfByte, 0, i);
+        }
 		return byteArrayOutputStream.toString();
 	}
 }

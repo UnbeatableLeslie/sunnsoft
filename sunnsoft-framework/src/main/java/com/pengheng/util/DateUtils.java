@@ -8,7 +8,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 public class DateUtils {
-	private static final Calendar calendar = Calendar.getInstance();
+	private static final Calendar CALENDAR = Calendar.getInstance();
 
 	private static final Logger logger = Logger.getLogger(DateUtils.class);
 
@@ -49,7 +49,7 @@ public class DateUtils {
 	public static final long ONE_DAY_IN_MILLISECOND = 86400000L;
 
 	protected DateUtils() {
-		calendar.clear();
+		CALENDAR.clear();
 	}
 
 	public static final Date getDateByDays(Date paramDate, int paramInt) {
@@ -61,36 +61,36 @@ public class DateUtils {
 	}
 
 	public static int getDatePart(Date paramDate, int paramInt) throws Exception {
-		calendar.setTime(paramDate);
+		CALENDAR.setTime(paramDate);
 		switch (paramInt) {
 		case 0:
-			return calendar.get(1);
+			return CALENDAR.get(1);
 		case 1:
-			return calendar.get(2) + 1;
+			return CALENDAR.get(2) + 1;
 		case 2:
-			return calendar.get(5);
+			return CALENDAR.get(5);
 		case 3:
-			return calendar.get(7) - 1;
+			return CALENDAR.get(7) - 1;
 		case 4:
-			return calendar.get(6);
+			return CALENDAR.get(6);
 		case 5:
-			return calendar.get(4);
+			return CALENDAR.get(4);
 		case 6:
-			return calendar.get(8);
+			return CALENDAR.get(8);
 		case 7:
-			return calendar.get(3);
+			return CALENDAR.get(3);
 		case 8:
-			return calendar.get(10);
+			return CALENDAR.get(10);
 		case 9:
-			return calendar.get(11);
+			return CALENDAR.get(11);
 		case 10:
-			return calendar.get(12);
+			return CALENDAR.get(12);
 		case 11:
-			return calendar.get(13);
+			return CALENDAR.get(13);
 		case 12:
-			return calendar.get(9);
+			return CALENDAR.get(9);
 		case 13:
-			switch (calendar.get(2) + 1) {
+			switch (CALENDAR.get(2) + 1) {
 			case 1:
 			case 2:
 			case 3:
@@ -141,13 +141,13 @@ public class DateUtils {
 
 	public static Date getDate(int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5,
 			int paramInt6) {
-		calendar.set(1, paramInt1);
-		calendar.set(2, paramInt2 - 1);
-		calendar.set(5, paramInt3);
-		calendar.set(11, paramInt4);
-		calendar.set(12, paramInt5);
-		calendar.set(13, paramInt6);
-		return calendar.getTime();
+		CALENDAR.set(1, paramInt1);
+		CALENDAR.set(2, paramInt2 - 1);
+		CALENDAR.set(5, paramInt3);
+		CALENDAR.set(11, paramInt4);
+		CALENDAR.set(12, paramInt5);
+		CALENDAR.set(13, paramInt6);
+		return CALENDAR.getTime();
 	}
 
 	public static Date getDate(int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5) {
@@ -184,8 +184,9 @@ public class DateUtils {
 	public static Timestamp parseTimestamp(String paramString1, String paramString2) {
 		Timestamp timestamp = null;
 		Date date = parseDate(paramString1, paramString2);
-		if (date != null)
-			timestamp = new Timestamp(date.getTime());
+		if (date != null) {
+            timestamp = new Timestamp(date.getTime());
+        }
 		return timestamp;
 	}
 

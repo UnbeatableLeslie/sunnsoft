@@ -25,10 +25,12 @@ public class CalUtil {
 	}
 
 	public static String Divide(String paramString1, String paramString2, int paramInt) {
-		if (paramInt < 0)
-			throw new IllegalArgumentException("必须为自然数");
-		if (CompareTo(paramString1, "0") == 0)
-			return "0";
+		if (paramInt < 0) {
+            throw new IllegalArgumentException("必须为自然数");
+        }
+		if (CompareTo(paramString1, "0") == 0) {
+            return "0";
+        }
 		BigDecimal bigDecimal1 = new BigDecimal(paramString1);
 		BigDecimal bigDecimal2 = new BigDecimal(paramString2);
 		return bigDecimal1.divide(bigDecimal2, paramInt, 4).toString();
@@ -47,8 +49,9 @@ public class CalUtil {
 	}
 
 	public static String Format(String paramString) {
-		if (StringUtils.isEmpty(paramString))
-			return "0.00";
+		if (StringUtils.isEmpty(paramString)) {
+            return "0.00";
+        }
 		DecimalFormat decimalFormat = new DecimalFormat();
 		decimalFormat.applyPattern("0.00");
 		double d = Double.parseDouble(paramString);
@@ -57,8 +60,9 @@ public class CalUtil {
 	}
 
 	public static String Format2(String paramString) {
-		if (StringUtils.isEmpty(paramString))
-			return "0.00";
+		if (StringUtils.isEmpty(paramString)) {
+            return "0.00";
+        }
 		DecimalFormat decimalFormat = new DecimalFormat();
 		decimalFormat.applyPattern("##,##0.00");
 		double d = Double.parseDouble(paramString);

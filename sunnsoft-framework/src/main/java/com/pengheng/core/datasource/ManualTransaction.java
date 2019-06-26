@@ -44,16 +44,19 @@ public class ManualTransaction {
   
   public ManualTransaction(String paramString, int paramInt1, int paramInt2) {
     if (DefaultContainer.getApplicationContext() != null) {
-      if (Toolkits.defaultString(paramString).equals(""))
-        paramString = "dataSourceTransactionManager.default"; 
-      if (this.dataSourceTransactionManager == null)
-        this.dataSourceTransactionManager = (DataSourceTransactionManager)DefaultContainer.getBean(paramString); 
+      if ("".equals(Toolkits.defaultString(paramString))) {
+          paramString = "dataSourceTransactionManager.default";
+      }
+      if (this.dataSourceTransactionManager == null) {
+          this.dataSourceTransactionManager = (DataSourceTransactionManager)DefaultContainer.getBean(paramString);
+      }
       DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
       defaultTransactionDefinition.setPropagationBehavior(paramInt1);
       defaultTransactionDefinition.setIsolationLevel(paramInt2);
       this.transactionStatus = this.dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
-      if (logger.isDebugEnabled())
-        logger.debug("Create transaction with[" + paramString + "], propagation behavior[" + paramInt1 + "], isolation level[" + paramInt2 + "]"); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Create transaction with[" + paramString + "], propagation behavior[" + paramInt1 + "], isolation level[" + paramInt2 + "]");
+      }
     } else {
       throw new IllegalStateException("Transaction init failure, spring context is invalid");
     } 
@@ -62,16 +65,18 @@ public class ManualTransaction {
   public void commit() {
     if (this.dataSourceTransactionManager != null && this.transactionStatus != null) {
       this.dataSourceTransactionManager.commit(this.transactionStatus);
-      if (logger.isDebugEnabled())
-        logger.debug("Commit transaction."); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Commit transaction.");
+      }
     } 
   }
   
   public void rollback() {
     if (this.dataSourceTransactionManager != null && this.transactionStatus != null) {
       this.dataSourceTransactionManager.rollback(this.transactionStatus);
-      if (logger.isDebugEnabled())
-        logger.debug("Rollback."); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Rollback.");
+      }
     } 
   }
   
@@ -79,8 +84,9 @@ public class ManualTransaction {
     Object object = null;
     if (this.transactionStatus != null) {
       object = this.transactionStatus.createSavepoint();
-      if (logger.isDebugEnabled())
-        logger.debug("Create savepoint: " + object.getClass().getName()); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Create savepoint: " + object.getClass().getName());
+      }
     } 
     return object;
   }
@@ -88,24 +94,27 @@ public class ManualTransaction {
   public void rollbackToSavepoint(Object paramObject) {
     if (this.transactionStatus != null) {
       this.transactionStatus.rollbackToSavepoint(paramObject);
-      if (logger.isDebugEnabled())
-        logger.debug("Rollback to savepoint: " + paramObject.getClass().getName()); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Rollback to savepoint: " + paramObject.getClass().getName());
+      }
     } 
   }
   
   public void releaseSavepoint(Object paramObject) {
     if (paramObject != null) {
       this.transactionStatus.releaseSavepoint(paramObject);
-      if (logger.isDebugEnabled())
-        logger.debug("Release savepoint: " + paramObject.getClass().getName()); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Release savepoint: " + paramObject.getClass().getName());
+      }
     } 
   }
   
   public void setRollbackOnly() {
     if (this.transactionStatus != null) {
       this.transactionStatus.setRollbackOnly();
-      if (logger.isDebugEnabled())
-        logger.debug("Set rollback only."); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Set rollback only.");
+      }
     } 
   }
   
@@ -113,12 +122,14 @@ public class ManualTransaction {
     try {
       paramRunnable.run();
       commit();
-      if (logger.isDebugEnabled())
-        logger.debug("Transaction commit"); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Transaction commit");
+      }
     } catch (Exception exception) {
       rollback();
-      if (logger.isDebugEnabled())
-        logger.debug("Transaction rollback"); 
+      if (logger.isDebugEnabled()) {
+          logger.debug("Transaction rollback");
+      }
     } 
   }
 }
