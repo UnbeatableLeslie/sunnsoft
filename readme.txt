@@ -14,7 +14,7 @@ SpringSession + Redis 实现session共享功能，支持水平扩展  （已完�
 Excel解析公用方法      easyexcel  / easypoi 选择一个
 国际化支持（待定）		参考：https://blog.csdn.net/mr_zhangs/article/details/79788618
 
----测试更新12
+---测试更新123
  
 Maven安装本地包方式
 mvn install:install-file -Dfile=sdk-java-1.3.jar -DgroupId=com.fuiou -DartifactId=fuiou -Dversion=1.3 -Dpackaging=jar
