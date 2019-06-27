@@ -248,7 +248,7 @@ public class StringUtil {
 
 		Vector vResult = new Vector();
 		if (source == null || "".equals(source)) {
-			String tmp[] = { "" };
+            String[] tmp = {""};
 			return tmp;
 		}
 
