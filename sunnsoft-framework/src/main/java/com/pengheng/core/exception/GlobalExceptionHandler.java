@@ -1,7 +1,6 @@
 package com.pengheng.core.exception;
 
 import org.apache.log4j.Logger;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,12 +16,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ApplicationException.class)
 	public ResultVo ApplicationExceptionHandler(ApplicationException ex) {
 		return new ResultVo(Toolkits.defaultString(ex.getCode()),ex.getMessage());
-	}
-	
-	@ExceptionHandler(UnauthorizedException.class)
-	public ResultVo UnauthorizedExceptionHandler(UnauthorizedException ex) {
-		log.error(ex);
-		return new ResultVo("403", "用户未授权，无权限访问该功能");
 	}
 
 	// 运行时异常
