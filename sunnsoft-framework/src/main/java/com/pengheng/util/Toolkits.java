@@ -1,14 +1,20 @@
 package com.pengheng.util;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public final class Toolkits {
 
@@ -23,8 +29,8 @@ public final class Toolkits {
 
 	public static final String defaultString(Object paramObject, String paramString) {
 		if ((paramObject != null) && ("null".equals(paramObject))) {
-            paramObject = null;
-        }
+			paramObject = null;
+		}
 		return (paramObject == null) || (((paramObject instanceof String)) && ("".equals(paramObject))) ? paramString
 				: paramObject.toString();
 	}
@@ -54,21 +60,25 @@ public final class Toolkits {
 	public static final String toJson(Object paramObject) {
 		String str = "";
 		if (paramObject != null) {
-            if (paramObject instanceof List || paramObject instanceof Collection || paramObject instanceof Object[]) {
-                str = JSONArray.fromObject(paramObject).toString();
-            } else {
-                str = JSONObject.fromObject(paramObject).toString();
-            }
-        }
+			if (paramObject instanceof List || paramObject instanceof Collection || paramObject instanceof Object[]) {
+				str = JSONArray.fromObject(paramObject).toString();
+			} else {
+				str = JSONObject.fromObject(paramObject).toString();
+			}
+		}
 		return str;
 	}
 
 	public static final String toJson(String paramString) {
 		String str = "";
 		if (!"".equals(defaultString(paramString))) {
-            str = JSONObject.fromObject(paramString).toString();
-        }
+			str = JSONObject.fromObject(paramString).toString();
+		}
 		return str;
+	}
+
+	public static HttpServletRequest getHttpServletRequest() {
+		return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 	}
 
 }
