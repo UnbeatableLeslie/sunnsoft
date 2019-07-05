@@ -7,8 +7,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultContainer implements ApplicationContextAware {
-	private static final Logger logger = Logger.getLogger(DefaultContainer.class);
+public class SpringContextUtil implements ApplicationContextAware {
+	private static final Logger logger = Logger.getLogger(SpringContextUtil.class);
 
 	private static ApplicationContext applicationContext;   
 
@@ -16,7 +16,7 @@ public class DefaultContainer implements ApplicationContextAware {
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
-    	DefaultContainer.applicationContext = applicationContext;
+    	SpringContextUtil.applicationContext = applicationContext;
 
         logger.info("ApplicationContext配置成功,applicationContext对象："+applicationContext);
 

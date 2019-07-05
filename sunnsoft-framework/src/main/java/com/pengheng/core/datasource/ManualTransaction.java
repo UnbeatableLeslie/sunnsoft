@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import com.pengheng.core.DefaultContainer;
+import com.pengheng.core.SpringContextUtil;
 import com.pengheng.util.Toolkits;
 
 public class ManualTransaction {
@@ -43,12 +43,12 @@ public class ManualTransaction {
   public ManualTransaction(int paramInt1, int paramInt2) { this(null, paramInt1, paramInt2); }
   
   public ManualTransaction(String paramString, int paramInt1, int paramInt2) {
-    if (DefaultContainer.getApplicationContext() != null) {
+    if (SpringContextUtil.getApplicationContext() != null) {
       if ("".equals(Toolkits.defaultString(paramString))) {
           paramString = "dataSourceTransactionManager.default";
       }
       if (this.dataSourceTransactionManager == null) {
-          this.dataSourceTransactionManager = (DataSourceTransactionManager)DefaultContainer.getBean(paramString);
+          this.dataSourceTransactionManager = (DataSourceTransactionManager)SpringContextUtil.getBean(paramString);
       }
       DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
       defaultTransactionDefinition.setPropagationBehavior(paramInt1);
