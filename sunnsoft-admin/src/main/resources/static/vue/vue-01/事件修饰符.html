@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .inner{
+            background-color:darkcyan;
+            height: 300px;
+        }
+    </style>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+        <div class="inner" id="app" @click.self="divClick">
+                <input type="button" value="按我" @click="btnClick">
+                <!-- .stop禁止冒泡事件  -->
+                 <input type="button" value="只按我" @click.stop="btnClick">
+                <!-- 从里到外触发事件，默认是从外到里 -->
+                <input type="button" value="从内到外" @click="btnClick">
+    
+                <!-- 通过.prevent 阻止默认行为 -->
+                <div>
+                    <a href="http://www.baidu.com" @click.prevent.once="linkclick">百度一哈</a>
+                </div>
+                <div>
+                    <a href="http://www.baidu.com" @click.prevent="linkclick">百度一下</a>
+                </div>
+                <div>
+                    <a href="http://www.baidu.com" @click="linkclick">百度一下</a> 
+                </div>
+
+        </div>
+        <body>
+        <!-- 使用.capture捕获事件高优先级   -->
+        <!-- <div class="inner" id="app" @click.capture="divClick">
+                <input type="button" value="按我" @click="btnClick">                
+        </div> -->
+        <!-- 只有自身才能触发点击事件 -->
+        <!-- <div class="inner" id="app" @click.self="divClick">
+                <input type="button" value="按我" @click="btnClick">                
+        </div> -->
+    <script>
+            var vm = new Vue({
+                el:"#app",
+                data:{},
+                methods: {
+                    divClick(){
+                        console.log("inner      divClick");
+                    },
+                    btnClick(){
+                        console.log("button     btnClick");
+                    },
+                    linkclick(){
+                        console.log("link       linkClick");
+                    }
+                },
+            })
+    </script>
+</body>
+</html>
