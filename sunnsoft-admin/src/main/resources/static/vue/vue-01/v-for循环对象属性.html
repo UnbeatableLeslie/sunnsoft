@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,20 +8,22 @@
     <title>Document</title>
     <script src="./lib/vue-2.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
-        <p v-for="(val, key, i) in user" >
+        <p v-for="(val, key, i) in user">
             key:{{key}} --- val:{{val}} --- index:{{i}}
         </p>
     </div>
     <script>
         var vm = new Vue({
-            el:"#app",
-            data:{
-               user: {id:1,name:'张三'}
+            el: "#app",
+            data: {
+                user: { id: 1, name: '张三' }
             },
-            methods:{}
+            methods: {}
         })
     </script>
 </body>
+
 </html>

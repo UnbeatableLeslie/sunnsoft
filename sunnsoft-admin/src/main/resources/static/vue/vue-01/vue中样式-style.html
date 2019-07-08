@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Document</title>
     <script src="./lib/vue-2.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
         <h1 :style="{color:'red'}">这是一个h1</h1>
@@ -15,13 +17,14 @@
     </div>
     <script>
         var vm = new Vue({
-            el:"#app",
-            data:{
-                objCss :{'color':'red','font-size':'12px','font-weight':'200'},
-                objCss2 :{'font-style':'italic'}
+            el: "#app",
+            data: {
+                objCss: { 'color': 'red', 'font-size': '12px', 'font-weight': '200' },
+                objCss2: { 'font-style': 'italic' }
             },
-            methods:{}
+            methods: {}
         })
     </script>
 </body>
+
 </html>

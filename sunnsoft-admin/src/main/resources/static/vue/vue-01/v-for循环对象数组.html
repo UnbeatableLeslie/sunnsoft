@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,16 @@
     <title>Document</title>
     <script src="./lib/vue-2.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
         <!-- item 循环的属性  index 数组下标 -->
         <p v-for="(item, index) in list">
-            索引值：{{index}} -- 对象id：{{item.id}}  -- 对象名称:{{item.name}}
+            索引值：{{index}} -- 对象id：{{item.id}} -- 对象名称:{{item.name}}
         </p>
 
         <p v-for="(user, index) in list">
-            <p v-for="(val, key) in user" >
+            <p v-for="(val, key) in user">
                 key:{{key}} --- val:{{val}}
             </p>
 
@@ -23,16 +25,17 @@
     </div>
     <script>
         var vm = new Vue({
-            el:"#app",
-            data:{
-               list:[
-                   {id:1,name:'张三'},
-                   {id:2,name:'李四'},
-                   {id:3,name:'王五'}
-               ]
+            el: "#app",
+            data: {
+                list: [
+                    { id: 1, name: '张三' },
+                    { id: 2, name: '李四' },
+                    { id: 3, name: '王五' }
+                ]
             },
-            methods:{}
+            methods: {}
         })
     </script>
 </body>
+
 </html>

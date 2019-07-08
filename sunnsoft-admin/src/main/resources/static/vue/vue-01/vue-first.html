@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="./lib/vue-2.4.0.js"></script>
 
 </head>
+
 <body>
     <!-- Vue 实例控制元素区 V-->
     <div id="app">
@@ -16,26 +18,27 @@
         <p v-text="msg"></p>
         <p v-text="msg1"> </p>
         <p v-html="msg1"></p>
-        <input type="button" v-bind:title="mytitle"  value="按钮" @mouseover="hello">
-        <input type="button" :title="mytitle"  value="按钮" v-on:click="hello">
+        <input type="button" v-bind:title="mytitle" value="按钮" @mouseover="hello">
+        <input type="button" :title="mytitle" value="按钮" v-on:click="hello">
 
     </div>
 
     <script>
         // VM区
         var vm = new Vue({
-            el:"#app",
-            data:{
-                msg:"hello vue",
-                msg1:"<h1>Hello Vue</h1>",
-                mytitle:"This is my Theme Title"
+            el: "#app",
+            data: {
+                msg: "hello vue",
+                msg1: "<h1>Hello Vue</h1>",
+                mytitle: "This is my Theme Title"
             },
             methods: {
-                 hello:function(){
-                     alert("hello world")
-                 }
+                hello: function () {
+                    alert("hello world")
+                }
             },
         })
     </script>
 </body>
+
 </html>

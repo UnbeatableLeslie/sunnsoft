@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Document</title>
     <script src="./lib/vue-2.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
         <input type="button" value="浪起来" @click="lang">
@@ -15,29 +17,30 @@
     </div>
 
 </body>
-    <script>        
-        var vm = new Vue({
-            el:"#app",
-            data:{
-                msg:"猥琐发育别浪！！",
-                intervalid:null
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "猥琐发育别浪！！",
+            intervalid: null
+        },
+        methods: {
+            lang() {//会自动解析成为lang:function(){}
+                //箭头函数 setInterval(()==>{}); == setInterval(function(){}) 解决this对象引用问题
+                if (this.intervalid != null) return;
+                this.intervalid = setInterval(() => {
+                    var start = this.msg.substring(0, 1);
+                    var end = this.msg.substring(1);
+                    this.msg = end + start;
+                }, 100)
             },
-            methods: {
-                lang(){//会自动解析成为lang:function(){}
-                    //箭头函数 setInterval(()==>{}); == setInterval(function(){}) 解决this对象引用问题
-                    if(this.intervalid!=null) return;
-                    this.intervalid = setInterval(() => {
-                        var start = this.msg.substring(0,1);
-                        var end = this.msg.substring(1);
-                        this.msg = end + start;
-                    },100)
-                },
-                stop:function(){
-                    console.log("别浪");
-                    clearInterval(this.intervalid)
-                    this.intervalid = null;
-                }
-            },
-        })
-    </script>
+            stop: function () {
+                console.log("别浪");
+                clearInterval(this.intervalid)
+                this.intervalid = null;
+            }
+        },
+    })
+</script>
+
 </html>

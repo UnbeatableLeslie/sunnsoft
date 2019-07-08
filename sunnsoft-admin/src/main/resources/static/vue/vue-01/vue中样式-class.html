@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .red{
+        .red {
             color: red;
         }
-        .thin{
+
+        .thin {
             font-weight: 200;
         }
-        .italic{
+
+        .italic {
             font-style: italic;
         }
-        .active{
+
+        .active {
             letter-spacing: 0.5em;
         }
     </style>
     <script src="./lib/vue-2.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
         <!-- <h1 class="red thin italic">大到无法想象</h1> -->
@@ -33,12 +38,13 @@
     </div>
     <script>
         var vm = new Vue({
-            el:"#app",
-            data:{
-                flag:false,
-                objectClass:{red:true,thin:true,italic:false,active:false}
+            el: "#app",
+            data: {
+                flag: false,
+                objectClass: { red: true, thin: true, italic: false, active: false }
             }
         })
     </script>
 </body>
+
 </html>

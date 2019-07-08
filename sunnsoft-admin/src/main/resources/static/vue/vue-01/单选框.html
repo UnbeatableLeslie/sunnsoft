@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <input type="radio" id="simayi" value="司马懿" v-model="checkedName">
+        <label for="simayi">司马懿</label>
+        <input type="radio" id="zhugeliang" value="诸葛亮" v-model="checkedName">
+        <label for="zhugeliang">诸葛亮</label> -->
+        <li v-for="(item, index) in userList" :key="item.id">
+            <input type="radio" :id="item.id" :value="item.name" v-model="checkedName">
+            <label :for="item.id">{{item.name}}</label>
+        </li>
+        <br>
+        <span>选择: {{ checkedName }} </span>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                userList: [
+                    { id: 1, name: '司马懿' },
+                    { id: 2, name: '诸葛亮' }
+                ],
+                checkedName:''
+            },
+            methods: {
+            }
+        })
+    </script>
+</body>
+
+</html>

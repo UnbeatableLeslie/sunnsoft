@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Document</title>
     <script src="./lib/vue-2.4.0.js"></script>
 </head>
+
 <body>
     <div id="app">
         <div>
@@ -16,30 +18,31 @@
         </div>
         <!-- 在属性v-for 循环中 用唯一字符串通过 :key 绑定数据 -->
         <p v-for="item in list" :key="item.id">
-            <input type="checkbox">  {{item.id}} === {{item.name}}
+            <input type="checkbox"> {{item.id}} === {{item.name}}
         </p>
     </div>
     <script>
         var vm = new Vue({
-            el:"#app",
-            data:{
-                list:[
-                    {id:1,name:'曹操'},
-                    {id:2,name:'孙坚'},
-                    {id:3,name:'刘备'},
-                    {id:4,name:'关羽'},
-                    {id:5,name:'张飞'},
+            el: "#app",
+            data: {
+                list: [
+                    { id: 1, name: '曹操' },
+                    { id: 2, name: '孙坚' },
+                    { id: 3, name: '刘备' },
+                    { id: 4, name: '关羽' },
+                    { id: 5, name: '张飞' },
                 ]
             },
-            methods:{
-                add(){
+            methods: {
+                add() {
                     //默认从行末添加
                     // this.list.push({id:this.id,name:this.name})
                     //从上往下添加
-                    this.list.unshift({id:this.id,name:this.name})
+                    this.list.unshift({ id: this.id, name: this.name })
                 }
             }
         })
     </script>
 </body>
+
 </html>

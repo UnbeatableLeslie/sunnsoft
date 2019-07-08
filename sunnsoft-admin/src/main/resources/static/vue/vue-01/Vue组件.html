@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button-component></button-component>
+        <button-component></button-component>
+        <button-component></button-component>
+
+        <button-component2></button-component2>
+
+
+        <blog-post title="hello vue"></blog-post>
+        <blog-post title="hello Spring"></blog-post>
+        <blog-post title="hello Mybatis"></blog-post>
+
+        <blog-post v-for="(item, index) in bloglist" :key="item.id" :title="item.title"></blog-post>
+    </div>
+    <script>
+        //定义全局的组件  在Vue对象中通过components 引用
+        var componentA = {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button @click="count++"> 你点我{{count}}次了</button>'
+        }
+
+        //自定义组件
+        // Vue.component('button-component', {
+        //     data: function () {
+        //         return {
+        //             count: 0
+        //         }
+        //     },
+        //     template: '<button @click="count++"> 你点我{{count}}次了</button>'
+        // })
+        Vue.component("blog-post", {
+            //通过props定义属性进行传递
+            props: ['title'],
+            template: '<h3>{{title}}</h3>'
+        })
+
+        //引用组件
+        new Vue({
+            el: "#app",
+            data: {
+                bloglist: [
+                    { id: 1, title: '多伦多猛龙队获取第一个总冠军' },
+                    { id: 2, title: '杜兰特携手欧文加盟篮网' },
+                    { id: 3, title: '卡哇伊同乔治加盟快船' }
+                ]
+            },
+            components: {
+                'button-component': componentA,
+                'button-component2': componentA
+            }
+
+        })
+    </script>
+</body>
+
+</html>

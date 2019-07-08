@@ -11,16 +11,21 @@
 
 <body>
     <div id="app">
-        <p v-for="count in 10">
-            这是第 {{count}} 次循环
-        </p>
+        <input type="checkbox" id="simayi" value="司马懿" v-model="checkedNames">
+        <label for="simayi">司马懿</label>
+        <input type="checkbox" id="zhugeliang" value="诸葛亮" v-model="checkedNames">
+        <label for="zhugeliang">诸葛亮</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
     </div>
     <script>
         var vm = new Vue({
             el: "#app",
             data: {
+                checkedNames: []
             },
-            methods: {}
+            methods: {
+            }
         })
     </script>
 </body>
