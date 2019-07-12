@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label for="">
+                    Id:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label for="">
+                    Name:
+                    <input type="text" class="form-control" v-model="name" @keyup.enter="add">
+                </label>
+                <input type="button" value="添加" class="btn btn-primary" @click="add">
+                <label for="">
+                    搜索名称关键字：
+                    <input type="text" class="form-control" v-model="keywords" v-focus v-color v-fontweight/>
+                </label>
+            </div>
+        </div>
+
+
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>名称</th>
+                    <th>创建时间</th>
+                    <th>操作 </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in search(keywords)" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.createtime | dateformat}}</td>
+                    <td><a href="" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <script>
+        //全局过滤器
+        Vue.filter('dateformat', function (date) {
+            return '1991-05-08 12:12:12'
+        })
+        //自定义指令
+        Vue.directive("focus", {
+            bind: function (el) { },
+            inserted: function (el) {
+                el.focus()//和JS相关的操作 写在inserted内
+            },
+            updated: function () { }
+        })
+        Vue.directive("color", {
+            bind: function (el) {
+                el.style.color = 'red'
+            }
+        })
+        Vue.directive("fontweight", {
+            bind: function (el) {
+                el.style.fontweight = '900px'
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                items: [
+                    { id: 1, name: '张飞', createtime: '2019:07-08 14:11:32' },
+                    { id: 2, name: '诸葛亮', createtime: '2019:07-08 14:11:32' },
+                    { id: 3, name: '刘备', createtime: '2019:07-08 14:11:32' }
+                ],
+                id: '',
+                name: '',
+                keywords: ''
+            },
+            methods: {
+                add() {
+                    var obj = { id: this.id, name: this.name, createtime: new Date() }
+                    this.items.push(obj);
+                    this.id = this.name = '';
+                },
+                del(id) {
+                    // this.items.some((item, i) => {
+                    //     if (item.id == id) {
+                    //         this.items.splice(i, 1);
+                    //         return true;
+                    //     }
+                    // })
+                    var index = this.items.findIndex(item => {
+                        if (item.id == id) {
+                            return true;
+                        }
+                    })
+                    this.items.splice(index, 1);
+                },
+                search(keywords) {
+                    // var newList = [];
+                    // this.items.forEach(item => {
+                    //     if(item.name.indexOf(keywords)!=-1){
+                    //         newList.push(item)
+                    //     }
+                    // });
+                    // return newList;
+                    return this.items.filter(item => {
+                        if (item.name.includes(keywords)) {
+                            return item
+                        }
+                    })
+                },
+                filters: {
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

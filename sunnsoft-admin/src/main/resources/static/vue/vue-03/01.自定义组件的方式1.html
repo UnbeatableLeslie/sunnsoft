@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js "></script>
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <mycom1></mycom1>
+    </div>
+</body>
+<script>
+    var com1 = Vue.extend({
+        template:'<h3>这是Vue.extend创建的组件</h3>'
+    })
+
+    Vue.component('mycom1',com1)
+
+    var vm = new Vue({
+        el:"#app"
+    })
+</script>
+
+</html>

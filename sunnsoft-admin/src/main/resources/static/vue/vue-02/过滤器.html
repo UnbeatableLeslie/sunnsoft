@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ msg | msgFormat('梁山伯', '祝英台')  }}</p>
+        <p>{{ msg | msgFormat('梁山伯', '祝英台')  }}</p>
+
+    </div>
+    <script>
+        Vue.filter('msgFormat', function (msg, arg, arg2) {
+            // 字符串的  replace 方法，第一个参数，除了可写一个 字符串之外，还可以定义一个正则
+            return msg.replace(/罗密欧/g, arg).replace(/朱丽叶/g, arg2)
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: '我是你的罗密欧，你是我的朱丽叶'
+            }
+        })
+    </script>
+</body>
+
+</html>

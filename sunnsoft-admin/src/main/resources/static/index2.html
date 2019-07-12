@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="app">
+		<p>{{ foo }}</p>
+		<!-- 这里的 `foo` 不会更新！ -->
+		<button v-on:click="foo = 'baz'">Change it</button>
+	</div>
+<!-- 	<div id="example"></div> -->
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+	var obj = {
+		foo : 'bar'
+	}
+
+	Object.freeze(obj)
+
+	new Vue({
+		el : '#app',
+		data : obj
+	});
+	
+	var data = {
+		a : 1
+	}
+	var vm = new Vue({
+		el : '#example',
+		data : data
+	})
+
+	console.log(vm.$data === data) // => true
+	 // => true
+	console.log(vm.$el === document.getElementById('example'))
+	// $watch 是一个实例方法
+	vm.$watch('a', function(newValue, oldValue) {
+		// 这个回调将在 `vm.a` 改变后调用
+			console.log('newValue is: ' + newValue+"   oldValue is: " + oldValue)
+	})
+	var vvm = new Vue({
+		data : {
+			a : 1
+		},
+		beforeCreate : function(){
+			console.log('beforeCreate')
+		},
+		created : function() {
+			// `this` 指向 vm 实例
+			console.log('a is: ' + this.a)
+		},
+		beforeMount:function(){
+			console.log("beforeMount")
+		},
+		mounted:function(){
+			console.log("mounted")
+		},
+		beforeUpdate:function(){
+			console.log("beforeUpdate")
+		},
+		updated:function(){
+			console.log("updated")
+		},
+		beforeDestroy:function(){
+			console.log("beforeDestory")
+		},
+		destroyed:function(){
+			console.log("destroyed")
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js "></script>
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <mycom3></mycom3>
+        <mycom3></mycom3>
+        <privatecom></privatecom>
+        <mycom3></mycom3>
+    </div>
+    <div id="app2">
+        <privatecom></privatecom>
+    </div>
+    <template id="temp">
+        <div>
+            <h1>
+                这是template通过外部元素定义的组件结构
+            </h1>
+            <span>哈哈</span>
+        </div>
+    </template>
+    <template id="temp2">
+        <h1>这是我私有的<h1>
+    </template>
+</body>
+<script>
+    Vue.component('mycom3', {
+        template: '#temp'
+    })
+
+    var vm = new Vue({
+        el: "#app"
+    })
+    var vm = new Vue({
+        el: "#app2",
+        components: {
+            privatecom: {
+                template: "#temp2"
+            }
+        }
+    })
+</script>
+
+</html>

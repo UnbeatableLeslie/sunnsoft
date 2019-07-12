@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 
 @EnableTransactionManagement
+//自动扫描所有的Mapper类
 @MapperScan(value="com.pengheng.mapper")
 @SpringBootApplication(exclude = PageHelperAutoConfiguration.class)
 public class StartApplication {

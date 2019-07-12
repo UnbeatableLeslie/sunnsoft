@@ -5,6 +5,42 @@
 <title>Insert title here</title>
 </head>
 <body>
-	Hello Spring Boot !!!
+	<div id="app">Hello {{ message }} !!!</div>
+	<div id="app2">
+		<span v-bind:title="message"> 鼠标悬停几秒钟查看此处动态绑定的提示信息！ </span>
+	</div>
+	<div id="app3">
+		<p v-if="!seen">U can See Me!!!</p>
+		<p v-else>U can't see me!!!</p>
+	</div>
+	<div id="app4">
+		<ol>
+			<li v-for="todo in todos">{{ todo.text}}</li>
+		</ol>
+	</div>
+	<div id="app5">
+		<p>{{message}}</p>
+		<button v-on:click="reverse">翻转消息</button>
+	</div>
+	<div id="app6">
+		<p>{{message}}</p>
+		<input v-model="message">
+	</div>
+	<div id="app7">
+		<ol>
+			<todo-item
+				v-for="item in itemList"
+				v-bind:todo="item"
+				v-bind:key="item.id"
+			></todo-item>
+		</ol>
+	</div>
+	<div id="app8">
+	  <p>{{ foo }}</p>
+	  <!-- 这里的 `foo` 不会更新！ -->
+	  <button v-on:click="foo = 'baz'">Change it</button>
+	</div>
 </body>
+<script src="js/vue.js"></script>
+<script src="index.js"></script>
 </html>
