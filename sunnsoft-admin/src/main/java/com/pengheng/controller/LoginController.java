@@ -1,14 +1,21 @@
 package com.pengheng.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.pengheng.service.UserService;
+import com.pengheng.util.ExcelUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +35,10 @@ import com.pengheng.util.Toolkits;
  */
 @RestController
 public class LoginController extends BaseController{
+
+	@Autowired
+	private UserService userService;
+
 
 	/**
 	 * 登录方法
@@ -96,5 +107,55 @@ public class LoginController extends BaseController{
 	@RequestMapping("/unauth")
 	public ResultVo unauth() {
 		return new ResultVoSuccess("403","用户无权限");
+	}
+
+	@RequestMapping("/export")
+	public void export(HttpServletResponse response,HttpServletRequest request) throws Exception {
+		String excelName = "导出数据";
+		List<Object> titleList = new ArrayList<>();
+		Map<String, String> titleMap = new HashMap<>();
+		titleMap.put("field", "id");
+		titleMap.put("title", "标题");
+		titleList.add(titleMap);
+		titleMap = new HashMap<>();
+		titleMap.put("field", "name");
+		titleMap.put("title", "名字");
+		titleList.add(titleMap);
+		titleMap = new HashMap<>();
+		titleMap.put("field", "age");
+		titleMap.put("title", "年龄");
+		titleList.add(titleMap);
+		titleMap = new HashMap<>();
+		titleMap.put("field", "hobby");
+		titleMap.put("title", "爱好");
+		titleList.add(titleMap);
+		titleMap = new HashMap<>();
+		titleMap.put("field", "international");
+		titleMap.put("title", "国籍");
+		titleList.add(titleMap);
+		List dataList = new ArrayList<>();
+
+		Map<Object, Object> userMap = new HashMap<>();
+		userMap.put("id", "1");
+		userMap.put("name", "张三");
+		userMap.put("age", "18");
+		userMap.put("hobby", "篮球");
+		userMap.put("aa", "篮球");
+		dataList.add(userMap);
+		userMap = new HashMap<>();
+		userMap.put("id", "2");
+		userMap.put("name", "蔡徐坤");
+		userMap.put("age", "18");
+		userMap.put("hobby", "rap 篮球");
+		userMap.put("aa", "篮球");
+		dataList.add(userMap);
+		userMap = new HashMap<>();
+		userMap.put("id", "3");
+		userMap.put("name", "TFBOYS");
+		userMap.put("age", "18");
+		userMap.put("hobby", "掏粪");
+		userMap.put("aa", "篮球");
+		dataList.add(userMap);
+		ExcelUtil.exportExcel(response,excelName, titleList, dataList);
 	}
 }

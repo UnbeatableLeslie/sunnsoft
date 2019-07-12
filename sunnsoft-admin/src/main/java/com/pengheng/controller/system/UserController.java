@@ -17,6 +17,7 @@ import com.pengheng.core.BaseController;
 import com.pengheng.model.CriterionVo;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoSuccess;
+import com.pengheng.service.UserService;
 import com.pengheng.service.impl.DynamicSqlService;
 
 @RestController
@@ -25,6 +26,8 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private DynamicSqlService dynamicSqlService;
+	@Autowired
+	private UserService userService;
 	
 	@RequiresPermissions("system:user:add")
 	@RequestMapping("/add")
@@ -75,5 +78,12 @@ public class UserController extends BaseController {
 	public ResultVo listUser(Model model,HttpServletRequest request,HttpServletResponse response) {
 		List<Map<Object, Object>> dynamicSelect = dynamicSqlService.dynamicSelect("sys_user");
 		return new ResultVoSuccess("查询成功",dynamicSelect);
+	}
+	
+	@RequestMapping("/list2")
+	public ResultVo listUser2(Model model,HttpServletRequest request,HttpServletResponse response) {
+		Map<Object,Object> paramMap = getParameterMap(model);
+		List<Map<Object, Object>> userList = userService.getUserList(paramMap);
+		return new ResultVoSuccess("查询成功",userList);
 	}
 }

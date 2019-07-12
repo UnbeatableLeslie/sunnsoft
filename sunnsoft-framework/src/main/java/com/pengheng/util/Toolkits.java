@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.github.pagehelper.PageHelper;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -36,11 +38,9 @@ public final class Toolkits {
 	}
 
 	public static final void useQueryPaging(Map<Object, Object> paramMap) {
-		if ((!paramMap.containsKey("page")) && (paramMap.containsKey("meta.page"))) {
-			paramMap.put("page", defaultString(paramMap.get("meta.page")));
-			paramMap.remove("meta.page");
-		}
-		paramMap.put("querytype", "multi");
+		int pageNum = Integer.parseInt(Toolkits.defaultString(paramMap.get("pageNum"),"0"));
+		int pageSize = Integer.parseInt(Toolkits.defaultString(paramMap.get("pageSize"),"20"));
+		PageHelper.startPage(pageNum, pageSize);
 	}
 
 	public static final Map<String, String> getCustomServicesAndMethodsRule() {
