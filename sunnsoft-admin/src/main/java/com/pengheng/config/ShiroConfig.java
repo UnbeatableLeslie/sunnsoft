@@ -58,11 +58,12 @@ public class ShiroConfig {
 		// 设置登出拦截
 		filterChain.put("/logout", "anon");
 		// 过滤指定连接不用登录
-		filterChain.put("/index.html", "anon");
 		filterChain.put("/kaptchaGet", "anon");
 		filterChain.put("/unlogin", "anon");
 		filterChain.put("/unauth", "anon");
 		filterChain.put("/login", "anon");
+		filterChain.put("/**/*.js", "anon");
+		filterChain.put("/**/*.html", "anon");
 		filterChain.put("/", "anon");
 
 		filterChain.put("/**", "authc");// 拦截所有方法
