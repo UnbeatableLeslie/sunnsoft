@@ -17,7 +17,7 @@ import com.pengheng.core.BaseController;
 import com.pengheng.model.CriterionVo;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoSuccess;
-import com.pengheng.service.UserService;
+import com.pengheng.service.IUserService;
 import com.pengheng.service.impl.DynamicSqlService;
 
 @RestController
@@ -27,7 +27,7 @@ public class UserController extends BaseController {
 	@Autowired
 	private DynamicSqlService dynamicSqlService;
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	
 	@RequiresPermissions("system:user:add")
 	@RequestMapping("/add")

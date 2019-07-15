@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pengheng.service.UserService;
+import com.pengheng.service.IUserService;
 import com.pengheng.util.ExcelUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -37,7 +37,7 @@ import com.pengheng.util.Toolkits;
 public class LoginController extends BaseController{
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 
 	/**
