@@ -54,7 +54,6 @@ public class UserRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Subject subject = SecurityUtils.getSubject();
-		System.out.println(Toolkits.toJson(subject.getPrincipal()));
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		Map<Object,Object> userMap = (Map<Object, Object>) subject.getPrincipal();
 		//查询用户的所有权限
