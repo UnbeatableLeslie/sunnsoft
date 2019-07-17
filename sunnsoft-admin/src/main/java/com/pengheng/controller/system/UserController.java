@@ -79,7 +79,8 @@ public class UserController extends BaseController {
 		List<Map<Object, Object>> dynamicSelect = dynamicSqlService.dynamicSelect("sys_user");
 		return new ResultVoSuccess("查询成功",dynamicSelect);
 	}
-	
+
+	@RequiresPermissions("system:user:list2")
 	@RequestMapping("/list2")
 	public ResultVo listUser2(Model model,HttpServletRequest request,HttpServletResponse response) {
 		Map<Object,Object> paramMap = getParameterMap(model);

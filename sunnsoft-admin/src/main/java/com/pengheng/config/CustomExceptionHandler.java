@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.pengheng.core.exception.GlobalExceptionHandler;
 import com.pengheng.model.ResultVo;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@RestControllerAdvice
 public class CustomExceptionHandler extends GlobalExceptionHandler {
 	
 	private static Logger log = Logger.getLogger(CustomExceptionHandler.class);
