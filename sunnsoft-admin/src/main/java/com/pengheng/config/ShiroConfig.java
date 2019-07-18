@@ -49,18 +49,13 @@ public class ShiroConfig {
 
 		// 设置需要拦截的路径
 		Map<String, String> filterChain = new HashMap<>();
-		// 登录后就可以直接访问
-		// 拦截授权
-//		// 通过加载数据库设置方法需要的权限
-//		filterChain.put("/demo/add", "perms[user:add]");
-
 		// 设置登出拦截
 		filterChain.put("/logout", "anon");
 		// 过滤指定连接不用登录
-		filterChain.put("/kaptchaGet", "anon");
 		filterChain.put("/unlogin", "anon");
 		filterChain.put("/unauth", "anon");
 		filterChain.put("/login", "anon");
+		filterChain.put("/common/*", "anon");
 		filterChain.put("/**/*.js", "anon");
 		filterChain.put("/**/*.html", "anon");
 		filterChain.put("/", "anon");

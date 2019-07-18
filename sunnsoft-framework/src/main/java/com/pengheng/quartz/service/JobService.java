@@ -20,7 +20,6 @@ public interface JobService {
 	 * 
 	 * @param jobName
 	 * @param jobGroup
-	 * @param cron
 	 */
 	void executeCronJob(String jobName, String jobGroup);
 
@@ -51,8 +50,6 @@ public interface JobService {
 	/**
 	 * 暂停所有任务
 	 * 
-	 * @param jobName
-	 * @param jobGroup
 	 */
 	void pauseAllJob();
 
@@ -67,8 +64,6 @@ public interface JobService {
 	/**
 	 * 恢复所有任务
 	 * 
-	 * @param triggerName
-	 * @param triggerGroup
 	 */
 	void resumeAllJob();
 
