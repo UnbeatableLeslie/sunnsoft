@@ -1,8 +1,5 @@
 package com.pengheng.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -17,7 +14,9 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheManager;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
