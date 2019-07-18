@@ -1,5 +1,6 @@
 package com.pengheng.config;
 
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -17,7 +18,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
  * @author 彭恒
  *
  */
-//@Aspect
+@Aspect
 @Configuration
 public class TransactionConfig {
      private static final String AOP_POINTCUT_EXPRESSION = "execution (* com.pengheng.service.**.*(..))";
@@ -27,30 +28,27 @@ public class TransactionConfig {
  
         @Bean
         public TransactionInterceptor txAdvice() {
- 
-            DefaultTransactionAttribute required_attribute = new DefaultTransactionAttribute();
-            required_attribute.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-            required_attribute.setIsolationLevel(TransactionDefinition.ISOLATION_DEFAULT);
-            
- 
-            DefaultTransactionAttribute required_readonly_attribute = new DefaultTransactionAttribute();
-            required_readonly_attribute.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-            required_readonly_attribute.setReadOnly(true);
-            required_readonly_attribute.setIsolationLevel(TransactionDefinition.ISOLATION_DEFAULT);
-            
+
+            DefaultTransactionAttribute txAttr_REQUIRED = new DefaultTransactionAttribute();
+            txAttr_REQUIRED.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+            DefaultTransactionAttribute txAttr_REQUIRED_READONLY = new DefaultTransactionAttribute();
+            txAttr_REQUIRED_READONLY.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+            txAttr_REQUIRED_READONLY.setReadOnly(true);
+
             NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
-            source.addTransactionalMethod("add*", required_attribute);
-            source.addTransactionalMethod("save*", required_attribute);
-            source.addTransactionalMethod("delete*", required_attribute);
-            source.addTransactionalMethod("update*", required_attribute);
-            source.addTransactionalMethod("exec*", required_attribute);
-            source.addTransactionalMethod("set*", required_attribute);
-            source.addTransactionalMethod("get*", required_readonly_attribute);
-            source.addTransactionalMethod("query*", required_readonly_attribute);
-            source.addTransactionalMethod("find*", required_readonly_attribute);
-            source.addTransactionalMethod("list*", required_readonly_attribute);
-            source.addTransactionalMethod("count*", required_readonly_attribute);
-            source.addTransactionalMethod("is*", required_readonly_attribute);
+            source.addTransactionalMethod("add*", txAttr_REQUIRED);
+            source.addTransactionalMethod("save*", txAttr_REQUIRED);
+            source.addTransactionalMethod("delete*", txAttr_REQUIRED);
+            source.addTransactionalMethod("update*", txAttr_REQUIRED);
+            source.addTransactionalMethod("exec*", txAttr_REQUIRED);
+            source.addTransactionalMethod("set*", txAttr_REQUIRED);
+            source.addTransactionalMethod("get*", txAttr_REQUIRED_READONLY);
+            source.addTransactionalMethod("query*", txAttr_REQUIRED_READONLY);
+            source.addTransactionalMethod("find*", txAttr_REQUIRED_READONLY);
+            source.addTransactionalMethod("list*", txAttr_REQUIRED_READONLY);
+            source.addTransactionalMethod("count*", txAttr_REQUIRED_READONLY);
+            source.addTransactionalMethod("is*", txAttr_REQUIRED_READONLY);
             return new TransactionInterceptor(transactionManager, source);
         }
  

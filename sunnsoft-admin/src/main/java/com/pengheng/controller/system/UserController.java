@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +32,15 @@ public class UserController extends BaseController {
 	
 	@RequiresPermissions("system:user:add")
 	@RequestMapping("/add")
+	//Controller 手动添加事物控制
+	@Transactional
 	public ResultVo addUser(Model model,HttpServletRequest request,HttpServletResponse response) {
 		Map<Object,Object> paramMap = getParameterMap(model);
+		String id = add(paramMap);
+		return new ResultVoSuccess("添加成功");
+	}
+
+	private String add(Map<Object, Object> paramMap) {
 		CriterionVo criterionVo = new CriterionVo();
 		criterionVo.addNormalResult("login_name",paramMap.get("login_name"));
 		criterionVo.addNormalResult("user_name",paramMap.get("user_name"));
@@ -47,9 +55,7 @@ public class UserController extends BaseController {
 		criterionVo.addNormalResult("create_time",new Date());
 		criterionVo.addNormalResult("update_time",new Date());
 		criterionVo.addNormalResult("remark","xxxx");
-		String id = dynamicSqlService.dynamicInsert("sys_user", criterionVo);
-		System.out.println(id);
-		return new ResultVoSuccess("添加成功");
+		return dynamicSqlService.dynamicInsert("sys_user", criterionVo);
 	}
 
 	@RequiresPermissions("system:user:update")
