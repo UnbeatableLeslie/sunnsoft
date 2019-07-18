@@ -16,7 +16,7 @@ public class CustomExceptionHandler extends GlobalExceptionHandler {
 
 	@ExceptionHandler(UnauthorizedException.class)
 	public ResultVo UnauthorizedExceptionHandler(UnauthorizedException ex) {
-		logger.error(ex.toString());
+		logger.error(ex.getMessage(),ex);
 		return new ResultVo("403", "用户未授权，无权限访问该功能");
 	}
 }

@@ -61,7 +61,7 @@ public class LoginController extends BaseController{
 //		if (!session_captcha.equals(captcha)) {
 //			return new ResultVoFailure("验证码错误");
 //		}
-		
+
 		//获取subject对象
 		Subject subject = SecurityUtils.getSubject();
 		//封装用户数据

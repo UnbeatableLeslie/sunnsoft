@@ -16,20 +16,21 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(ApplicationException.class)
 	public ResultVo ApplicationExceptionHandler(ApplicationException ex) {
+		logger.error(ex.getMessage(),ex);
 		return new ResultVo(Toolkits.defaultString(ex.getCode()),ex.getMessage());
 	}
 
 	// 运行时异常
 	@ExceptionHandler(RuntimeException.class)
 	public ResultVo runtimeExceptionHandler(RuntimeException ex) {
-		logger.error(ex.toString());
+		logger.error(ex.getMessage(),ex);
 		return new ResultVoFailure("系统异常");
 	}
 
 	// 其他错误
 	@ExceptionHandler({ Exception.class })
 	public ResultVo exception(Exception ex) {
-		logger.error(ex.toString());
+		logger.error(ex.getMessage(),ex);
 		return new ResultVoFailure("系统异常");
 	}
 
