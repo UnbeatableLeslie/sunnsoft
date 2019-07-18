@@ -1,9 +1,12 @@
 package com.pengheng.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+//自动扫描所有的Mapper类
+@MapperScan(value="com.pengheng.mapper")
 public class MyBatisConfig {
 
 	public ConfigurationCustomizer configurationCustomizer() {
