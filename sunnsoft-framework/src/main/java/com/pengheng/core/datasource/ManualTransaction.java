@@ -1,6 +1,7 @@
 package com.pengheng.core.datasource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -35,8 +36,8 @@ public class ManualTransaction {
   private TransactionStatus transactionStatus = null;
   
   private DataSourceTransactionManager dataSourceTransactionManager = null;
-  
-  private static final Logger logger = Logger.getLogger(ManualTransaction.class);
+
+  private static final Logger logger = LoggerFactory.getLogger(ManualTransaction.class);
   
   public ManualTransaction() { this(3, 2); }
   

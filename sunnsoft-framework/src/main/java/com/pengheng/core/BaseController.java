@@ -1,11 +1,12 @@
 package com.pengheng.core;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -27,7 +28,7 @@ public class BaseController {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 
-	private static final Logger logger = Logger.getLogger(BaseController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);
 
 	@InitBinder
 	public void initBinder(ServletRequestDataBinder paramServletRequestDataBinder) 

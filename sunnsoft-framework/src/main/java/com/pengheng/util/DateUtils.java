@@ -1,16 +1,18 @@
 package com.pengheng.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import org.apache.log4j.Logger;
 
 public class DateUtils {
 	private static final Calendar CALENDAR = Calendar.getInstance();
 
-	private static final Logger logger = Logger.getLogger(DateUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
 	public static final int PART_OF_YEAR = 0;
 

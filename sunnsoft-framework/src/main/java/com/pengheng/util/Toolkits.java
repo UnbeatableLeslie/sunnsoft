@@ -9,7 +9,8 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -20,7 +21,7 @@ import net.sf.json.JSONObject;
 
 public final class Toolkits {
 
-	private static final Logger logger = Logger.getLogger(Toolkits.class);
+	private static final Logger logger = LoggerFactory.getLogger(Toolkits.class);
 	private static final Map<String, String> customServicesAndMethodsRule = new HashMap<String, String>();
 	private static final Map<Object, Object> onlineUsers = new HashMap<Object, Object>();
 	private static final Map<String, String> customDubboServices = new HashMap<String, String>();

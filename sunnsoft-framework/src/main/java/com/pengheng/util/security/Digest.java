@@ -2,10 +2,11 @@ package com.pengheng.util.security;
 
 import java.security.MessageDigest;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Digest {
-	private static final Logger logger = Logger.getLogger(Digest.class);
+	private static final Logger logger = LoggerFactory.getLogger(Digest.class);
 
 	public static final byte[] messageDigest(String paramString1, String paramString2, String paramString3) {
 		byte[] arrayOfByte = new byte[0];

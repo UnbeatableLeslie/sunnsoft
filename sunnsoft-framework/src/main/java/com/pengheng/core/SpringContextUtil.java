@@ -1,6 +1,7 @@
 package com.pengheng.core;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
-	private static final Logger logger = Logger.getLogger(SpringContextUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpringContextUtil.class);
 
 	private static ApplicationContext applicationContext;   
 

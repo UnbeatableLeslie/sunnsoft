@@ -1,6 +1,7 @@
 package com.pengheng.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -24,7 +25,7 @@ import java.util.regex.Pattern;
  * 数组的末尾、将String转化成gb2312的编码格式、将一个String转化成String[].
  */
 public class StringUtil {
-	private static final Logger logger = Logger.getLogger(StringUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
 	public StringUtil() {
 	}
@@ -533,7 +534,7 @@ public class StringUtil {
 		try {
 			value = new String(oldStr.getBytes("ISO-8859-1"), "GBK");
 		} catch (UnsupportedEncodingException e) {
-			logger.error(e);
+			logger.error(e.toString());
 		}
 		return value;
 	}

@@ -3,8 +3,6 @@ package com.pengheng.config;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,6 +10,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ public class RedisLockAop {
 	@Autowired
 	private RedisUtils redisUtils;
 
-	private static final Log logger = LogFactory.getLog(RedisLockAop.class);
+	private static final Logger logger = LoggerFactory.getLogger(RedisLockAop.class);
 
 	@Pointcut("@annotation(com.pengheng.core.annotation.RedisLock)")
 	public void lockPointCut() {
@@ -58,7 +58,7 @@ public class RedisLockAop {
 					long endtime = System.currentTimeMillis();
 					logger.info(" COST: " + (endtime - starttime) + "ms]");
 				} catch (Exception e) {
-					logger.error(e);
+					logger.error(e.toString());
 					throw new ApplicationException("调用服务异常 sid:" + className + "." + methodName);
 				} finally {
 					String redisValue = redisUtils.get(key);

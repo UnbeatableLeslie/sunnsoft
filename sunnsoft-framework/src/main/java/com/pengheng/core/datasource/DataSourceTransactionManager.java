@@ -1,13 +1,14 @@
 package com.pengheng.core.datasource;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionStatus;
 
 public class DataSourceTransactionManager extends org.springframework.jdbc.datasource.DataSourceTransactionManager {
   private static final long serialVersionUID = 6078725651654466985L;
-  
-  private static final Logger logger = Logger.getLogger(DataSourceTransactionManager.class);
+
+  private static final Logger logger = LoggerFactory.getLogger(DataSourceTransactionManager.class);
   
   @Override
   protected void doCommit(DefaultTransactionStatus paramDefaultTransactionStatus) {
