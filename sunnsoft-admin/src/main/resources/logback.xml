@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+	<!-- 此xml在spring-boot-1.5.3.RELEASE.jar里 -->
+    <property name="log.path" value="/home/sunnsoft/logs" />
+    <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n" />
 
-	<property name="log.path" value="/home/sunnsoft/logs" />
-	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+	<!-- 开启后可以通过jmx动态控制日志级别(springboot Admin的功能) -->
+	<!--<jmxConfigurator/>-->
 
-	<!-- 控制台输出 -->
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.path}/sys-console.log</File>
 		<encoder>
 			<pattern>${log.pattern}</pattern>
 		</encoder>
-	</appender>
-	
-	<!-- 系统日志输出 -->
-	<appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-	    <file>${log.path}/sys-info.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- 按天回滚 daily -->
-			<fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- 日志最大的历史 60天 -->
-			<maxHistory>60</maxHistory>
+			<!-- 添加.gz 历史日志会启用压缩 大大缩小日志文件所占空间 -->
+			<!--<fileNamePattern>/home/hfw-client/hfw_log/stdout.log.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+			<fileNamePattern>/log/hfw-client/hfw_log/stdout.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory><!--  保留30天日志 -->
 		</rollingPolicy>
-		<encoder>
-			<pattern>${log.pattern}</pattern>
-		</encoder>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+	</appender>
+
+    <!-- 系统日志输出 -->
+    <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-	</appender>
-	
-	<appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-	    <file>${log.path}/sys-error.log</file>
+    </appender>
+
+    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log.path}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- 日志最大的历史 60天 -->
-			<maxHistory>60</maxHistory>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
@@ -46,22 +57,13 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
-	
-	<!-- 显示形成的sql、使用的参数、结果集 -->
-	<!--
-		<logger name="java.sql" level="debug" />
-		<logger name="org.springframework.jdbc" level="debug" />
-	-->
 
+	<logger name="com.pengheng.mapper" level="DEBUG" />
 
-	<root level="info">
-		<appender-ref ref="console" />
-	</root>
-	<logger name="mybatis.sql" level="info"></logger>
-	
-	<!--系统操作日志-->
-    <root level="info">
+	<root level="INFO">
+		<appender-ref ref="CONSOLE"/>
+		<appender-ref ref="FILE"/>
         <appender-ref ref="file_info" />
         <appender-ref ref="file_error" />
-    </root>
-</configuration> 
+	</root>
+</configuration>
