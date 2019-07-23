@@ -34,7 +34,7 @@ public class UploadFileUtils {
         String dateTime =  DateUtils.getNow("yyyyMMdd");
 
         if (file.isEmpty()) {
-            throw new ApplicationException("文件为空");
+            throw new ApplicationException("上传文件为空");
         }
         // 文件名
         String fileName = file.getOriginalFilename();
