@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pengheng.config.ConfigProperties;
 import com.pengheng.service.IUserService;
 import com.pengheng.util.ExcelUtil;
 import org.apache.shiro.SecurityUtils;
@@ -38,6 +39,8 @@ public class LoginController extends BaseController{
 
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private ConfigProperties configProperties;
 
 
 	/**
@@ -50,7 +53,7 @@ public class LoginController extends BaseController{
 	@RedisLock
 	@RequestMapping("/login")
 	public ResultVo login(Model model,HttpServletRequest request) throws Exception {
-//
+		System.out.println(configProperties.urlpath);
 		Map<Object,Object> paramMap = getParameterMap(model);
 		
 		String username = Toolkits.defaultString(paramMap.get("username"));
