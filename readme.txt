@@ -9,7 +9,10 @@ Shiro ehcache 缓存设置，保存权限信息避免反复查询数据库  （�
 SpringSession + Redis 实现session共享功能，支持水平扩展  （已完成）
 定时任务的动态添加暂停删除功能  （已完成）
 文件上传公用方法	
+     完成图片上传公用方法
+     添加虚拟路径映射，显示图片
 Excel解析公用方法      easyexcel  / easypoi 选择一个
+     excel文件导出
 国际化支持（待定）		参考：https://blog.csdn.net/mr_zhangs/article/details/79788618
 
  
