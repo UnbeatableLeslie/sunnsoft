@@ -54,6 +54,7 @@ public class ShiroConfig {
 		filterChain.put("/unlogin", "anon");
 		filterChain.put("/unauth", "anon");
 		filterChain.put("/login", "anon");
+		filterChain.put("/file", "anon");
 		filterChain.put("/common/*", "anon");
 		filterChain.put("/**/*.js", "anon");
 		filterChain.put("/**/*.html", "anon");

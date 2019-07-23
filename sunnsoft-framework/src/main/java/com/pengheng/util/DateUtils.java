@@ -214,4 +214,10 @@ public class DateUtils {
 		long l = paramDate1.getTime() - paramDate2.getTime();
 		return (l > 0L) ? 1 : ((l < 0L) ? -1 : 0);
 	}
+
+	public static String getNow(String formatter){
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatter);
+		String format = simpleDateFormat.format(new Date());
+		return format;
+	}
 }
