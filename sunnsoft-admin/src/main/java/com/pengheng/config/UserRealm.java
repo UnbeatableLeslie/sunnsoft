@@ -44,19 +44,35 @@ public class UserRealm extends AuthorizingRealm {
             throw new UnknownAccountException("账号或密码不正确");// 表示用户不存在
         } else {
             //查询用户的所有权限
-            StringBuffer sb = new StringBuffer();
-            sb.append("select sys_menu.perms from sys_menu");
-            sb.append(" left join sys_role_menu on sys_menu.id = sys_role_menu.menu_id ");
-            sb.append(" left join sys_role on sys_role_menu.role_id = sys_role.id");
-            sb.append(" left join sys_user_role on sys_role.id = sys_user_role.role_id");
-            sb.append(" left join sys_user on sys_user_role.user_id = sys_user.id");
-            sb.append(" where sys_user.id = " + Toolkits.defaultString(userMap.get("id")) + " and sys_menu.perms <> ''");
-            List<Map<Object, Object>> permsList = dynamicSqlService.dynamicSelect("(" + sb + ") as tb");
-            userMap.put("permsList", permsList);
+            getUserAllPermissions(userMap);
+            //查询用户拥有的角色
+            getUserAllRoles(userMap);
         }
         password = Toolkits.defaultString(userMap.get("password"));
 
         return new SimpleAuthenticationInfo(userMap, password, "");
+    }
+
+    private void getUserAllPermissions(Map<Object, Object> userMap) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("select sys_menu.perms from sys_menu");
+        sb.append(" left join sys_role_menu on sys_menu.id = sys_role_menu.menu_id ");
+        sb.append(" left join sys_role on sys_role_menu.role_id = sys_role.id");
+        sb.append(" left join sys_user_role on sys_role.id = sys_user_role.role_id");
+        sb.append(" left join sys_user on sys_user_role.user_id = sys_user.id");
+        sb.append(" where sys_user.id = " + Toolkits.defaultString(userMap.get("id")) + " and sys_menu.perms <> ''");
+        List<Map<Object, Object>> permsList = dynamicSqlService.dynamicSelect("(" + sb + ") as tb");
+        userMap.put("permsList", permsList);
+    }
+
+    private void getUserAllRoles(Map<Object, Object> userMap) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("select sys_role.role_key from sys_role");
+        sb.append(" left join sys_user_role on sys_role.id = sys_user_role.role_id ");
+        sb.append(" left join sys_user on sys_user.id = sys_user_role.user_id");
+        sb.append(" where sys_user.id = " + Toolkits.defaultString(userMap.get("id")));
+        List<Map<Object, Object>> roleList = dynamicSqlService.dynamicSelect("(" + sb + ") as tb");
+        userMap.put("roleList", roleList);
     }
 
     /**
@@ -67,6 +83,11 @@ public class UserRealm extends AuthorizingRealm {
         Subject subject = SecurityUtils.getSubject();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Map<Object, Object> userMap = (Map<Object, Object>) subject.getPrincipal();
+
+        List<Map<Object, Object>> roleList = (List<Map<Object, Object>>) userMap.get("roleList");
+        for (Map<Object, Object> role : roleList) {
+            authorizationInfo.addRole(Toolkits.defaultString(role.get("role_key")));
+        }
 
         List<Map<Object, Object>> permsList = (List<Map<Object, Object>>) userMap.get("permsList");
         for (Map<Object, Object> map : permsList) {

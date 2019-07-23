@@ -55,6 +55,13 @@ public class ShiroConfig {
 		filterChain.put("/unauth", "anon");
 		filterChain.put("/login", "anon");
 		filterChain.put("/file", "anon");
+		//后台管理自定义过滤器配置，验证是否是对应角色
+		filterChain.put("/system/**","authc,roles[admin]");
+		//门户网站自定义过滤器配置，验证是否是对应角色
+//		filterChain.put("/portal/**","portalFilter");
+		//APP管理自定义过滤器配置，验证是否是对应角色
+//		filterChain.put("/app/**","appFilter");
+
 		filterChain.put("/common/*", "anon");
 		filterChain.put("/**/*.js", "anon");
 		filterChain.put("/**/*.html", "anon");
