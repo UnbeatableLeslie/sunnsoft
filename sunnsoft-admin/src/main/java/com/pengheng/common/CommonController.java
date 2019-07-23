@@ -1,22 +1,16 @@
-package com.pengheng.controller;
+package com.pengheng.common;
 
-import java.awt.image.BufferedImage;
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.Producer;
-import com.pengheng.model.ResultVo;
-import com.pengheng.model.ResultVoFailure;
-import com.pengheng.model.ResultVoSuccess;
+import java.awt.image.BufferedImage;
 
 @RestController
 public class CommonController {

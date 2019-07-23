@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 //自动扫描所有的Mapper类
-@MapperScan(value="com.pengheng.mapper")
+@MapperScan(value="com.pengheng.**.mapper")
 public class MyBatisConfig {
 
 	public ConfigurationCustomizer configurationCustomizer() {

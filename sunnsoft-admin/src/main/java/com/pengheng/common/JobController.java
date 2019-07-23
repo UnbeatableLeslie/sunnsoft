@@ -1,22 +1,22 @@
-package com.pengheng.controller.common;
+package com.pengheng.common;
 
-import java.util.List;
-import java.util.Map;
-
+import com.pengheng.quartz.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pengheng.quartz.service.JobService;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @author hzb
- * @date 2018/08/28
+ * @Remark 定时任务处理类
+ * @author pengheng
+ * @date 2019年7月23日15:37:13
  */
 @RestController
-@RequestMapping("/quartz")
+@RequestMapping("/common/quartz")
 public class JobController {
 	@Autowired
 	private JobService jobService;

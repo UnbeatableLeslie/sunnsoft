@@ -1,9 +1,8 @@
-package com.pengheng.service.impl;
+package com.pengheng.manage.service.impl;
 
-import com.pengheng.mapper.UserMapper;
-import com.pengheng.service.IUserService;
+import com.pengheng.manage.mapper.UserMapper;
+import com.pengheng.manage.service.IUserService;
 import com.pengheng.util.Toolkits;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

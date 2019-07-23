@@ -38,4 +38,4 @@ mybatis:
   # 指定全局配置文件位置
   config-location: classpath:mybatis/mybatis-config.xml
   # 指定sql映射文件位置
-  mapper-locations: classpath:com.pengheng.mapper/**/*.xml,mapper/DynamicSqlMapper.xml
+  mapper-locations: classpath:com.pengheng.**.mapper/**/*.xml,mapper/DynamicSqlMapper.xml
