@@ -56,7 +56,7 @@ public class LoginController extends BaseController{
 		
 		String username = Toolkits.defaultString(paramMap.get("username"));
 		String password = Toolkits.defaultString(paramMap.get("password"));
-		boolean rememberme = Boolean.parseBoolean(Toolkits.defaultString(paramMap.get("rememberme")));
+		boolean rememberme = Boolean.parseBoolean(Toolkits.defaultString(paramMap.get("rememberMe")));
 		String session_captcha = Toolkits.defaultString(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
 		String captcha = request.getParameter("captcha");
 //		if (!session_captcha.equals(captcha)) {

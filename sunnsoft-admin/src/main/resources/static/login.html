@@ -16,8 +16,8 @@
 
         .login-card {
             position: absolute;
-            top: 25%;
-            right: 40%;
+            top: 21%;
+            right: 36%;
         }
 
         .login-card-title {
@@ -58,11 +58,14 @@
                     <el-input prefix-icon="el-icon-lock" v-model="form.password"></el-input>
                 </el-form-item>
                 <el-form-item label="验证码">
-                    <el-input prefix-icon="el-icon-picture-outline" v-model="form.kaptcha" class="login-kaptcha">
+                    <el-input prefix-icon="el-icon-picture-outline" v-model="form.captcha" class="login-kaptcha">
                     </el-input>
                     <div class="login-kaptcha-img">
-                        <img :src="form.kaptchaImg" @click="replaceKaptcha">
+                        <img :src="form.captchaImg" @click="replaceKaptcha">
                     </div>
+                </el-form-item>
+                <el-form-item label="记住我">
+                    <el-checkbox v-model="form.rememberMe" label=""></el-checkbox>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">立即登录</el-button>
@@ -78,6 +81,7 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- import JavaScript -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
 <script>
     var vm = new Vue({
         el: '#app',
@@ -85,16 +89,37 @@
             form: {
                 username: '',
                 password: '',
-                kaptcha: '',
-                kaptchaImg: 'http://localhost:8080/common/kaptchaGet'
+                captcha: '',
+                captchaImg: '/common/kaptchaGet',
+                rememberMe: false
             }
         },
         methods: {
             replaceKaptcha() {
-                this.form.kaptchaImg = 'http://localhost:8080/common/kaptchaGet?' + new Date();
+                this.form.captchaImg = '/common/kaptchaGet?' + new Date();
             },
             onSubmit() {
-                console.log("Submit");
+                var data = {
+                    username: this.form.username,
+                    password: this.form.password,
+                    captcha : this.form.captcha,
+                    rememberMe : this.form.rememberMe
+                };
+                this.$http.post('/login', data , { emulateJSON: true }).then(function (res) {
+                    this.$message({
+                        message: res.body.msg,
+                        type: res.body.code=='200'?'success':'error',
+                        duration:500,
+                        onClose:function(){
+                            //如果登录成功跳转到主界面
+                            if(res.body.code=='200') {
+                                location.href = 'main.html';
+                            }
+                        }
+                    });
+                }, function (res) {
+                    this.$message.error('用户名或密码错误');
+                });
             }
         },
     })
