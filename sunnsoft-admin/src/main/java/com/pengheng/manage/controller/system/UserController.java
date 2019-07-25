@@ -6,7 +6,9 @@ import com.pengheng.model.CriterionVo;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoSuccess;
 import com.pengheng.service.impl.DynamicSqlService;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/system/user")
+@RequiresRoles(logical = Logical.OR , value = {"admin","admin2"})
 public class UserController extends BaseController {
 
 	@Autowired
@@ -84,7 +87,7 @@ public class UserController extends BaseController {
 		return new ResultVoSuccess("查询成功",dynamicSelect);
 	}
 
-	@RequiresPermissions("system:user:list")
+	@RequiresPermissions("system:user:list2")
 	@RequestMapping("/list2")
 	public ResultVo listUser2(Model model,HttpServletRequest request,HttpServletResponse response) {
 		Map<Object,Object> paramMap = getParameterMap(model);

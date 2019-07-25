@@ -26,7 +26,7 @@ public class JobController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/getAll", method = RequestMethod.POST)
+	@RequestMapping(value = "/getAll")
 	public Object startCronJob() {
 		List<Map<Object, Object>> allCronJob = jobService.getAllCronJob();
 		return allCronJob;
@@ -39,7 +39,7 @@ public class JobController {
 	 * @param jobGroup
 	 * @return
 	 */
-	@RequestMapping(value = "/execute", method = RequestMethod.POST)
+	@RequestMapping(value = "/execute")
 	public String executeCronJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
 		jobService.executeCronJob(jobName, jobGroup);
 		return "create cron task success";
@@ -79,7 +79,7 @@ public class JobController {
 	 * @param jobGroup
 	 * @return
 	 */
-	@RequestMapping(value = "/pause", method = RequestMethod.POST)
+	@RequestMapping(value = "/pause")
 	public String pauseJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
 		jobService.pauseJob(jobName, jobGroup);
 		return "pause job success";
@@ -90,7 +90,7 @@ public class JobController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/pauseAll", method = RequestMethod.POST)
+	@RequestMapping(value = "/pauseAll")
 	public String pauseAll() {
 		jobService.pauseAllJob();
 		return "pause all job success";
@@ -103,7 +103,7 @@ public class JobController {
 	 * @param jobGroup
 	 * @return
 	 */
-	@RequestMapping(value = "/resume", method = RequestMethod.POST)
+	@RequestMapping(value = "/resume")
 	public String resumeJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
 		jobService.resumeJob(jobName, jobGroup);
 		return "resume all job success";
@@ -114,7 +114,7 @@ public class JobController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/resumeAll", method = RequestMethod.POST)
+	@RequestMapping(value = "/resumeAll")
 	public String resumeAllJob() {
 		jobService.resumeAllJob();
 		return "resume all job success";
@@ -127,7 +127,7 @@ public class JobController {
 	 * @param jobGroup
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.PUT)
+	@RequestMapping(value = "/delete")
 	public String deleteJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
 		jobService.deleteJob(jobName, jobGroup);
 		return "delete job success";
