@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ApplicationException.class)
 	public ResultVo ApplicationExceptionHandler(ApplicationException ex) {
 		logger.error(ex.getMessage(),ex);
-		return new ResultVo(Toolkits.defaultString(ex.getCode()),ex.getMessage());
+		return new ResultVoFailure(ex.getCause().getMessage());
 	}
 
 	// 运行时异常

@@ -59,7 +59,7 @@ public class RedisLockAop {
 					logger.info(" COST: " + (endtime - starttime) + "ms]");
 				} catch (Exception e) {
 					logger.error(e.toString());
-					throw new ApplicationException("调用服务异常 sid:" + className + "." + methodName);
+					throw new ApplicationException(e);
 				} finally {
 					String redisValue = redisUtils.get(key);
 					if (value.equals(redisValue)) {
