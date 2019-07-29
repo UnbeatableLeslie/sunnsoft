@@ -18,6 +18,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,9 +50,10 @@ public class LoginController extends BaseController{
 	 */
 	@RedisLock
 	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-	public ResultVo login(SysUser sysUser,boolean rememberMe,HttpServletRequest request) throws Exception {
+	public ResultVo login(SysUser sysUser, boolean rememberMe, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		System.out.println(configProperties.urlpath);
-
+		Map<Object, Object> parameterMap = super.getParameterMap(model);
+		System.out.println("请求参数："+Toolkits.toJson(parameterMap));
 		String userType = sysUser.getUserType();
 		String username = sysUser.getUserName();
 		Assert.notEmpty(500,"用户名不能为空",username);

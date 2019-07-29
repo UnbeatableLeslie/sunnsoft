@@ -10,9 +10,13 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 @Aspect
 @Component
@@ -29,7 +33,7 @@ public class LogAspect {
         Object [] args = joinpoint.getArgs();
         MethodSignature signature = (MethodSignature) joinpoint.getSignature();
         Method method = signature.getMethod();
-        logger.info("{}.{}:请求参数:{}",method.getDeclaringClass().getName(),method.getName(), Arrays.toString(joinpoint.getArgs()));
+        logger.info("{}.{}:请求参数:{}",method.getDeclaringClass().getName(),method.getName(), Toolkits.toJson(excludeArray(joinpoint.getArgs())));
     }
 
     @AfterReturning(value = "logPointCut()",returning = "ret")
@@ -37,5 +41,28 @@ public class LogAspect {
         MethodSignature signature = (MethodSignature) joinpoint.getSignature();
         Method method = signature.getMethod();
         logger.info("{}.{}:返回参数:{}",method.getDeclaringClass().getName(),method.getName(), Toolkits.toJson(ret));
+    }
+
+
+    /**
+     * 排除 Request  Response Model 参数 避免转换json异常
+     * @param args
+     * @return
+     */
+    private List excludeArray(Object[] args){
+        List arr = new ArrayList();
+        for (int i = 0; i < args.length; i++) {
+            if(args[i] instanceof  ServletRequest){
+                continue;
+            }
+            if(args[i] instanceof  ServletResponse){
+                continue;
+            }
+            if(args[i] instanceof  Model){
+                continue;
+            }
+            arr.add(args[i]);
+        }
+        return arr;
     }
 }
