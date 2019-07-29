@@ -53,12 +53,16 @@ public class LogAspect {
         List arr = new ArrayList();
         for (int i = 0; i < args.length; i++) {
             if(args[i] instanceof  ServletRequest){
+                ServletRequest arg = (ServletRequest) args[i];
+                arr.add(Toolkits.toJson(arg.getParameterMap()));
                 continue;
             }
             if(args[i] instanceof  ServletResponse){
                 continue;
             }
             if(args[i] instanceof  Model){
+                Model arg = (Model) args[i];
+                arr.add(Toolkits.toJson(Toolkits.toJson(arg.asMap().get("parameterMap"))));
                 continue;
             }
             arr.add(args[i]);
