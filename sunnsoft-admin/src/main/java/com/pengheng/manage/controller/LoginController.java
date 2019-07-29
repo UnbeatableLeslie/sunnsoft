@@ -18,10 +18,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +48,7 @@ public class LoginController extends BaseController{
 	 * @throws Exception 
 	 */
 	@RedisLock
-	@GetMapping("/login")
+	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo login(SysUser sysUser,boolean rememberMe,HttpServletRequest request) throws Exception {
 		System.out.println(configProperties.urlpath);
 
@@ -89,7 +86,7 @@ public class LoginController extends BaseController{
 	 * 登出方法
 	 * @return
 	 */
-	@PostMapping("/logout")
+	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo logout() {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
@@ -100,22 +97,16 @@ public class LoginController extends BaseController{
 	 * shiro过滤未登录跳转提示
 	 * @return
 	 */
-	@RequestMapping("/unlogin")
+	@RequestMapping(value = "/unlogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo unlogin() {
 		return new ResultVo("401","用户未登录");
-	}
-
-
-	@RequestMapping("/testSwagger2")
-	public ResultVo testSwagger2(SysUser sysUser) {
-		return new ResultVoSuccess("ceshi ");
 	}
 
 	/**
 	 * shiro过滤无权限跳转
 	 * @return
 	 */
-	@RequestMapping("/unauth")
+	@RequestMapping(value = "/unauth", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo unauth() {
 		return new ResultVoSuccess("401","用户无权限");
 	}
