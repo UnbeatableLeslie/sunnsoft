@@ -41,15 +41,18 @@ public final class Toolkits {
 
 	public static final Map<Object,Object> getPageMap(){
 		Map<Object,Object> pageMap = new HashMap<>();
-		int pageNum;
+        HttpServletRequest httpServletRequest = Toolkits.getHttpServletRequest();
+        httpServletRequest.setAttribute("usePageHelper","true");
+
+        int pageNum;
 		int pageSize;
 		try {
-			pageNum = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageNum"));
+			pageNum = Integer.parseInt(httpServletRequest.getParameter("pageNum"));
 		} catch (Exception e) {
 			pageNum = 1;
 		}
 		try {
-			pageSize = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageSize"));
+			pageSize = Integer.parseInt(httpServletRequest.getParameter("pageSize"));
 		} catch (Exception e) {
 			pageSize = 20;
 		}

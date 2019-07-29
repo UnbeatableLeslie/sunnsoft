@@ -11,4 +11,5 @@ public interface IUserService {
 
 	ResultVo getUserList(SysUser sysUser);
 
+    ResultVo getUserListByPage(SysUser sysUser);
 }

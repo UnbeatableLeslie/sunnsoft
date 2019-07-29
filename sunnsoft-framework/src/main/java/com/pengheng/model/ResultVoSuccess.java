@@ -19,8 +19,4 @@ public class ResultVoSuccess  extends ResultVo{
         super(ReplyCode.ALL_SUCCESS.getCode(), msg, data);
     }
 
-    public ResultVoSuccess(String msg, Object data, Object info)
-    {
-        super(ReplyCode.ALL_SUCCESS.getCode(), msg, data, info);
-    }
 }

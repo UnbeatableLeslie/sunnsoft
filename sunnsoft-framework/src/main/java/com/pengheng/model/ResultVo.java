@@ -3,6 +3,7 @@ package com.pengheng.model;
 import com.github.pagehelper.PageInfo;
 import com.pengheng.util.Toolkits;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -23,20 +24,13 @@ public class ResultVo implements Serializable {
     }
 
     public ResultVo(String code) {
-        this(code, "", null, null);
+        this(code, "", null);
     }
 
     public ResultVo(String code, String msg) {
         this.code = code;
         this.msg = msg;
 
-    }
-
-    public ResultVo(String code, String msg, Object data, Object pageInfo) {
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
-        this.pageInfo = pageInfo;
     }
 
     public ResultVo(String paramString1, String paramString2, Object paramObject) {
@@ -46,15 +40,21 @@ public class ResultVo implements Serializable {
 
         //如果是列表的话 判断是否回传分页信息
         if (paramObject instanceof List) {
-            Map<Object, Object> pageMap = Toolkits.getPageMap();
-            long total = new PageInfo((List) paramObject).getTotal();
+            HttpServletRequest httpServletRequest = Toolkits.getHttpServletRequest();
+            Boolean usePageHelper = Boolean.parseBoolean(Toolkits.defaultString(httpServletRequest.getAttribute("usePageHelper"),"false"));
 
-            long pageSize = Long.parseLong(Toolkits.defaultString(pageMap.get("pageSize"), "20"));
-            long totalPage = total % pageSize == 0 ? total / pageSize : (total / pageSize + 1);
+            if(usePageHelper) {
+                Map<Object, Object> pageMap = Toolkits.getPageMap();
+                long total = new PageInfo((List) paramObject).getTotal();
 
-            pageMap.put("total",total);
-            pageMap.put("totalPage",totalPage);
-            this.pageInfo = pageMap;
+                long pageSize = Long.parseLong(Toolkits.defaultString(pageMap.get("pageSize"), "20"));
+                long totalPage = total % pageSize == 0 ? total / pageSize : (total / pageSize + 1);
+
+                pageMap.put("total", total);
+                pageMap.put("totalPage", totalPage);
+                this.pageInfo = pageMap;
+                httpServletRequest.setAttribute("usePageHelper","false");
+            }
         }
 
     }

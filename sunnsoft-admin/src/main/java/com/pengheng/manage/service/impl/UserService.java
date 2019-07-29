@@ -27,10 +27,19 @@ public class UserService implements IUserService {
 
 	@Override
 	public ResultVo getUserList(SysUser sysUser) {
-    	Toolkits.useQueryPaging();
 		List<Map<Object, Object>> userList = userMapper.getUserList(sysUser);
 		if(CollectionUtils.isNotEmpty(userList)) {
 			return new ResultVoSuccess("获取对象成功",userList);
+		}else{
+			return new ResultVoFailure("未找到对应数据");
+		}
+	}
+	@Override
+	public ResultVo getUserListByPage(SysUser sysUser) {
+    	Toolkits.useQueryPaging();
+		List<Map<Object, Object>> userList = userMapper.getUserList(sysUser);
+		if(CollectionUtils.isNotEmpty(userList)) {
+			return new ResultVoSuccess("获取分页对象成功",userList);
 		}else{
 			return new ResultVoFailure("未找到对应数据");
 		}

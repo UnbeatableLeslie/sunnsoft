@@ -19,8 +19,4 @@ public class ResultVoNotFound extends ResultVo{
         super(ReplyCode.getReplayCodes(paramString), ReplyCode.getReplayTexts(paramString), paramObject);
     }
 
-    public ResultVoNotFound(String paramString, Object paramObject, Object paramObject2)
-    {
-        super(ReplyCode.getReplayCodes(paramString), ReplyCode.getReplayTexts(paramString), paramObject, paramObject2);
-    }
 }

@@ -20,7 +20,7 @@ public class LogAspect {
 
     private static Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
-    @Pointcut("execution(public * com.pengheng.controller..*.*(..))")
+    @Pointcut("execution(public * com.pengheng.*.controller..*.*(..))")
     public void logPointCut() {
     }
 

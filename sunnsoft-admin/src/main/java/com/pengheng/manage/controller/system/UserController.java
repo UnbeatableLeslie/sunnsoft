@@ -81,9 +81,25 @@ public class UserController extends BaseController {
         return new ResultVoSuccess("查询成功", dynamicSelect);
     }
 
+    /**
+     * 查询所有列表
+     * @param sysUser
+     * @return
+     */
     @RequestMapping(value = "/list2", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultVo listUser2(SysUser sysUser) {
         ResultVo resultVo = userService.getUserList(sysUser);
+        return resultVo;
+    }
+
+    /**
+     * 按分页查询数据
+     * @param sysUser
+     * @return
+     */
+    @RequestMapping(value = "/list3", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResultVo listUser3(SysUser sysUser) {
+        ResultVo resultVo = userService.getUserListByPage(sysUser);
         return resultVo;
     }
 }

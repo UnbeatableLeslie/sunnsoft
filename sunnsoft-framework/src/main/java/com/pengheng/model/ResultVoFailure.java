@@ -19,12 +19,4 @@ public class ResultVoFailure extends ResultVo{
         super(ReplyCode.ALL_FAILURE.getCode(), msg, data);
     }
 
-    public ResultVoFailure(String msg, Object data, Object info)
-    {
-        super(ReplyCode.ALL_FAILURE.getCode(), msg, data, info);
-    }
-
-
-
-
 }
