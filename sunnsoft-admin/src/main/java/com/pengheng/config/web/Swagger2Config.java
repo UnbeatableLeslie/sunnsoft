@@ -36,9 +36,9 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("功能测试")
+                .title("Sunnsoft-Api-Doc")
                 //创建人
-                .contact(new Contact("Edison", "xxx@qq.com", "xxx@qq.com"))
+                .contact(new Contact("pengheng", "#", "254124185@qq.com"))
                 //版本号
                 .version("1.0")
                 //描述

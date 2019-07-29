@@ -45,9 +45,12 @@ public final class Toolkits {
 		int pageSize;
 		try {
 			pageNum = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageNum"));
-			pageSize = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageSize"));
 		} catch (Exception e) {
 			pageNum = 1;
+		}
+		try {
+			pageSize = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageSize"));
+		} catch (Exception e) {
 			pageSize = 20;
 		}
 		pageMap.put("pageNum",pageNum);

@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,7 +69,7 @@ public class UserController extends BaseController {
 
 	@RequiresPermissions("system:user:delete")
 	@RequestMapping("/delete/{id}")
-	public ResultVo deleteUser(String id) {
+	public ResultVo deleteUser(@PathVariable("id") String id) {
 		CriterionVo criterionVo = new CriterionVo();
 		criterionVo.addCondition("id", id);
 		int dynamicDelete = dynamicSqlService.dynamicDelete("sys_user", criterionVo);
