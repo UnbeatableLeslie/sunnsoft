@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.github.pagehelper.Page;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +39,27 @@ public final class Toolkits {
 				: paramObject.toString();
 	}
 
-	public static final void useQueryPaging(Map<Object, Object> paramMap) {
-		int pageNum = Integer.parseInt(Toolkits.defaultString(paramMap.get("pageNum"),"0"));
-		int pageSize = Integer.parseInt(Toolkits.defaultString(paramMap.get("pageSize"),"20"));
-		PageHelper.startPage(pageNum, pageSize);
+	public static final Map<Object,Object> getPageMap(){
+		Map<Object,Object> pageMap = new HashMap<>();
+		int pageNum;
+		int pageSize;
+		try {
+			pageNum = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageNum"));
+			pageSize = Integer.parseInt(Toolkits.getHttpServletRequest().getParameter("pageSize"));
+		} catch (Exception e) {
+			pageNum = 1;
+			pageSize = 20;
+		}
+		pageMap.put("pageNum",pageNum);
+		pageMap.put("pageSize",pageSize);
+		return pageMap;
+	}
+
+	public static final void useQueryPaging() {
+		Map<Object, Object> pageMap = getPageMap();
+		Object pageNum = pageMap.get("pageNum");
+		Object pageSize = pageMap.get("pageSize");
+		PageHelper.startPage(Integer.parseInt(Toolkits.defaultString(pageNum,"1")), Integer.parseInt(Toolkits.defaultString(pageSize,"20")));
 	}
 
 	public static final Map<String, String> getCustomServicesAndMethodsRule() {
@@ -104,6 +122,15 @@ public final class Toolkits {
 			ip = request.getRemoteAddr();
 		}
 		return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+	}
+
+	public static boolean isAjax(HttpServletRequest req){
+		//判断是否为ajax请求，默认不是
+		boolean isAjaxRequest = false;
+		if(!StringUtils.isBlank(req.getHeader("x-requested-with")) && req.getHeader("x-requested-with").equals("XMLHttpRequest")){
+			isAjaxRequest = true;
+		}
+		return isAjaxRequest;
 	}
 
 }

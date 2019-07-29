@@ -2,8 +2,11 @@ package com.pengheng.manage.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.pengheng.config.ConfigProperties;
+import com.pengheng.config.shiro.LoginAuthToken;
 import com.pengheng.core.BaseController;
 import com.pengheng.core.annotation.RedisLock;
+import com.pengheng.core.exception.Assert;
+import com.pengheng.domain.SysUser;
 import com.pengheng.manage.service.IUserService;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
@@ -13,10 +16,10 @@ import com.pengheng.util.Toolkits;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,20 +46,19 @@ public class LoginController extends BaseController{
 
 	/**
 	 * 登录方法
-	 * @param model
 	 * @param request
 	 * @return
 	 * @throws Exception 
 	 */
 	@RedisLock
-	@RequestMapping("/login")
-	public ResultVo login(Model model,HttpServletRequest request) throws Exception {
+	@GetMapping("/login")
+	public ResultVo login(SysUser sysUser,boolean rememberMe,HttpServletRequest request) throws Exception {
 		System.out.println(configProperties.urlpath);
-		Map<Object,Object> paramMap = getParameterMap(model);
-		
-		String username = Toolkits.defaultString(paramMap.get("username"));
-		String password = Toolkits.defaultString(paramMap.get("password"));
-		boolean rememberme = Boolean.parseBoolean(Toolkits.defaultString(paramMap.get("rememberMe")));
+
+		String userType = sysUser.getUserType();
+		String username = sysUser.getUserName();
+		Assert.notEmpty(500,"用户名不能为空",username);
+		String password = sysUser.getPassword();
 		String session_captcha = Toolkits.defaultString(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
 		String captcha = request.getParameter("captcha");
 //		if (!session_captcha.equals(captcha)) {
@@ -66,26 +68,28 @@ public class LoginController extends BaseController{
 		//获取subject对象
 		Subject subject = SecurityUtils.getSubject();
 		//封装用户数据
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberme);
+		LoginAuthToken token = new LoginAuthToken(username, password,rememberMe,userType);
 		
 		try {
-			subject.login(token);//执行Shiro配置的拦截方法
-		} catch (UnknownAccountException e) {//登录失败：用户名不存在
+			//执行Shiro配置的拦截方法
+			subject.login(token);
+			//登录失败：用户名不存在
+		} catch (UnknownAccountException e) {
 			e.printStackTrace();
 			return new ResultVoFailure("用户名不存在");
-		} catch (IncorrectCredentialsException e) {//登录失败：密码错误
+			//登录失败：密码错误
+		} catch (IncorrectCredentialsException e) {
 			return new ResultVoFailure("密码错误");
 		}
 		return new ResultVoSuccess("登录成功");
-//		return invokeService;
-		
+
 	}
 
 	/**
 	 * 登出方法
 	 * @return
 	 */
-	@RequestMapping("/logout")
+	@PostMapping("/logout")
 	public ResultVo logout() {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
@@ -98,7 +102,13 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping("/unlogin")
 	public ResultVo unlogin() {
-		return new ResultVo("403","用户未登录");
+		return new ResultVo("401","用户未登录");
+	}
+
+
+	@RequestMapping("/testSwagger2")
+	public ResultVo testSwagger2(SysUser sysUser) {
+		return new ResultVoSuccess("ceshi ");
 	}
 
 	/**
@@ -107,10 +117,10 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping("/unauth")
 	public ResultVo unauth() {
-		return new ResultVoSuccess("403","用户无权限");
+		return new ResultVoSuccess("401","用户无权限");
 	}
 
-	@RequestMapping("/export")
+	@GetMapping("/export")
 	public void export(HttpServletResponse response,HttpServletRequest request) throws Exception {
 		String excelName = "导出数据";
 		List<Object> titleList = new ArrayList<>();

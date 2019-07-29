@@ -108,15 +108,12 @@
                 this.$http.post('/login', data , { emulateJSON: true }).then(function (res) {
                     this.$message({
                         message: res.body.msg,
-                        type: res.body.code=='200'?'success':'error',
-                        duration:500,
-                        onClose:function(){
-                            //如果登录成功跳转到主界面
-                            if(res.body.code=='200') {
-                                location.href = 'main.html';
-                            }
-                        }
+                        type: res.body.code=='200'?'success':'error'
                     });
+                    if(res.body.code=='200') {
+                        location.href = 'main.html';
+                    }
+
                 }, function (res) {
                     this.$message.error('用户名或密码错误');
                 });

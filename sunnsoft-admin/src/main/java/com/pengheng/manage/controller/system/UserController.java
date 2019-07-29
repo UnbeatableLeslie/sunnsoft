@@ -1,6 +1,7 @@
 package com.pengheng.manage.controller.system;
 
 import com.pengheng.core.BaseController;
+import com.pengheng.domain.SysUser;
 import com.pengheng.manage.service.IUserService;
 import com.pengheng.model.CriterionVo;
 import com.pengheng.model.ResultVo;
@@ -11,12 +12,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,27 +28,26 @@ public class UserController extends BaseController {
 	private DynamicSqlService dynamicSqlService;
 	@Autowired
 	private IUserService userService;
-	
+
 	@RequiresPermissions("system:user:add")
 	@RequestMapping("/add")
 	//Controller 手动添加事物控制
 	@Transactional
-	public ResultVo addUser(Model model,HttpServletRequest request,HttpServletResponse response) {
-		Map<Object,Object> paramMap = getParameterMap(model);
-		String id = add(paramMap);
+	public ResultVo addUser(SysUser sysUser) {
+		String id = add(sysUser);
 		return new ResultVoSuccess("添加成功");
 	}
 
-	private String add(Map<Object, Object> paramMap) {
+	private String add(SysUser sysUser) {
 		CriterionVo criterionVo = new CriterionVo();
-		criterionVo.addNormalResult("login_name",paramMap.get("login_name"));
-		criterionVo.addNormalResult("user_name",paramMap.get("user_name"));
-		criterionVo.addNormalResult("user_type",paramMap.get("user_type"));
-		criterionVo.addNormalResult("email",paramMap.get("email"));
-		criterionVo.addNormalResult("phonenumber",paramMap.get("phonenumber"));
-		criterionVo.addNormalResult("sex",paramMap.get("sex"));
-		criterionVo.addNormalResult("password",paramMap.get("password"));
-		criterionVo.addNormalResult("status",paramMap.get("status"));
+		criterionVo.addNormalResult("login_name",sysUser.getLoginName());
+		criterionVo.addNormalResult("user_name",sysUser.getUserName());
+		criterionVo.addNormalResult("user_type",sysUser.getUserType());
+		criterionVo.addNormalResult("email",sysUser.getEmail());
+		criterionVo.addNormalResult("phonenumber",sysUser.getPhonenumber());
+		criterionVo.addNormalResult("sex",sysUser.getSex());
+		criterionVo.addNormalResult("password",sysUser.getPassword());
+		criterionVo.addNormalResult("status",sysUser.getStatus());
 		criterionVo.addNormalResult("login_ip","192.168.1.1");
 		criterionVo.addNormalResult("login_date",new Date());
 		criterionVo.addNormalResult("create_time",new Date());
@@ -61,37 +58,33 @@ public class UserController extends BaseController {
 
 	@RequiresPermissions("system:user:update")
 	@RequestMapping("/update")
-	public ResultVo updateUser(Model model,HttpServletRequest request,HttpServletResponse response) {
-		Map<Object,Object> paramMap = getParameterMap(model);
+	public ResultVo updateUser(SysUser sysUser) {
 		CriterionVo criterionVo = new CriterionVo();
-		criterionVo.addCondition("id", paramMap.get("id"));
-		criterionVo.addNormalResult("user_name",paramMap.get("user_name"));
+		criterionVo.addCondition("id", sysUser.getId());
+		criterionVo.addNormalResult("user_name",sysUser.getUserName());
 		int dynamicUpdate = dynamicSqlService.dynamicUpdate("sys_user", criterionVo);
 		return new ResultVoSuccess("修改成功");
 	}
 
 	@RequiresPermissions("system:user:delete")
-	@RequestMapping("/delete")
-	public ResultVo deleteUser(Model model,HttpServletRequest request,HttpServletResponse response) {
-		Map<Object,Object> paramMap = getParameterMap(model);
+	@RequestMapping("/delete/{id}")
+	public ResultVo deleteUser(String id) {
 		CriterionVo criterionVo = new CriterionVo();
-		criterionVo.addCondition("id", paramMap.get("id"));
+		criterionVo.addCondition("id", id);
 		int dynamicDelete = dynamicSqlService.dynamicDelete("sys_user", criterionVo);
 		return new ResultVoSuccess("删除成功");
 	}
 
 	@RequiresPermissions("system:user:list")
 	@RequestMapping("/list")
-	public ResultVo listUser(Model model,HttpServletRequest request,HttpServletResponse response) {
+	public ResultVo listUser() {
 		List<Map<Object, Object>> dynamicSelect = dynamicSqlService.dynamicSelect("sys_user");
 		return new ResultVoSuccess("查询成功",dynamicSelect);
 	}
 
-	@RequiresPermissions("system:user:list2")
 	@RequestMapping("/list2")
-	public ResultVo listUser2(Model model,HttpServletRequest request,HttpServletResponse response) {
-		Map<Object,Object> paramMap = getParameterMap(model);
-		List<Map<Object, Object>> userList = userService.getUserList(paramMap);
-		return new ResultVoSuccess("查询成功",userList);
+	public ResultVo listUser2(SysUser sysUser) {
+		ResultVo resultVo = userService.getUserList(sysUser);
+		return resultVo;
 	}
 }
