@@ -5,8 +5,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 /**
- * @author Administrator
- * @date 2018/08/28
+ * @author pengheng
+ * @date 2019年8月12日18:59:33
  */
 public class AsyncJob implements Job {
     @Override

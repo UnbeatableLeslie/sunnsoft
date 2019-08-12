@@ -28,8 +28,8 @@ import com.pengheng.quartz.job.AsyncJob;
 import com.pengheng.quartz.job.CronJob;
 
 /**
- * @author hzb
- * @date 2018/08/28
+ * @author pengheng
+ * @date 2019年8月12日19:00:07
  */
 @Service
 public class JobServiceImpl implements JobService {
