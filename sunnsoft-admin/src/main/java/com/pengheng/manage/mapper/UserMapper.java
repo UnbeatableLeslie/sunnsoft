@@ -1,5 +1,6 @@
 package com.pengheng.manage.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pengheng.domain.SysUser;
 import org.springframework.stereotype.Repository;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<SysUser> {
 
     Map<Object,Object> checkuserById(Map<Object, Object> paramMap);
 

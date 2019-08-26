@@ -1,5 +1,6 @@
 package com.pengheng.manage.controller.system;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pengheng.core.BaseController;
 import com.pengheng.domain.SysUser;
 import com.pengheng.manage.service.IUserService;
@@ -100,6 +101,17 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/list3", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultVo listUser3(SysUser sysUser) {
         ResultVo resultVo = userService.getUserListByPage(sysUser);
+        return resultVo;
+    }
+
+    /**
+     * 使用MyBatisPlus 分页插件分页
+     * @param sysUser
+     * @return
+     */
+    @RequestMapping(value = "/list4", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResultVo listUser4(SysUser sysUser) {
+        ResultVo resultVo = userService.getUserListByPlusPage(sysUser);
         return resultVo;
     }
 }

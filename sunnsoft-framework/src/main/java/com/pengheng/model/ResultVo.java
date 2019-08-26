@@ -6,6 +6,7 @@ import com.pengheng.util.Toolkits;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.*;
 
 public class ResultVo implements Serializable {
@@ -55,6 +56,20 @@ public class ResultVo implements Serializable {
                 this.pageInfo = pageMap;
                 httpServletRequest.setAttribute("usePageHelper","false");
             }
+        } else if(paramObject instanceof IPage){//如果传入的是MyBatisPlus 的分页对象
+            Map<Object, Object> pageMap = new HashMap<>();
+            
+            IPage page = (IPage) paramObject;
+            long total = page.getTotal();
+            long pageSize = page.getSize();
+            long pageNum = page.getCurrent();
+            long totalPage = page.getPages();
+            pageMap.put("total", total);
+            pageMap.put("pageNum", pageNum);
+            pageMap.put("pageSize", pageSize);
+            pageMap.put("totalPage", totalPage);
+            this.pageInfo = pageMap;
+            this.data = page.getRecords();
         }
 
     }

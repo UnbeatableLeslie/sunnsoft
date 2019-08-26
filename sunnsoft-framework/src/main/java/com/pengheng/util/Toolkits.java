@@ -8,7 +8,8 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,14 @@ public final class Toolkits {
 		Object pageNum = pageMap.get("pageNum");
 		Object pageSize = pageMap.get("pageSize");
 		PageHelper.startPage(Integer.parseInt(Toolkits.defaultString(pageNum,"1")), Integer.parseInt(Toolkits.defaultString(pageSize,"20")));
+	}
+
+	public static IPage usePlusQueryPage() {
+		Map<Object, Object> pageMap = getPageMap();
+		long pageNum = Long.parseLong(Toolkits.defaultString(pageMap.get("pageNum")));
+		long pageSize = Long.parseLong(Toolkits.defaultString(pageMap.get("pageSize")));
+		return new Page(pageNum,pageSize);
+
 	}
 
 	public static final Map<String, String> getCustomServicesAndMethodsRule() {

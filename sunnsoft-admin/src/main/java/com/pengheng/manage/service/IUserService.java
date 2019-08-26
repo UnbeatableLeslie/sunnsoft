@@ -1,5 +1,6 @@
 package com.pengheng.manage.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pengheng.domain.SysUser;
 import com.pengheng.model.ResultVo;
 
@@ -12,4 +13,7 @@ public interface IUserService {
 	ResultVo getUserList(SysUser sysUser);
 
     ResultVo getUserListByPage(SysUser sysUser);
+
+    ResultVo getUserListByPlusPage(SysUser sysUser);
+
 }
