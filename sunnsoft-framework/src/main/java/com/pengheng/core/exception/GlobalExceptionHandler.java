@@ -1,5 +1,6 @@
 package com.pengheng.core.exception;
 
+import com.pengheng.model.ReplyCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +18,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ApplicationException.class)
 	public ResultVo ApplicationExceptionHandler(ApplicationException ex) {
 		logger.error(ex.getMessage(),ex);
-		return new ResultVoFailure(ex.getCause().getMessage());
+		return new ResultVoFailure(ex.getCode(),ex.getCause().getMessage());
 	}
 
 	// 运行时异常

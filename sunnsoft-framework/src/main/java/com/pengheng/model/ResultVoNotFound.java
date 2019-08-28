@@ -6,7 +6,7 @@ public class ResultVoNotFound extends ResultVo{
 
     public ResultVoNotFound()
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), ReplyCode.ALL_FAILURE.getTxtCode());
+        super(ReplyCode.NOT_FOUND.getCode(), ReplyCode.NOT_FOUND.getTxtCode());
     }
 
     public ResultVoNotFound(String paramString)

@@ -5,18 +5,18 @@ public class ResultVoSuccess  extends ResultVo{
 
     public ResultVoSuccess()
     {
-        super(ReplyCode.ALL_SUCCESS.getCode(), ReplyCode.ALL_SUCCESS.getTxtCode());
+        super(ReplyCode.SUCCESS.getCode(), ReplyCode.SUCCESS.getTxtCode());
     }
 
     public ResultVoSuccess(String msg)
     {
 
-        super(ReplyCode.ALL_SUCCESS.getCode(),msg);
+        super(ReplyCode.SUCCESS.getCode(),msg);
     }
 
     public ResultVoSuccess(String msg, Object data)
     {
-        super(ReplyCode.ALL_SUCCESS.getCode(), msg, data);
+        super(ReplyCode.SUCCESS.getCode(), msg, data);
     }
 
 }

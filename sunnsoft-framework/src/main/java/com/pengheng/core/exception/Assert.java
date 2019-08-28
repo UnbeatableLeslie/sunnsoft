@@ -2,6 +2,7 @@ package com.pengheng.core.exception;
 
 import java.util.Collection;
 
+import com.pengheng.model.ReplyCode;
 import org.apache.commons.lang.StringUtils;
 
 public final class Assert {
@@ -21,7 +22,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param object 待判定参数
 	 */
-	public static void notNull(int code , String message , Object object) {
+	public static void notNull(ReplyCode code , String message , Object object) {
 		if(object == null) {
 			throw new ApplicationException(code,message);
 		}
@@ -34,7 +35,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param string 待判定字符串
 	 */
-	public static void notEmpty(int code,String message,String string) {
+	public static void notEmpty(ReplyCode code,String message,String string) {
 		if(StringUtils.isBlank(string)) {
 			throw new ApplicationException(code,message);
 		}
@@ -47,7 +48,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param collection 待判定集合对象
 	 */
-	public static void notEmpty(int code , String message,Collection<?> collection)
+	public static void notEmpty(ReplyCode code , String message,Collection<?> collection)
 	{
 		if(collection == null || collection.isEmpty())
 		{
@@ -62,7 +63,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param objects 待判定参数集合
 	 */
-	public static void notNull(int code, String message, Object... objects)
+	public static void notNull(ReplyCode code, String message, Object... objects)
 	{
 		for(Object object : objects)
 		{
@@ -79,7 +80,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param strings 待判定字符串集合
 	 */
-	public static void notEmpty(int code ,String message, String... strings)
+	public static void notEmpty(ReplyCode code ,String message, String... strings)
 	{
 		for(String string : strings)
 		{
@@ -98,7 +99,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param array 待判定数组
 	 */
-	public static void notEmpty(int code,String message,Object[] array)
+	public static void notEmpty(ReplyCode code,String message,Object[] array)
 	{
 		if(array == null || array.length == 0)
 		{
@@ -119,7 +120,7 @@ public final class Assert {
 	 * @param message 异常信息
 	 * @param param 待判定Boolean对象
 	 */
-	public static void assertTrue(int code,String message,Boolean param)
+	public static void assertTrue(ReplyCode code,String message,Boolean param)
 	{
 		if(param == null || !param)
 		{
@@ -131,7 +132,7 @@ public final class Assert {
 	 * @param code 错误代码
 	 * @param message 异常信息
 	 */
-	public static void exception(int code,String message) {
+	public static void exception(ReplyCode code,String message) {
 		throw new ApplicationException(code,message);
 	}
 	

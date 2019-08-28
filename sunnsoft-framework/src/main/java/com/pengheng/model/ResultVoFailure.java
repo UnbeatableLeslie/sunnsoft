@@ -6,17 +6,22 @@ public class ResultVoFailure extends ResultVo{
 
     public ResultVoFailure()
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), ReplyCode.ALL_FAILURE.getTxtCode());
+        super(ReplyCode.ERROR.getCode(), ReplyCode.ERROR.getTxtCode());
     }
 
     public ResultVoFailure(String msg)
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), msg);
+        super(ReplyCode.ERROR.getCode(), msg);
     }
 
     public ResultVoFailure(String msg, Object data)
     {
-        super(ReplyCode.ALL_FAILURE.getCode(), msg, data);
+        super(ReplyCode.ERROR.getCode(), msg, data);
+    }
+
+    public ResultVoFailure(ReplyCode code, String msg)
+    {
+        super(code.getCode(), msg);
     }
 
 }

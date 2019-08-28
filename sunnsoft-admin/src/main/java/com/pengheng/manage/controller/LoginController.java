@@ -8,6 +8,7 @@ import com.pengheng.core.annotation.RedisLock;
 import com.pengheng.core.exception.Assert;
 import com.pengheng.domain.SysUser;
 import com.pengheng.manage.service.IUserService;
+import com.pengheng.model.ReplyCode;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
 import com.pengheng.model.ResultVoSuccess;
@@ -51,12 +52,11 @@ public class LoginController extends BaseController{
 	@RedisLock
 	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo login(SysUser sysUser, boolean rememberMe, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-		System.out.println(configProperties.urlpath);
 		Map<Object, Object> parameterMap = super.getParameterMap(model);
 		System.out.println("请求参数："+Toolkits.toJson(parameterMap));
 		String userType = sysUser.getUserType();
 		String username = sysUser.getUserName();
-		Assert.notEmpty(500,"用户名不能为空",username);
+		Assert.notEmpty(ReplyCode.PARAMETER_FAILURE,"用户名不能为空",username);
 		String password = sysUser.getPassword();
 		String session_captcha = Toolkits.defaultString(request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY));
 		String captcha = request.getParameter("captcha");

@@ -1,11 +1,13 @@
 package com.pengheng.core.exception;
 
+import com.pengheng.model.ReplyCode;
+
 public class ApplicationException extends RuntimeException {
 	private static final long serialVersionUID = 5710541742740468778L;
 
-	private int code;
+	private ReplyCode code;
 
-	public ApplicationException(int code, String msg) {
+	public ApplicationException(ReplyCode code, String msg) {
 		super(msg);
 		this.code = code;
 
@@ -25,7 +27,7 @@ public class ApplicationException extends RuntimeException {
 	/**
 	 * @return 错误码
 	 */
-	public int getCode() {
+	public ReplyCode getCode() {
 		return code;
 	}
 }

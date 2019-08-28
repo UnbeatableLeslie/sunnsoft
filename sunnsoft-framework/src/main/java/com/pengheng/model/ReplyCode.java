@@ -8,16 +8,22 @@ package com.pengheng.model;
 public enum ReplyCode {
 
     /** 操作成功  **/
-    ALL_SUCCESS("200", "操作成功"),
+    SUCCESS("200", "操作成功"),
 
-    /** 非法的token  **/
-    ILLEGAL_FAILURE("403","非法的token"),
-
-    /** 参数异常  **/
+    /** 表单信息验证失败  **/
     PARAMETER_FAILURE("400","参数异常"),
 
-    /** 账号或密码错误 **/
-    ALL_FAILURE("500", "操作失败");
+    /** 认证信息失败  **/
+    AUTHOR_ERROR("401","认证信息失败"),
+
+    /** 非法的token  **/
+    ILLEGAL_TOKEN("403","非法的token"),
+
+    /** 未找到对应信息  **/
+    NOT_FOUND("404","未找到对应信息"),
+
+    /** 系统异常或操作逻辑不正确 **/
+    ERROR("500", "操作失败");
 
 //  /** 其他客户端登录  **/
 //  OTHERLOGIN_FAILURE("50012","其他客户端登录"),
