@@ -1,13 +1,18 @@
 package com.pengheng.config.web;
 
+import com.google.code.kaptcha.servlet.KaptchaServlet;
 import com.pengheng.config.ConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.servlet.ServletException;
 
 /**
  * 通过配置解决跨域问题
@@ -37,5 +42,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/file/**").addResourceLocations("file:"+configProperties.urlpath);
+    }
+
+    @Bean
+    public ServletRegistrationBean servletRegistrationBean() throws ServletException{
+        ServletRegistrationBean servlet = new ServletRegistrationBean(new KaptchaServlet(),"/images/kaptcha.jpg");
+        servlet.addInitParameter("kaptcha.border", "no");
+        servlet.addInitParameter("kaptcha.textproducer.font.color", "blue");
+        servlet.addInitParameter("kaptcha.image.width", "125");
+        servlet.addInitParameter("kaptcha.image.height", "60");
+        servlet.addInitParameter("kaptcha.textproducer.char.string", "0123456789");
+        servlet.addInitParameter("kaptcha.textproducer.char.space", "4");
+        servlet.addInitParameter("kaptcha.obscurificator.impl", "com.google.code.kaptcha.impl.ShadowGimpy");
+        servlet.addInitParameter("kaptcha.noise.impl", "com.google.code.kaptcha.impl.NoNoise");
+        servlet.addInitParameter("kaptcha.textproducer.char.length", "4");
+        return servlet;
     }
 }

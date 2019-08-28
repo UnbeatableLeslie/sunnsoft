@@ -63,6 +63,7 @@ public class ShiroConfig {
 //		filterChain.put("/app/**","appFilter");
 
 		filterChain.put("/common/*", "anon");
+		filterChain.put("/images/kaptcha.jpg", "anon");
 		filterChain.put("/**/*.js", "anon");
 		filterChain.put("/**/*.html", "anon");
 		filterChain.put("/", "anon");
