@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  * 用户信息表
  * </p>
  *
- * @author jobob
+ * @author admin
  * @since 2019-08-30
  */
 @Data

@@ -27,7 +27,7 @@ import com.pengheng.manage.entity.SysUser;
     * 用户信息表 前端控制器
     * </p>
  *
- * @author jobob
+ * @author admin
  * @since 2019-08-30
  */
 @RestController
