@@ -19,6 +19,10 @@ import java.util.Map;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoSuccess;
 import com.pengheng.model.ResultVoFailure;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${table.entityName};
 <#if superControllerClassPackage??>
@@ -54,20 +58,23 @@ public class ${table.controllerName} {
     private ${table.serviceName} ${table.name}Service;
 
     @ApiOperation(value = "获取${table.name}列表",notes="")
-    @ApiImplicitParam(name = "map", value = "${table.name}实体中的参数", required = true, dataType = "Map")
+    @ApiImplicitParam(name = "${table.name}", value = "${table.name}实体", required = false, dataType = "${table.name}")
     @GetMapping("/")
-    public ResultVo ${table.name}List(@RequestParam Map<String,Object> map) throws Exception {
+    public ResultVo list(${table.entityName} ${table.name}) throws Exception {
 
-        Collection<${table.entityName}> ${table.name}List = ${table.name}Service.listByMap(map);
+        Wrapper<${table.entityName}> wrapper = new QueryWrapper<>();
+        Collection<${table.entityName}> ${table.name}List = ${table.name}Service.list(wrapper);
         ResultVo resultVo = new ResultVoSuccess();
         resultVo.setData(${table.name}List);
         return resultVo;
     }
 
+
+
     @ApiOperation(value = "添加${table.name}",notes="新增一条${table.name}")
     @ApiImplicitParam(name = "${table.name}", value = "${table.name}实体", required = true, dataType = "${table.name}")
     @PostMapping("/add")
-    public ResultVo add(@RequestBody  ${table.entityName} ${table.name}) throws Exception {
+    public ResultVo add(${table.entityName} ${table.name}) throws Exception {
 
         Boolean flag = ${table.name}Service.save(${table.name});
         return flag?new ResultVoSuccess("添加成功"):new ResultVoFailure("添加失败");
@@ -85,14 +92,14 @@ public class ${table.controllerName} {
     @ApiOperation(value = "修改${table.name}",notes="根据id修改${table.name}")
     @ApiImplicitParam(name = "${table.name}", value = "${table.name}实体", required = true, dataType = "${table.entityName}")
     @PutMapping("/update")
-    public ResultVo update(@RequestBody  ${table.entityName} ${table.name}) throws Exception {
+    public ResultVo update(${table.entityName} ${table.name}) throws Exception {
 
         Boolean flag = ${table.name}Service.updateById(${table.name});
         return flag?new ResultVoSuccess("修改成功"):new ResultVoFailure("修改失败");
     }
 
     @ApiOperation(value = "查询${table.name}", notes = "查询${table.name}详细信息")
-    @ApiImplicitParam(name = "${table.name}", value = "${table.name}实体", required = true, dataType = "${table.name}")
+    @ApiImplicitParam(name = "id", value = "${table.name}id", required = true, dataType = "<#list table.fields as field><#if field.keyFlag == true>${field.columnType?lower_case?cap_first}</#if></#list> ")
     @PostMapping("get/{id}")
     public ResultVo get(@PathVariable Integer id) throws Exception {
 
