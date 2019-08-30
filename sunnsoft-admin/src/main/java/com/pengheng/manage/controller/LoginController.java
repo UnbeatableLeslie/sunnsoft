@@ -6,7 +6,7 @@ import com.pengheng.config.shiro.LoginAuthToken;
 import com.pengheng.core.BaseController;
 import com.pengheng.core.annotation.RedisLock;
 import com.pengheng.core.exception.Assert;
-import com.pengheng.domain.SysUser;
+import com.pengheng.manage.entity.SysUser;
 import com.pengheng.manage.service.IUserService;
 import com.pengheng.model.ReplyCode;
 import com.pengheng.model.ResultVo;

@@ -1,7 +1,7 @@
 package com.pengheng.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.pengheng.domain.SysUser;
+import com.pengheng.manage.entity.SysUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

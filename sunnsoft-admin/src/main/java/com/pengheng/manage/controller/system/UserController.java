@@ -2,7 +2,7 @@ package com.pengheng.manage.controller.system;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.pengheng.core.BaseController;
-import com.pengheng.domain.SysUser;
+import com.pengheng.manage.entity.SysUser;
 import com.pengheng.manage.service.IUserService;
 import com.pengheng.model.CriterionVo;
 import com.pengheng.model.ResultVo;

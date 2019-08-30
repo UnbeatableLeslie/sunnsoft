@@ -1,10 +1,7 @@
 package com.pengheng.manage.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.pengheng.domain.SysUser;
+import com.pengheng.manage.entity.SysUser;
 import com.pengheng.manage.mapper.UserMapper;
 import com.pengheng.manage.service.IUserService;
 import com.pengheng.model.ResultVo;
