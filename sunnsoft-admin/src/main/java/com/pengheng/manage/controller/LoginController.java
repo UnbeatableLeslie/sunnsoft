@@ -20,7 +20,10 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,21 +42,17 @@ public class LoginController extends BaseController{
 
 	@Autowired
 	private IUserService userService;
+
 	@Autowired
 	private ConfigProperties configProperties;
 
 
 	/**
 	 * 登录方法
-	 * @param request
-	 * @return
-	 * @throws Exception 
 	 */
 	@RedisLock
 	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-	public ResultVo login(SysUser sysUser, boolean rememberMe, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-		Map<Object, Object> parameterMap = super.getParameterMap(model);
-		System.out.println("请求参数："+Toolkits.toJson(parameterMap));
+	public ResultVo login(SysUser sysUser, boolean rememberMe, HttpServletRequest request, Model model) {
 		String userType = sysUser.getUserType();
 		String username = sysUser.getUserName();
 		Assert.notEmpty(ReplyCode.PARAMETER_FAILURE,"用户名不能为空",username);
@@ -68,7 +67,7 @@ public class LoginController extends BaseController{
 		Subject subject = SecurityUtils.getSubject();
 		//封装用户数据
 		LoginAuthToken token = new LoginAuthToken(username, password,rememberMe,userType);
-		
+
 		try {
 			//执行Shiro配置的拦截方法
 			subject.login(token);

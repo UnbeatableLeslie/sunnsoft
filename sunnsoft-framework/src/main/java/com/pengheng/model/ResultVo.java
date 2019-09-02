@@ -1,13 +1,16 @@
 package com.pengheng.model;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.pengheng.util.Toolkits;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ResultVo implements Serializable {
 
@@ -31,7 +34,6 @@ public class ResultVo implements Serializable {
     public ResultVo(String code, String msg) {
         this.code = code;
         this.msg = msg;
-
     }
 
     public ResultVo(String paramString1, String paramString2, Object paramObject) {
