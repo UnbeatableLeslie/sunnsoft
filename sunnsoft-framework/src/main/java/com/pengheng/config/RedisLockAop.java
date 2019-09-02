@@ -1,8 +1,7 @@
 package com.pengheng.config;
 
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
+import com.pengheng.core.exception.ApplicationException;
+import com.pengheng.util.RedisUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,12 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.pengheng.core.exception.ApplicationException;
-import com.pengheng.util.RedisUtils;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Aspect
 @Component
 public class RedisLockAop {
+
 	@Autowired
 	private RedisUtils redisUtils;
 
@@ -57,7 +57,9 @@ public class RedisLockAop {
 					resultObject = joinPoint.proceed();
 					long endtime = System.currentTimeMillis();
 					logger.info(" COST: " + (endtime - starttime) + "ms]");
-				} catch (Exception e) {
+				} catch (ApplicationException ex) {
+                    throw ex;
+                } catch (Exception e) {
 					logger.error(e.toString());
 					throw new ApplicationException(e);
 				} finally {

@@ -42,8 +42,7 @@ public class BaseController {
 	{
 		HttpSession localHttpSession = paramHttpServletRequest.getSession();
 		logger.debug("current session: " + localHttpSession.getId());
-		Map localMap = convertParameterMap(paramHttpServletRequest, paramHttpServletResponse);
-		return localMap;
+		return convertParameterMap(paramHttpServletRequest, paramHttpServletResponse);
 	}
 
 	protected Object convertJson2Object(String paramString, Class<?> paramClass)
