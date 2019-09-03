@@ -1,13 +1,16 @@
 package com.pengheng.manage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * <p>
@@ -19,7 +22,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="SysUser对象", description="用户信息表")
+@ApiModel(value = "SysUser对象", description = "用户信息表")
 public class SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +72,13 @@ public class SysUser implements Serializable {
 
     @ApiModelProperty(value = "备注")
     private String remark;
+
+
+    @TableField(exist = false)
+    private Set<String> permsList;
+
+    @TableField(exist = false)
+    private Set<String> roleList;
 
 
 }
