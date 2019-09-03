@@ -105,16 +105,13 @@ public class ShiroConfig {
 	@Bean
 	public AuthorizingRealm authorizingRealm() {
 		UserRealm userRealm = new UserRealm();
-		userRealm.setCredentialsMatcher(new CredentialsMatcher() {
-			@Override
-			public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-				LoginAuthToken userToken = (LoginAuthToken) token;
-				// 要验证的明文密码
-				String plaintext = new String(userToken.getPassword());
-				// 数据库中的加密后的密文
-				String hashed = info.getCredentials().toString();
-				return BCrypt.checkpw(plaintext, hashed);
-			}
+		userRealm.setCredentialsMatcher((token, info) -> {
+			LoginAuthToken userToken = (LoginAuthToken) token;
+			// 要验证的明文密码
+			String plaintext = new String(userToken.getPassword());
+			// 数据库中的加密后的密文
+			String hashed = info.getCredentials().toString();
+			return BCrypt.checkpw(plaintext, hashed);
 		});
 
 		return userRealm;
