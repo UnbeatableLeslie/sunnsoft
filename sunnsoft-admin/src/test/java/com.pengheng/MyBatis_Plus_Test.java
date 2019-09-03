@@ -1,17 +1,15 @@
 package com.pengheng;
 
-import com.pengheng.manage.entity.SysMenu;
-import com.pengheng.manage.entity.SysUser;
-import com.pengheng.manage.mapper.UserMapper;
-import com.pengheng.manage.service.ISysMenuService;
-import com.pengheng.manage.service.ISysUserService;
+import com.pengheng.dao.entity.SysUser;
+import com.pengheng.dao.mapper.UserMapper;
+import com.pengheng.service.ISysMenuService;
+import com.pengheng.service.ISysUserService;
 import com.pengheng.util.Toolkits;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 

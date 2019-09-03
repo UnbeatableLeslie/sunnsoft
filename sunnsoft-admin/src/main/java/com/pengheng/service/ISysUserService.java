@@ -1,6 +1,6 @@
-package com.pengheng.manage.service;
+package com.pengheng.service;
 
-import com.pengheng.manage.entity.SysUser;
+import com.pengheng.dao.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

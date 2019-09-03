@@ -1,10 +1,10 @@
-package com.pengheng.manage.controller;
+package com.pengheng.controller.manage;
 
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.pengheng.manage.entity.SysUser;
-import com.pengheng.manage.service.ISysUserService;
+import com.pengheng.dao.entity.SysUser;
+import com.pengheng.service.ISysUserService;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
 import com.pengheng.model.ResultVoNotFound;

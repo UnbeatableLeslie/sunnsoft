@@ -1,8 +1,8 @@
-package com.pengheng.manage.service.impl;
+package com.pengheng.service.impl;
 
-import com.pengheng.manage.entity.SysMenu;
-import com.pengheng.manage.mapper.SysMenuMapper;
-import com.pengheng.manage.service.ISysMenuService;
+import com.pengheng.dao.entity.SysMenu;
+import com.pengheng.dao.mapper.SysMenuMapper;
+import com.pengheng.service.ISysMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

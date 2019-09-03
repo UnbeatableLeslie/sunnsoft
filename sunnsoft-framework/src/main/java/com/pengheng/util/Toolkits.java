@@ -1,26 +1,19 @@
 package com.pengheng.util;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.github.pagehelper.PageHelper;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 public final class Toolkits {
 
@@ -29,19 +22,19 @@ public final class Toolkits {
 	private static final Map<Object, Object> onlineUsers = new HashMap<Object, Object>();
 	private static final Map<String, String> customDubboServices = new HashMap<String, String>();
 
-	public static final String defaultString(Object paramObject) {
+	public static String defaultString(Object paramObject) {
 		return defaultString(paramObject, "");
 	}
 
-	public static final String defaultString(Object paramObject, String paramString) {
-		if ((paramObject != null) && ("null".equals(paramObject))) {
+	public static String defaultString(Object paramObject, String paramString) {
+		if (("null".equals(paramObject))) {
 			paramObject = null;
 		}
 		return (paramObject == null) || (((paramObject instanceof String)) && ("".equals(paramObject))) ? paramString
 				: paramObject.toString();
 	}
 
-	public static final Map<Object,Object> getPageMap(){
+	public static Map<Object,Object> getPageMap(){
 		Map<Object,Object> pageMap = new HashMap<>();
         HttpServletRequest httpServletRequest = Toolkits.getHttpServletRequest();
         httpServletRequest.setAttribute("usePageHelper","true");
@@ -63,7 +56,7 @@ public final class Toolkits {
 		return pageMap;
 	}
 
-	public static final void useQueryPaging() {
+	public static void useQueryPaging() {
 		Map<Object, Object> pageMap = getPageMap();
 		Object pageNum = pageMap.get("pageNum");
 		Object pageSize = pageMap.get("pageSize");
@@ -78,11 +71,11 @@ public final class Toolkits {
 
 	}
 
-	public static final Map<String, String> getCustomServicesAndMethodsRule() {
+	public static Map<String, String> getCustomServicesAndMethodsRule() {
 		return customServicesAndMethodsRule;
 	}
 
-	public static final String getSystemPropertyValue(String paramString) {
+	public static String getSystemPropertyValue(String paramString) {
 		String str = "";
 		try {
 			str = StringUtils.defaultString(PropertiesUtil.getProperty(paramString));
@@ -92,7 +85,7 @@ public final class Toolkits {
 		return str;
 	}
 
-	public static final String toJson(Object paramObject) {
+	public static String toJson(Object paramObject) {
 		String str = "";
 		if (paramObject != null) {
 			if (paramObject instanceof List || paramObject instanceof Collection || paramObject instanceof Object[]) {
@@ -104,7 +97,7 @@ public final class Toolkits {
 		return str;
 	}
 
-	public static final String toJson(String paramString) {
+	public static String toJson(String paramString) {
 		String str = "";
 		if (!"".equals(defaultString(paramString))) {
 			str = JSONObject.fromObject(paramString).toString();
@@ -146,11 +139,7 @@ public final class Toolkits {
 
 	public static boolean isAjax(HttpServletRequest req){
 		//判断是否为ajax请求，默认不是
-		boolean isAjaxRequest = false;
-		if(!StringUtils.isBlank(req.getHeader("x-requested-with")) && req.getHeader("x-requested-with").equals("XMLHttpRequest")){
-			isAjaxRequest = true;
-		}
-		return isAjaxRequest;
+		return "XMLHttpRequest".equals(req.getHeader("x-requested-with"));
 	}
 
 }

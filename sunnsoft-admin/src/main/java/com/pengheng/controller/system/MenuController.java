@@ -1,4 +1,4 @@
-package com.pengheng.manage.controller.system;
+package com.pengheng.controller.system;
 
 import com.pengheng.core.BaseController;
 
