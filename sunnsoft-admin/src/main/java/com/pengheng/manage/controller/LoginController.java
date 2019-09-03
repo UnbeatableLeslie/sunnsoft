@@ -1,13 +1,10 @@
 package com.pengheng.manage.controller;
 
 import com.google.code.kaptcha.Constants;
-import com.pengheng.config.ConfigProperties;
 import com.pengheng.config.shiro.LoginAuthToken;
-import com.pengheng.core.BaseController;
 import com.pengheng.core.annotation.RedisLock;
 import com.pengheng.core.exception.Assert;
 import com.pengheng.manage.entity.SysUser;
-import com.pengheng.manage.service.IUserService;
 import com.pengheng.model.ReplyCode;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
@@ -18,7 +15,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,13 +34,7 @@ import java.util.Map;
  *
  */
 @RestController
-public class LoginController extends BaseController{
-
-	@Autowired
-	private IUserService userService;
-
-	@Autowired
-	private ConfigProperties configProperties;
+public class LoginController {
 
 
 	/**

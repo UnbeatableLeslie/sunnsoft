@@ -1,26 +1,24 @@
 package com.pengheng.manage.controller;
 
 
-import org.springframework.web.bind.annotation.*;
-
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.pengheng.manage.entity.SysUser;
+import com.pengheng.manage.service.ISysUserService;
+import com.pengheng.model.ResultVo;
+import com.pengheng.model.ResultVoFailure;
+import com.pengheng.model.ResultVoNotFound;
+import com.pengheng.model.ResultVoSuccess;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import com.pengheng.model.ResultVo;
-import com.pengheng.model.ResultVoSuccess;
-import com.pengheng.model.ResultVoFailure;
-import com.pengheng.model.ResultVoNotFound;
-
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
-import com.pengheng.manage.service.ISysUserService;
-import com.pengheng.manage.entity.SysUser;
 
 /**
  * <p>
@@ -92,4 +90,13 @@ public class SysUserController {
             return new ResultVoNotFound("未找到对应信息");
         }
     }
+
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public ResultVo getRole() {
+        Subject subject = SecurityUtils.getSubject();
+        SysUser sysUser = (SysUser) subject.getPrincipal();
+        return new ResultVo("200", "Success", sysUser);
+    }
+
 }
