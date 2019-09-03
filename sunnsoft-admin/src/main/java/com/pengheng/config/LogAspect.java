@@ -29,43 +29,37 @@ public class LogAspect {
     }
 
     @Before("logPointCut()")
-    public void before(JoinPoint joinpoint){
-        Object [] args = joinpoint.getArgs();
+    public void before(JoinPoint joinpoint) {
         MethodSignature signature = (MethodSignature) joinpoint.getSignature();
         Method method = signature.getMethod();
-        logger.info("{}.{}:请求参数:{}",method.getDeclaringClass().getName(),method.getName(), Toolkits.toJson(excludeArray(joinpoint.getArgs())));
+        logger.info("{}.{}:请求参数:{}", method.getDeclaringClass().getName(), method.getName(), Toolkits.toJson(excludeArray(joinpoint.getArgs())));
     }
 
-    @AfterReturning(value = "logPointCut()",returning = "ret")
-    public void after(JoinPoint joinpoint,Object ret){
+    @AfterReturning(value = "logPointCut()", returning = "ret")
+    public void after(JoinPoint joinpoint, Object ret) {
         MethodSignature signature = (MethodSignature) joinpoint.getSignature();
         Method method = signature.getMethod();
-        logger.info("{}.{}:返回参数:{}",method.getDeclaringClass().getName(),method.getName(), Toolkits.toJson(ret));
+        logger.info("{}.{}:返回参数:{}", method.getDeclaringClass().getName(), method.getName(), Toolkits.toJson(ret));
     }
 
 
     /**
      * 排除 Request  Response Model 参数 避免转换json异常
-     * @param args
-     * @return
      */
-    private List excludeArray(Object[] args){
-        List arr = new ArrayList();
-        for (int i = 0; i < args.length; i++) {
-            if(args[i] instanceof  ServletRequest){
-                ServletRequest arg = (ServletRequest) args[i];
+    private List excludeArray(Object[] args) {
+        List<Object> arr = new ArrayList<>();
+        for (Object arg1 : args) {
+            if (arg1 instanceof ServletRequest) {
+                ServletRequest arg = (ServletRequest) arg1;
                 arr.add(Toolkits.toJson(arg.getParameterMap()));
-                continue;
-            }
-            if(args[i] instanceof  ServletResponse){
-                continue;
-            }
-            if(args[i] instanceof  Model){
-                Model arg = (Model) args[i];
+            } else if (arg1 instanceof ServletResponse) {
+
+            } else if (arg1 instanceof Model) {
+                Model arg = (Model) arg1;
                 arr.add(Toolkits.toJson(Toolkits.toJson(arg.asMap().get("parameterMap"))));
-                continue;
+            } else {
+                arr.add(arg1);
             }
-            arr.add(args[i]);
         }
         return arr;
     }
