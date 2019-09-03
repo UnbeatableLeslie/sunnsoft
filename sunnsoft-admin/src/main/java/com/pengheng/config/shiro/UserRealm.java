@@ -45,7 +45,6 @@ public class UserRealm extends AuthorizingRealm {
 
         SysUser sysUser = sysUserList.stream().findFirst().get();
         // 清除掉密码
-        sysUser.setPassword(null);
         sysUser.setPermsList(sysMenuMapper.findMenuByUserId(sysUser.getId()));
         sysUser.setRoleList(userMapper.findRoleByUserId(sysUser.getId()));
 
