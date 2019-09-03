@@ -1,7 +1,7 @@
-package com.pengheng.manage.mapper;
+package com.pengheng.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.pengheng.manage.entity.SysUser;
+import com.pengheng.dao.entity.SysUser;
 
 /**
  * <p>

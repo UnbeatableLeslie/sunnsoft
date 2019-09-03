@@ -1,8 +1,8 @@
 package com.pengheng.config.shiro;
 
-import com.pengheng.manage.entity.SysUser;
-import com.pengheng.manage.mapper.SysMenuMapper;
-import com.pengheng.manage.mapper.UserMapper;
+import com.pengheng.dao.entity.SysUser;
+import com.pengheng.dao.mapper.SysMenuMapper;
+import com.pengheng.dao.mapper.UserMapper;
 import com.pengheng.util.Toolkits;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -60,8 +60,8 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         SysUser sysUser = (SysUser) subject.getPrincipal();
 
-        sysUser.getRoleList().forEach(item -> authorizationInfo.addRole(Toolkits.defaultString(item)));
-        sysUser.getPermsList().forEach(item -> authorizationInfo.addStringPermission(Toolkits.defaultString(item)));
+        sysUser.getRoleList().stream().filter(item -> !item.isEmpty()).forEach(item -> authorizationInfo.addRole(Toolkits.defaultString(item)));
+        sysUser.getPermsList().stream().filter(item -> !item.isEmpty()).forEach(item -> authorizationInfo.addStringPermission(Toolkits.defaultString(item)));
 
         return authorizationInfo;
     }

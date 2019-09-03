@@ -1,4 +1,4 @@
-package com.pengheng.manage.entity;
+package com.pengheng.dao.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;

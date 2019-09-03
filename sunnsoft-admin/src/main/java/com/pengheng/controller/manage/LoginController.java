@@ -1,10 +1,10 @@
-package com.pengheng.manage.controller;
+package com.pengheng.controller.manage;
 
 import com.google.code.kaptcha.Constants;
 import com.pengheng.config.shiro.LoginAuthToken;
 import com.pengheng.core.annotation.RedisLock;
 import com.pengheng.core.exception.Assert;
-import com.pengheng.manage.entity.SysUser;
+import com.pengheng.dao.entity.SysUser;
 import com.pengheng.model.ReplyCode;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;

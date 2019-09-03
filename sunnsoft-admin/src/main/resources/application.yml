@@ -43,3 +43,7 @@ mybatis-plus:
   mapper-locations:
   - classpath:com.pengheng.**.mapper/**/*.xml
   - mapper/DynamicSqlMapper.xml
+
+
+application:
+  cookieCipherKey: "2AvVhdsgUs0FSA3SDFAdag=="

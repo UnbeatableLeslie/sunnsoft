@@ -1,7 +1,7 @@
 package com.pengheng.service;
 
 import com.pengheng.core.exception.ApplicationException;
-import com.pengheng.manage.entity.SysUser;
+import com.pengheng.dao.entity.SysUser;
 import com.pengheng.model.ReplyCode;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

@@ -11,6 +11,7 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,13 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
+
+    /**
+     * rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+     */
+    @Value("${application.cookieCipherKey}")
+    private String cookieCipherKey;
+
 	@Bean
 	public SimpleCookie rememberMeCookie() {
 		// 这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
@@ -32,8 +40,7 @@ public class ShiroConfig {
 	public CookieRememberMeManager rememberMeManager() {
 		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
 		cookieRememberMeManager.setCookie(rememberMeCookie());
-		// rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
-		cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+		cookieRememberMeManager.setCipherKey(Base64.decode(cookieCipherKey));
 		return cookieRememberMeManager;
 	}
 

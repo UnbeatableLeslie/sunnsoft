@@ -1,7 +1,7 @@
-package com.pengheng.manage.mapper;
+package com.pengheng.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.pengheng.manage.entity.SysMenu;
+import com.pengheng.dao.entity.SysMenu;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

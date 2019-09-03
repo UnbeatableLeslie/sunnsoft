@@ -1,9 +1,9 @@
-package com.pengheng.manage.service.impl;
+package com.pengheng.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.pengheng.manage.entity.SysUser;
-import com.pengheng.manage.mapper.UserMapper;
-import com.pengheng.manage.service.IUserService;
+import com.pengheng.dao.entity.SysUser;
+import com.pengheng.dao.mapper.UserMapper;
+import com.pengheng.service.IUserService;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoFailure;
 import com.pengheng.model.ResultVoSuccess;

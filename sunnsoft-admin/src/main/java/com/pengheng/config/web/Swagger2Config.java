@@ -21,13 +21,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class Swagger2Config {
 
+    /**
+     * 获取当前二级包名
+     */
+    private String getPackageName() {
+        String packageName = Swagger2Config.class.getPackage().getName();
+        int twoIndex = packageName.indexOf(".", packageName.indexOf(".") + 1);
+        return packageName.substring(0, twoIndex);
+    }
+
     @Bean
     public Docket createRestApi() {
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
                 //为当前包路径
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage(getPackageName()))
                 .paths(PathSelectors.any())
                 .build();
     }

@@ -1,4 +1,4 @@
-package com.pengheng.manage.controller;
+package com.pengheng.controller.manage;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
