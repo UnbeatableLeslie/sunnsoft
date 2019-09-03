@@ -3,6 +3,7 @@ package com.pengheng.manage.controller;
 import com.google.code.kaptcha.Constants;
 import com.pengheng.config.shiro.LoginAuthToken;
 import com.pengheng.core.annotation.RedisLock;
+import com.pengheng.core.exception.ApplicationException;
 import com.pengheng.core.exception.Assert;
 import com.pengheng.manage.entity.SysUser;
 import com.pengheng.model.ReplyCode;
@@ -90,7 +91,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/unlogin", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo unlogin() {
-		return new ResultVo("401","用户未登录");
+		throw new ApplicationException(ReplyCode.AUTHOR_ERROR, "用户未登录");
 	}
 
 	/**
@@ -99,7 +100,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/unauth", method = {RequestMethod.GET, RequestMethod.POST})
 	public ResultVo unauth() {
-		return new ResultVoSuccess("401","用户无权限");
+		throw new ApplicationException(ReplyCode.AUTHOR_ERROR, "用户无权限");
 	}
 
 	@GetMapping("/export")

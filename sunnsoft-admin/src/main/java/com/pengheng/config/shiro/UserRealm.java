@@ -60,8 +60,8 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         SysUser sysUser = (SysUser) subject.getPrincipal();
 
-        sysUser.getRoleList().forEach(item -> authorizationInfo.addRole(Toolkits.defaultString(item)));
-        sysUser.getPermsList().forEach(item -> authorizationInfo.addStringPermission(Toolkits.defaultString(item)));
+        sysUser.getRoleList().stream().filter(item -> !item.isEmpty()).forEach(item -> authorizationInfo.addRole(Toolkits.defaultString(item)));
+        sysUser.getPermsList().stream().filter(item -> !item.isEmpty()).forEach(item -> authorizationInfo.addStringPermission(Toolkits.defaultString(item)));
 
         return authorizationInfo;
     }
