@@ -47,4 +47,6 @@ mybatis-plus:
 
 
 application:
-  cookieCipherKey: "2AvVhdsgUs0FSA3SDFAdag=="
+  cookie:
+    cipherKey: "2AvVhdsgUs0FSA3SDFAdag=="
+    maxAge: 259200

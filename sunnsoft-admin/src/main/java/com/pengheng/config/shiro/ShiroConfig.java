@@ -1,8 +1,5 @@
 package com.pengheng.config.shiro;
 
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -24,15 +21,18 @@ public class ShiroConfig {
     /**
      * rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
      */
-    @Value("${application.cookieCipherKey}")
+    @Value("${application.cookie.cipherKey}")
     private String cookieCipherKey;
+
+    @Value("${application.cookie.maxAge}")
+    private int cookieMaxAge;
 
 	@Bean
 	public SimpleCookie rememberMeCookie() {
 		// 这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
 		SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
 		// <!-- 记住我cookie生效时间30天 ,单位秒;-->
-		simpleCookie.setMaxAge(259200);
+		simpleCookie.setMaxAge(cookieMaxAge);
 		return simpleCookie;
 	}
 

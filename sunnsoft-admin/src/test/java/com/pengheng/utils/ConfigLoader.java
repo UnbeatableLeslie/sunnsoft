@@ -28,6 +28,12 @@ public class ConfigLoader {
     }
 
 
+    /**
+     * 手动解析YAML配置中的SPEL表达式
+     *
+     * @param expression 表达式
+     * @return 表达式最后的值
+     */
     private String parseValue(String expression) {
         expression = expression.trim();
         if (expression.startsWith("${")) {
