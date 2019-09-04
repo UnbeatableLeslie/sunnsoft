@@ -37,6 +37,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
         String parent = "com.pengheng";
+        String parent2 = "com/pengheng";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         // 包配置
@@ -50,12 +51,12 @@ public class CodeGenerator {
         pc.setMapper("dao.mapper");
 
         Map<String, String> pathMap = new HashMap<>();
-        pathMap.put("controller_path", projectPath + "/src/main/java/" + parent + "/controller/" + moduleName);
-        pathMap.put("service_path", projectPath + "/src/main/java/" + parent + "/service");
-        pathMap.put("service_impl_path", projectPath + "/src/main/java/" + parent + "/service/impl");
-        pathMap.put("entity_path", projectPath + "/src/main/java/" + parent + "/dao/entity");
-        pathMap.put("mapper_path", projectPath + "/src/main/java/" + parent + "/dao/mapper");
-        pathMap.put("xml_path", projectPath + "/src/main/java/" + parent + "/dao/mapper");
+        pathMap.put("controller_path", projectPath + "/src/main/java/" + parent2 + "/controller/" + moduleName);
+        pathMap.put("service_path", projectPath + "/src/main/java/" + parent2 + "/service");
+        pathMap.put("service_impl_path", projectPath + "/src/main/java/" + parent2 + "/service/impl");
+        pathMap.put("entity_path", projectPath + "/src/main/java/" + parent2 + "/dao/entity");
+        pathMap.put("mapper_path", projectPath + "/src/main/java/" + parent2 + "/dao/mapper");
+        pathMap.put("xml_path", projectPath + "/src/main/java/" + parent2 + "/dao/mapper");
         pc.setPathInfo(pathMap);
         mpg.setPackageInfo(pc);
         //设置自定义配置
