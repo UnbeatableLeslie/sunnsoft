@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.pengheng.utils.ConfigLoader;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
@@ -93,11 +94,13 @@ public class CodeGenerator {
 
     private static DataSourceConfig getDataSourceConfig() {
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
+        ConfigLoader configLoader = ConfigLoader.getInstance();
+        dsc.setUrl(configLoader.getValue("spring.datasource.url"));
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        // dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setDriverName(configLoader.getValue("spring.datasource.driver-class-name"));
+        dsc.setUsername(configLoader.getValue("spring.datasource.username"));
+        dsc.setPassword(configLoader.getValue("spring.datasource.password"));
         return dsc;
     }
 
