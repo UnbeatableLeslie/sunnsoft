@@ -56,9 +56,8 @@ public class ShiroConfig {
 		Map<String, String> filterChain = new HashMap<>();
 		// 设置登出拦截
 		filterChain.put("/logout", "anon");
-		// 过滤指定连接不用登录
-		filterChain.put("/unlogin", "anon");
-		filterChain.put("/unauth", "anon");
+		filterChain.put("/uploadFile", "anon");
+
 		filterChain.put("/login", "anon");
 		filterChain.put("/file", "anon");
 		//后台管理自定义过滤器配置，验证是否是对应角色
