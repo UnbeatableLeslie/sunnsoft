@@ -3,13 +3,13 @@ package com.pengheng.common;
 import com.pengheng.model.ResultVo;
 import com.pengheng.model.ResultVoSuccess;
 import com.pengheng.service.StorageService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
@@ -48,8 +48,15 @@ public class CommonController {
     }
 
 
+    /**
+     * 可设置调用权限, 防止用户恶意上传文件
+     *
+     * @param multipartFile 文件流对象
+     */
+    @ApiOperation(value = "文件上传", notes = "文件上传接口", produces = "application/json", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiImplicitParam(name = "file", value = "文件对象", required = true, dataType = "file", paramType = "form")
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public ResultVo uploadFile(@RequestParam("file") MultipartFile multipartFile) {
+    public ResultVo uploadFile(@RequestParam(name = "file") MultipartFile multipartFile) {
         String filePath = storageService.transferTo(multipartFile);
         return new ResultVo("200", "成功", Collections.singletonMap("path", filePath));
     }
