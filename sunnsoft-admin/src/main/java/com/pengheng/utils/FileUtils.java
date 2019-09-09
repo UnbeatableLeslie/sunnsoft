@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.UUID;
@@ -17,7 +18,7 @@ import java.util.UUID;
  * @Author pengheng
  * @Date 2019年7月23日15:02:49
  */
-public class UploadFileUtils {
+public class FileUtils {
 
 
     /**
@@ -76,12 +77,39 @@ public class UploadFileUtils {
         return mulFile;
     }
 
+    /**
+     * 下载文件
+     * @param response
+     * @param file
+     * @param newFileName
+     */
+    public static void download(HttpServletResponse response,File file,String newFileName){
+        try {
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename="+new String(newFileName.getBytes("ISO8859-1"),"UTF-8"));
+            BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+            InputStream is = new FileInputStream(file.getAbsoluteFile());
+            BufferedInputStream bis = new BufferedInputStream(is);
+            int length = 0;
+            byte[] temp = new byte[1 * 1024 * 10];
+            while((length = bis.read(temp))!=-1){
+                 bos.write(temp,0,length);
+            }
+            bos.flush();
+            bis.close();
+            bos.close();
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         try {
             File file = new File("C:\\Users\\admin\\Desktop\\test001.jpg");
 
             String rootPath = "/project/sunnsoft-admin/general/";
-            UploadFileUtils.upload(file, rootPath);
+            FileUtils.upload(file, rootPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
