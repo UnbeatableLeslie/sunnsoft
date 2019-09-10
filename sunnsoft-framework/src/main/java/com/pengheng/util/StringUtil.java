@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.UUID;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -625,4 +626,14 @@ public class StringUtil {
 //		System.out.print(dou);
 //	}
 
+
+	/**
+	 * 实现生成一个随机字符串方法
+	 * 生成一个UUID去掉-符号并且返回
+	 *
+	 * @return 随机字符串
+	 */
+	public static String generateUUID() {
+		return UUID.randomUUID().toString().replaceAll("-", "");
+	}
 }
