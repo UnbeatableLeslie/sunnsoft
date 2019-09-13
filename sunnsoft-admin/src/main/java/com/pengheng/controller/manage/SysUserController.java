@@ -10,6 +10,7 @@ import com.pengheng.model.ResultVoFailure;
 import com.pengheng.model.ResultVoNotFound;
 import com.pengheng.model.ResultVoSuccess;
 import com.pengheng.service.SysUserService;
+import com.pengheng.utils.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Collection;
 
 /**
@@ -94,6 +97,12 @@ public class SysUserController {
     public ResultVo getRole() {
         SysUser currentUser = sysUserService.requireCurrentUser();
         return new ResultVo("200", "Success", currentUser);
+    }
+
+    @RequestMapping("downloadFile")
+    public void downLoadFile(HttpServletResponse response){
+        File file = new File("E:\\iphone\\IMG_0009.JPG");
+        FileUtils.download(response,file,file.getName());
     }
 
 }

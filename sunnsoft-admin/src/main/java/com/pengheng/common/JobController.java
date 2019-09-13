@@ -1,11 +1,11 @@
 package com.pengheng.common;
 
+import com.pengheng.model.ResultVo;
+import com.pengheng.model.ResultVoSuccess;
 import com.pengheng.quartz.service.JobService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -26,10 +26,11 @@ public class JobController {
      *
      * @return
      */
-    @RequestMapping(value = "/getAll", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object startCronJob() {
+//    @RequiresPermissions("common:quartz:list")
+    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResultVo list() {
         List<Map<Object, Object>> allCronJob = jobService.getAllCronJob();
-        return allCronJob;
+        return new ResultVoSuccess("获取定时任务成功",allCronJob);
     }
 
     /**
@@ -40,9 +41,9 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/execute", method = {RequestMethod.GET, RequestMethod.POST})
-    public String executeCronJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
+    public ResultVo executeCronJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
         jobService.executeCronJob(jobName, jobGroup);
-        return "create cron task success";
+        return new ResultVoSuccess("启动定时任务成功");
     }
 
     /**
@@ -53,10 +54,10 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/cron", method = {RequestMethod.GET, RequestMethod.POST})
-    public String startCronJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup,
+    public ResultVo createCronJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup,
                                @RequestParam("cron") String cron) {
         jobService.addCronJob(jobName, jobGroup, cron);
-        return "create cron task success";
+        return new ResultVoSuccess("创建同步定时任务成功");
     }
 
     /**
@@ -67,9 +68,9 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/async", method = {RequestMethod.GET, RequestMethod.POST})
-    public String startAsyncJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
+    public ResultVo startAsyncJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
         jobService.addAsyncJob(jobName, jobGroup);
-        return "create async task success";
+        return new ResultVoSuccess("创建异步定时任务成功");
     }
 
     /**
@@ -80,9 +81,9 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/pause", method = {RequestMethod.GET, RequestMethod.POST})
-    public String pauseJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
+    public ResultVo pauseJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
         jobService.pauseJob(jobName, jobGroup);
-        return "pause job success";
+        return new ResultVoSuccess("暂停定时任务成功");
     }
 
     /**
@@ -91,9 +92,9 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/pauseAll", method = {RequestMethod.GET, RequestMethod.POST})
-    public String pauseAll() {
+    public ResultVo pauseAll() {
         jobService.pauseAllJob();
-        return "pause all job success";
+        return new ResultVoSuccess("暂停全部定时任务成功");
     }
 
     /**
@@ -104,9 +105,9 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/resume", method = {RequestMethod.GET, RequestMethod.POST})
-    public String resumeJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
+    public ResultVo resumeJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
         jobService.resumeJob(jobName, jobGroup);
-        return "resume all job success";
+        return new ResultVoSuccess("恢复定时任务成功");
     }
 
     /**
@@ -115,9 +116,9 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/resumeAll", method = {RequestMethod.GET, RequestMethod.POST})
-    public String resumeAllJob() {
+    public ResultVo resumeAllJob() {
         jobService.resumeAllJob();
-        return "resume all job success";
+        return new ResultVoSuccess("恢复全部定时任务成功");
     }
 
     /**
@@ -128,8 +129,8 @@ public class JobController {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
-    public String deleteJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
+    public ResultVo deleteJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup) {
         jobService.deleteJob(jobName, jobGroup);
-        return "delete job success";
+        return new ResultVoSuccess("删除定时任务成功");
     }
 }

@@ -16,10 +16,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,7 +66,7 @@ public class LoginController {
 		} catch (IncorrectCredentialsException e) {
 			return new ResultVoFailure("密码错误");
 		}
-		return new ResultVoSuccess("登录成功");
+		return new ResultVoSuccess("登录成功",subject.getSession().getId());
 
 	}
 

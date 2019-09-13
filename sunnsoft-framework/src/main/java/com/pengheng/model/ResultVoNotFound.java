@@ -11,12 +11,12 @@ public class ResultVoNotFound extends ResultVo{
 
     public ResultVoNotFound(String paramString)
     {
-        super(ReplyCode.getReplayCodes(paramString), ReplyCode.getReplayTexts(paramString));
+        super(ReplyCode.NOT_FOUND.getCode(), paramString);
     }
 
     public ResultVoNotFound(String paramString, Object paramObject)
     {
-        super(ReplyCode.getReplayCodes(paramString), ReplyCode.getReplayTexts(paramString), paramObject);
+        super(ReplyCode.NOT_FOUND.getCode(),paramString, paramObject);
     }
 
 }

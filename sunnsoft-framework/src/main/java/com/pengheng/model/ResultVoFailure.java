@@ -19,7 +19,7 @@ public class ResultVoFailure extends ResultVo {
     }
 
     public ResultVoFailure(ReplyCode code, String msg) {
-        super(Optional.ofNullable(code).map(ReplyCode::getCode).orElse(null), msg);
+        super(code.getCode(), msg);
     }
 
 }
