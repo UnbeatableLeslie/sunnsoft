@@ -55,8 +55,9 @@ public class JobController {
      */
     @RequestMapping(value = "/cron", method = {RequestMethod.GET, RequestMethod.POST})
     public ResultVo createCronJob(@RequestParam("jobName") String jobName, @RequestParam("jobGroup") String jobGroup,
-                               @RequestParam("cron") String cron) {
-        jobService.addCronJob(jobName, jobGroup, cron);
+                                  @RequestParam("cron") String cron,
+                                  @RequestParam("sid") String sid) {
+        jobService.addCronJob(jobName, jobGroup, cron, sid);
         return new ResultVoSuccess("创建同步定时任务成功");
     }
 

@@ -101,7 +101,7 @@ public class JobServiceImpl implements JobService {
      * @param jobGroup
      */
     @Override
-    public void addCronJob(String jobName, String jobGroup, String cron) {
+    public void addCronJob(String jobName, String jobGroup, String cron, String sid) {
         try {
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
@@ -112,7 +112,7 @@ public class JobServiceImpl implements JobService {
                 // 构建job信息
                 jobDetail = JobBuilder.newJob(CronJob.class).withIdentity(jobName, jobGroup).build();
                 // 用JopDataMap来传递数据
-                jobDetail.getJobDataMap().put("sid", "userService.getUser");// 通过这里动态设置需要传递的参数
+                jobDetail.getJobDataMap().put("sid", sid);// 通过这里动态设置需要传递的参数
 
                 // 表达式调度构建器(即任务执行的时间,每5秒执行一次)
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);

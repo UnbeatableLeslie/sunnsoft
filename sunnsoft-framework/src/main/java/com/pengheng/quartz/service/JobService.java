@@ -29,7 +29,7 @@ public interface JobService {
 	 * @param jobName
 	 * @param jobGroup
 	 */
-	void addCronJob(String jobName, String jobGroup, String cron);
+	void addCronJob(String jobName, String jobGroup, String cron, String sid);
 
 	/**
 	 * 添加异步任务
