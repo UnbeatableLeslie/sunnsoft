@@ -1,49 +1,44 @@
-package com.pengheng;
+package com.sunnsoft;
 
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.pengheng.utils.ConfigLoader;
-import org.apache.commons.lang.StringUtils;
+import com.sunnsoft.utils.ConfigLoader;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class CodeGenerator {
 
     private static final String projectPath = System.getProperty("user.dir") + "/" + "sunnsoft-admin";
+    private static  String TABLEPREFIX = "hetong_";
 
     /**
      * <p>
      * 读取控制台内容
      * </p>
      */
-    public static String scanner(String tip) {
+    private static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (StringUtils.isNotEmpty(ipt)) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException("请输入正确的" + tip + "！");
+        System.out.println(("请输入" + tip + "："));
+        return scanner.nextLine();
     }
 
     public static void main(String[] args) {
-        String parent = "com.pengheng";
-        String parent2 = "com/pengheng";
+        String parent = "com.sunnsoft";
+        String parent2 = "com/sunnsoft";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         // 包配置
         PackageConfig pc = new PackageConfig();
-        String moduleName = scanner("模块名");
+        String moduleName = scanner("模块名(输入空白字符串不生成Controller)");
+        String prefix = scanner("请输入表前缀");
+        TABLEPREFIX = prefix.trim().isEmpty() ? TABLEPREFIX : prefix.trim();
         pc.setParent(parent);
         pc.setController("controller." + moduleName);
         pc.setService("service");
@@ -52,22 +47,46 @@ public class CodeGenerator {
         pc.setMapper("dao.mapper");
 
         Map<String, String> pathMap = new HashMap<>();
-        pathMap.put("controller_path", projectPath + "/src/main/java/" + parent2 + "/controller/" + moduleName);
-        pathMap.put("service_path", projectPath + "/src/main/java/" + parent2 + "/service");
-        pathMap.put("service_impl_path", projectPath + "/src/main/java/" + parent2 + "/service/impl");
+        if (moduleName != null && !moduleName.trim().isEmpty()) {
+            pathMap.put("controller_path", projectPath + "/src/main/java/" + parent2 + "/controller/" + moduleName);
+        }
+        String sercvice = scanner("是否生成service(输入空白字符串跳过生成Service)");
+        String mapper = scanner("是否生成mapper(输入空白字符串跳过生成Mapper)");
+        if (sercvice != null && !sercvice.trim().isEmpty()) {
+            pathMap.put("service_path", projectPath + "/src/main/java/" + parent2 + "/service");
+            pathMap.put("service_impl_path", projectPath + "/src/main/java/" + parent2 + "/service/impl");
+        }
+        if (mapper != null && !mapper.trim().isEmpty()) {
+            pathMap.put("mapper_path", projectPath + "/src/main/java/" + parent2 + "/dao/mapper");
+            pathMap.put("xml_path", projectPath + "/src/main/java/" + parent2 + "/dao/mapper");
+        }
+
         pathMap.put("entity_path", projectPath + "/src/main/java/" + parent2 + "/dao/entity");
-        pathMap.put("mapper_path", projectPath + "/src/main/java/" + parent2 + "/dao/mapper");
-        pathMap.put("xml_path", projectPath + "/src/main/java/" + parent2 + "/dao/mapper");
+
         pc.setPathInfo(pathMap);
         mpg.setPackageInfo(pc);
         //设置自定义配置
-//        mpg.setCfg(getInjectionConfig(pc));
+
+        mpg.setCfg(getInjectionConfig(pc, moduleName));
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
 
         ConfigBuilder config = new ConfigBuilder(pc, getDataSourceConfig(), getStrategyConfig(pc), getTemplateConfig(), getGlobalConfig());
 
         mpg.setConfig(config);
         mpg.execute();
+    }
+
+    private static InjectionConfig getInjectionConfig(PackageConfig pc, String moduleName) {
+        return new InjectionConfig() {
+            //自定义属性注入:abc
+            //在.ftl(或者是.vm)模板中，通过${cfg.abc}获取属性
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<>();
+                map.put("myModuName", Optional.ofNullable(moduleName).orElse(""));
+                this.setMap(map);
+            }
+        };
     }
 
     private static StrategyConfig getStrategyConfig(PackageConfig pc) {
@@ -77,8 +96,10 @@ public class CodeGenerator {
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        strategy.setRestControllerStyle(true);
+        strategy.setControllerMappingHyphenStyle(false);
+        strategy.setSuperControllerClass("com.sunnsoft.core.BaseController");
+        strategy.setTablePrefix(TABLEPREFIX);
         return strategy;
     }
 
